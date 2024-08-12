@@ -1,0 +1,24 @@
+#sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+.choose {
+  background-color: var(--colors-default-200);
+}
+#sidebar a {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  row-gap: 7px;
+  align-items: center;
+  padding: 15px 10px;
+
+  color: var(--colors-default-800);
+  border-radius: 15px;
+  font-size: var(--font-size-small);
+}
+
+#sidebar a:hover {
+  background-color: var(--colors-default-300);
+}
