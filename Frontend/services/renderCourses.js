@@ -1,4 +1,5 @@
 async function render(courseContainer, courses) {
+  console.log(true);
   courseContainer.innerHTML = courses
     .map(
       (course) =>

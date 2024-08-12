@@ -11,7 +11,7 @@ function currentSlide(n) {
   showSlides((slideIndex = n));
 }
 
-function showSlides(n) {
+async function showSlides(n) {
   let i;
   const slides = document.getElementsByClassName('mySlides');
   const dots = document.getElementsByClassName('dot');

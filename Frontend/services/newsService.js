@@ -1,0 +1,3 @@
+function newsService() {
+  //code here
+}
