@@ -1,4 +1,6 @@
-Cấu trúc thư mục
+# Cấu trúc thư mục
+
+\`\`\`plaintext
 .
 ├── assets/
 │ ├── images/ # Thư mục chứa hình ảnh
@@ -42,3 +44,4 @@ Cấu trúc thư mục
 ├── readme.md # Tệp README mô tả dự án
 └── style.css # Tệp CSS trang chính
 └── .gitignore # Tệp .gitignore gốc
+\`\`\`
