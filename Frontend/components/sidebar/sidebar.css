@@ -22,3 +22,8 @@
 #sidebar a:hover {
   background-color: var(--colors-default-300);
 }
+@media screen and (max-width: 768px) {
+  #sidebar {
+    display: none;
+  }
+}

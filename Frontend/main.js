@@ -32,10 +32,30 @@ document.addEventListener('DOMContentLoaded', function () {
       })
       .catch((error) => {});
   }
+
+  function loadServices(service) {
+    fetch(`services/${service}.js`)
+      .then((response) => response.text())
+      .then((js) => {
+        const script = document.createElement('script');
+        script.text = js;
+        document.body?.appendChild(script);
+      })
+      .catch((error) => {});
+  }
+
+  // Loading components
   ['nav', 'sidebar', 'wrapper', 'slider'].forEach((component) => {
     loadComponent(component);
     try {
       loadScript(component);
+    } catch (e) {}
+  });
+
+  // Loading services
+  ['renderCourses'].forEach((service) => {
+    try {
+      loadServices(service);
     } catch (e) {}
   });
 });
