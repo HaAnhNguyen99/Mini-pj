@@ -1,4 +1,4 @@
 .container {
   min-height: 100vh;
-  background-color: red;
+  background-color: var(--colors-default-300);
 }

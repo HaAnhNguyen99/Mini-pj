@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', function () {
   function loadComponent(component) {
-    fetch(`./components/${component}/${component}.html`)
+    fetch(`../components/${component}/${component}.html`)
       .then((response) => response.text())
       .then((html) => {
         const container = document.querySelector(`#${component}`);
@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   function loadScript(component) {
-    fetch(`./components/${component}/${component}.js`)
+    fetch(`../components/${component}/${component}.js`)
       .then((response) => {
         if (!response.ok) {
           return 404;
@@ -34,7 +34,7 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   function loadServices(service) {
-    fetch(`services/${service}.js`)
+    fetch(`../../../services/${service}.js`)
       .then((response) => response.text())
       .then((js) => {
         const script = document.createElement('script');
