@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', function () {
   function loadComponent(component) {
-    fetch(`../../components/${component}/${component}.html`)
+    fetch(`../components/${component}/${component}.html`)
       .then((response) => response.text())
       .then((html) => {
         const container = document.querySelector(`#${component}`);
