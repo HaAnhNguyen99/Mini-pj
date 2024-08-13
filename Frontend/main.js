@@ -45,7 +45,7 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   // Loading components
-  ['nav', 'sidebar', 'wrapper', 'slider'].forEach((component) => {
+  ['nav', 'sidebar', 'wrapper', 'slider', 'footer'].forEach((component) => {
     loadComponent(component);
     try {
       loadScript(component);
