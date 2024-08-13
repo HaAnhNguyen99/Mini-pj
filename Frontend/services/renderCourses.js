@@ -11,7 +11,9 @@ async function render(courseContainer, courses) {
                 : ''
             }
 
-              <a class="top-card" href="https://${course.title}">
+              <a class="top-card" data-course-id="${course.id}" href="https://${
+          course.title
+        }">
                 <img src="${
                   course.course_img
                 }" alt="Course Image" loading="lazy" />
