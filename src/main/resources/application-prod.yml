@@ -1,0 +1,13 @@
+spring:
+  datasource:
+      url: jdbc:postgresql://dpg-cqte4tij1k6c738jmrq0-a.singapore-postgres.render.com:5432/online_course_jclr
+      username: online_course_jclr_user
+      password: vN8aQ4RgBqOQnnqFLXmObj9eXiWA2h0N
+  jpa:
+    properties:
+      hibernate:
+        format_sql: true
+        show_sql: false
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: update
