@@ -1,8 +1,0 @@
-server:
-  port: 9999
-
-spring:
-  application:
-    name: course-online-selling
-  profiles:
-    active: prod
