@@ -8,6 +8,7 @@ nav {
   border-bottom: 1px solid var(--colors-default-200);
   position: sticky;
   top: 0;
+  background-color: #fff;
 }
 
 nav a {
