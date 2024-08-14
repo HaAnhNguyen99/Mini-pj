@@ -13,24 +13,125 @@
     <link
       href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
       rel="stylesheet" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Quicksand:wght@300..700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap"
       rel="stylesheet" />
-
     <link rel="stylesheet" href="detail.css" />
     <link rel="stylesheet" href="../../config/grobal.css" />
   </head>
   <body>
-    <!-- Write a navbar html code with logo on left, input type text in the middle and sign up, sign in in right-->
+    <!-- Navbar -->
     <header>
       <nav id="nav"></nav>
     </header>
+
     <!-- Container -->
     <div class="container">
       <div id="sidebar"></div>
+      <div class="course-content">
+        <div class="left-content">
+          <h1 id="course-title">Lập trình C++ cơ bản, nâng cao</h1>
+          <p id="course-desc">
+            Khóa học lập trình C++ từ cơ bản tới nâng cao dành cho người mới bắt
+            đầu. Mục tiêu của khóa học này nhằm giúp các bạn nắm được các khái
+            niệm căn cơ của lập trình, giúp các bạn có nền tảng vững chắc để
+            chinh phục con đường trở thành một lập trình viên.
+          </p>
+
+          <div class="course-detail-header">
+            <h2>Nội dung khóa học</h2>
+            <div class="header-detail">
+              <span> <span class="chapters bold">5</span> Chương </span>
+              •
+              <span> <span class="lessions bold"> 138 </span> bài học </span>
+              •
+              <span
+                >Thời lượng<span class="duration bold">
+                  10 giờ 29 phút
+                </span></span
+              >
+            </div>
+          </div>
+          <div class="panel">
+            <div class="panel-header">
+              <strong> 1: Giới thiệu</strong>
+              <p>
+                <span>3</span>
+                <span>Bài học</span>
+              </p>
+            </div>
+
+            <div class="panel-body collapse">
+              <div class="panel-item">
+                <div>
+                  <img src="../../assets/icons/play.svg" alt="" />
+                  <span>1. Các kiểu dữ liệu cơ bản</span>
+                </div>
+                <p>
+                  <span>01.03</span>
+                </p>
+              </div>
+              <div class="panel-item">
+                <div>
+                  <img src="../../assets/icons/play.svg" alt="" />
+                  <span>2. Toán tử cơ bản</span>
+                </div>
+                <p>
+                  <span>01.03</span>
+                </p>
+              </div>
+              <div class="panel-item">
+                <div>
+                  <img src="../../assets/icons/play.svg" alt="" />
+                  <span>3. Toán tử điều kiện</span>
+                </div>
+                <p>
+                  <span>01.03</span>
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Course Reviews -->
+          <!-- <div class="course-reviews">
+          <h2>Reviews</h2>
+          <div class="review">
+            <img src="user.jpg" alt="User Image" />
+            <p>User Name</p>
+            <p>Review Text</p>
+          </div>
+        </div> -->
+        </div>
+
+        <div class="right-content">
+          <div id="course-img"></div>
+          <div>
+            <span id="course-price">Miễn phí</span>
+          </div>
+          <button id="registerCourse">Đăng ký học</button>
+          <div class="course-info">
+            <p>
+              <img src="../../assets/icons/level.svg" alt="" />Trình độ học cơ
+              bản
+            </p>
+            <p>
+              <img src="../../assets/icons/total.svg" alt="" /> Tổng số
+              <span id="totalLessons">23</span> bài học
+            </p>
+            <p>
+              <img src="../../assets/icons/duration.svg" alt="" />Thời lượng
+              <span id="totalLessons">10 giờ 29 phút</span>
+            </p>
+            <p>
+              <img src="../../assets/icons/battery.svg" alt="" />Học mọi lúc,
+              mọi nơi
+            </p>
+          </div>
+        </div>
+      </div>
     </div>
+
+    <!-- Footer -->
     <footer id="footer"></footer>
 
     <script type="module" src="detail.js"></script>

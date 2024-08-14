@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   function loadScript(component) {
-    fetch(`../../components/${component}/${component}.js`)
+    fetch(`../components/${component}/${component}.js`)
       .then((response) => {
         if (!response.ok) {
           return 404;
@@ -61,11 +61,39 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 });
 
-newsService(a, b);
+(async function fetchCourses() {
+  try {
+    // Lấy toàn bộ URL hiện tại
+    const urlParams = new URLSearchParams(window.location.search);
+    const courseId = urlParams.get('id');
+    if (courseId) {
+      console.log(`Course ID: ${courseId}`);
+      // Bạn có thể sử dụng courseId để fetch dữ liệu hoặc xử lý khác ở đây
+      const response = await fetch(
+        `https://66b83ef23ce57325ac76b541.mockapi.io/courses/${courseId}`
+      );
+      const course = await response.json();
+      console.log(course);
+    } else {
+      console.log('Course ID not found in the URL');
+    }
+  } catch (error) {
+    console.error('Error fetching courses:', error);
+  }
+})();
+
+const header = document.querySelector('.panel-header');
+header.addEventListener('click', () => {
+  const panelContent = document.querySelector('.panel-body');
+  //click to add collapse, if already collapse remove it
+  panelContent.classList.toggle('collapse');
+  //change icon collapse/expand
+});
 
 const CourseDetail_API = {
   id: 1,
   title: 'string',
+  price: 'number',
   decs: 'string',
   target: ['string', 'string'],
   thumbnail: 'img link',
