@@ -3,6 +3,14 @@ target/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
+### MacOS ###
+*.DS_Store
+Thumbs.db
+.vscode/
+*.log
+*.cache
+*.tmp
+*.suo
 
 ### STS ###
 .apt_generated
