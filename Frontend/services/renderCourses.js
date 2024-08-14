@@ -1,5 +1,4 @@
 async function render(courseContainer, courses) {
-  console.log(true);
   courseContainer.innerHTML = courses
     .map(
       (course) =>
@@ -11,8 +10,10 @@ async function render(courseContainer, courses) {
                 : ''
             }
 
-              <a class="top-card" data-course-id="${course.id}" href="https://${
-          course.title
+              <a class="top-card" id="course-detail" data-course-id="${
+                course.id
+              }" href="http://127.0.0.1:3000/pages/Course_Detail/detail.html?id=${
+          course.id
         }">
                 <img src="${
                   course.course_img
