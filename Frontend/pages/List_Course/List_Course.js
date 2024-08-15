@@ -9,8 +9,10 @@ document.addEventListener('DOMContentLoaded', function () {
         container.replaceWith(temp.content);
       })
       .catch((error) => {
+        const right_content = document.querySelector('.right-content');
         content.innerHTML =
           '<p>Sorry, an error occurred while loading the content.</p>';
+        console.log(error);
       });
   }
 
@@ -45,15 +47,7 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   // Loading components
-  [
-    'nav',
-    'sidebar',
-    'wrapper',
-    'slider',
-    'footer',
-    'Sign_Up',
-    'Sign_In',
-  ].forEach((component) => {
+  ['nav', 'sidebar', 'footer'].forEach((component) => {
     loadComponent(component);
     try {
       loadScript(component);
@@ -61,7 +55,7 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 
   // Loading services
-  ['renderCourses', 'env'].forEach((service) => {
+  [].forEach((service) => {
     try {
       loadServices(service);
     } catch (e) {}
