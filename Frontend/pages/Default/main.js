@@ -34,7 +34,7 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   function loadServices(service) {
-    fetch(`../../../services/${service}.js`)
+    fetch(`../../services/${service}.js`)
       .then((response) => response.text())
       .then((js) => {
         const script = document.createElement('script');
@@ -45,7 +45,15 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   // Loading components
-  ['nav', 'sidebar', 'wrapper', 'slider', 'footer'].forEach((component) => {
+  [
+    'nav',
+    'sidebar',
+    'wrapper',
+    'slider',
+    'footer',
+    'Sign_In',
+    'Sign_Up',
+  ].forEach((component) => {
     loadComponent(component);
     try {
       loadScript(component);

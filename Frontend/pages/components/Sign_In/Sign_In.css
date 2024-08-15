@@ -1,0 +1,196 @@
+
+#sign-in--wrapper{
+    position: absolute;
+    top: 70px;
+    left: 0;
+    right: 0;
+    z-index: 10;
+    width: 530px;
+    height: 600px;
+    margin: 0 auto;
+    animation-name: _inline-u6mwo5o_8ox72_1;
+    animation-duration: .3s;
+}
+.sign-in--wrapper{
+    display: none;
+}
+.sign-in__container{
+    width: 100%;
+    padding: 10px;
+    height: 100%;
+    text-align: center;
+    color: var(--colors-default-900);
+    border-radius: 8px;
+    background-color: var(--colors-default-50);
+}
+.sign-in__btnClose{
+    float: right;
+    margin-top: 10px;
+    display: inline;
+    padding: 6px 8px;
+    background-color: var(--colors-default-100);
+    border-radius: 44px;
+    cursor: pointer;
+}
+.sign-in__btnClose img {
+    width: 20px;
+    height: 25px;
+}
+.sign-in__logo{
+    font-size: var(--font-size-large);
+    margin-top: 50px;
+}
+.sign-in__title{
+    font-weight: var(--font-weight-bold);
+    line-height: 1.4;
+    margin: 12px 0;
+}
+.sign-in__rule{
+    margin: 12px 0;
+    padding: 0 50px;
+    line-height: 1.4;
+    color: var(--colors-emphasis);
+    font-size: var(--font-size-small);
+}
+.sign-in__options{
+    margin: 20px 20%;
+}
+.sign-in__options-list{
+}
+.sign-in__options-item{
+    display: flex;
+    padding: 10px;
+    margin: 15px 0;
+    border-radius: 44px;
+    color: var(--colors-default-950);
+    font-weight: var(--font-weight-medium);
+    align-items: center;
+    background-color: white;
+    cursor: pointer;
+    border: 2px solid #dce0e3
+}
+.sign-in__options-item:hover{
+    background-color: var(--colors-default-100);
+}
+.sign-in__options-item div{
+    flex: 2;
+    font-size: var(--font-size-small);
+}
+.sign-in__footer{
+    margin: 20px 0;
+}
+.sign-in__footer p {
+    margin: 10px 0;
+}
+.sign-in__footer a {
+    color: var(--color-secondary);
+    text-decoration: underline;
+}
+.sign-up__policy{
+    font-size: var(--font-size-small);
+}
+.sign-up__policy a{
+    color: var(--colors-default-900);
+    text-decoration: underline;
+    text-align: center;
+}
+.mark-in{
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: #0006;
+    z-index: 9;
+    animation-name: _inline-u6mwo5i_8ox72_1;
+    animation-duration: .3s;
+    animation-timing-function: linear;
+    display: none;
+}
+@keyframes _inline-u6mwo5i_8ox72_1{
+    0%{
+        opacity: 0;
+    }
+    100%{
+        opacity: 1;
+    }
+}
+@keyframes _inline-u6mwo5o_8ox72_1{
+    0%{
+        scale: 0;
+        opacity: 0;
+    }
+    100%{
+        scale: 1;
+        opacity: 1;
+    }
+}
+@keyframes _none-u6mwo5o_8ox72_1{
+    100%{
+        scale: 1;
+        opacity: 1;
+    }
+    0%{
+        scale: 0;
+        opacity: 0;
+    }
+}
+.show{
+    display: block;
+}
+
+.sign-in__withEmaill{
+    margin: 20px 10%;
+}
+.sign-in__withEmaill .sign-in__withEmaill-item{
+    margin: 10px 0;
+    list-style: none;
+    text-align: left;
+}
+.sign-in__withEmaill .sign-in__withEmaill-remember{
+    margin: 10px 0;
+    list-style: none;
+    text-align: left;
+    display: flex;
+    align-items: center;
+}
+.sign-in__withEmaill .sign-in__withEmaill-remember input{
+    width: 16px;
+}
+.sign-in__withEmaill .sign-in__withEmaill-remember label{
+    margin-left: 15px;
+}
+.sign-in__withEmaill .sign-in__withEmaill-item label{
+    display: flex;
+    margin: 5px 0 ;
+    justify-content: space-between;
+    font-size: var(--font-size-small);
+    font-weight: var(--font-weight-medium);
+}
+.sign-in__withEmaill .sign-in__withEmaill-item input{
+    border: none;
+    width: 100%;
+    padding: 15px;
+    margin: 5px 0 ;
+    border-radius: 44px;
+    font-size: var(--font-size-normal);
+    border: 2px solid #dce0e3;
+}
+.sign-in__withEmaill button {
+    border: none;
+    font-size: var(--font-size-normal);
+    font-weight: var(--font-weight-bold);
+    width: 100%;
+    padding: 10px;
+    margin: 5px 0 ;
+    border-radius: 44px;
+    cursor: pointer;
+    color: var(--colors-default-50);
+    background-color: var(--color-secondary);
+}
+.active__email{
+    display: block;
+}
+.hide{
+    display: none;
+}
