@@ -16,7 +16,7 @@ async function render(courseContainer, courses) {
           course.id
         }">
                 <img src="${
-                  course.course_img
+                  course.thumbnail
                 }" alt="Course Image" loading="lazy" />
               </a>
               <div class="bot-card">
