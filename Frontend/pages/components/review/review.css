@@ -1,0 +1,106 @@
+#review {
+  margin-top: 30px;
+}
+
+#review h2 {
+  margin-bottom: 20px;
+}
+.wysiwyg-editor {
+  border: 1px solid #cfd8dc;
+  border-radius: 8px;
+  padding: 10px;
+  width: 100%;
+  max-width: 100%;
+  background-color: #ffffff;
+}
+
+.toolbar {
+  display: flex;
+  margin-bottom: 5px;
+  border-bottom: 1px solid #cfd8dc;
+  padding-bottom: 5px;
+}
+
+.toolbar button {
+  background: none;
+  border: none;
+  color: #90a4ae;
+  margin-right: 10px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+#editor {
+  width: 100%;
+  min-height: 150px;
+  padding: 10px;
+  font-size: 14px;
+  border: none;
+  outline: none;
+  resize: none;
+  overflow-y: auto;
+}
+
+.buttons {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 10px;
+}
+
+.buttons .cancel {
+  background: none;
+  border: 1px solid #cfd8dc;
+  border-radius: 5px;
+  padding: 8px 16px;
+  color: #90a4ae;
+  margin-right: 10px;
+  cursor: pointer;
+}
+
+.buttons .submit {
+  background-color: #42a5f5;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 8px 16px;
+  cursor: pointer;
+}
+
+.buttons .submit:hover {
+  background-color: #1e88e5;
+}
+
+#editor img {
+  max-width: 300px; /* Set the maximum width */
+  max-height: 300px; /* Set the maximum height */
+  width: auto; /* Allow width to adjust while keeping the aspect ratio */
+  height: auto; /* Allow height to adjust while keeping the aspect ratio */
+  position: relative; /* Ensure resizing handles are positioned correctly */
+  display: block;
+  margin: 10px 0;
+  cursor: pointer; /* Default cursor for images */
+}
+
+/* Resize handle styles */
+#editor img::before,
+#editor img::after {
+  content: '';
+  position: absolute;
+  background: rgba(0, 0, 0, 0.5);
+}
+
+#editor img::before {
+  width: 10px;
+  height: 10px;
+  cursor: nwse-resize; /* Resize diagonal cursor */
+  bottom: 0;
+  right: 0;
+}
+
+#editor img:hover::before {
+  display: block;
+}
+
+#editor img::after {
+  display: none;
+}
