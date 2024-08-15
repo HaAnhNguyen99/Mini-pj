@@ -12,7 +12,7 @@ async function render(courseContainer, courses) {
 
               <a class="top-card" id="course-detail" data-course-id="${
                 course.id
-              }" href="http://127.0.0.1:3000/pages/Course_Detail/detail.html?id=${
+              }" href="http://127.0.0.1:3000/Frontend/pages/Course_Detail/detail.html?id=${
           course.id
         }">
                 <img src="${
