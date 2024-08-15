@@ -47,12 +47,14 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   // Loading components
-  ['nav', 'sidebar', 'footer', 'review'].forEach((component) => {
-    loadComponent(component);
-    try {
-      loadScript(component);
-    } catch (e) {}
-  });
+  ['nav', 'sidebar', 'footer', 'review', 'Sign_In', 'Sign_Up'].forEach(
+    (component) => {
+      loadComponent(component);
+      try {
+        loadScript(component);
+      } catch (e) {}
+    }
+  );
 
   // Loading services
   [

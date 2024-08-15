@@ -16,7 +16,7 @@
 }
 .sign-in__container{
     width: 100%;
-    padding: 10px;
+    padding: 16px;
     height: 100%;
     text-align: center;
     color: var(--colors-default-900);
@@ -35,6 +35,20 @@
 .sign-in__btnClose img {
     width: 20px;
     height: 25px;
+}
+.sign-in__btnBack{
+    float: left;
+    display: inline;
+    margin-top: 10px;
+    padding: 6px 6px;
+    opacity: .6;
+    cursor: pointer;
+}
+.sign-in__btnBack img, label{
+    cursor: pointer;
+}
+.sign-in__btnBack:hover{
+    opacity: 1;
 }
 .sign-in__logo{
     font-size: var(--font-size-large);

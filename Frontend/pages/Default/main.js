@@ -51,8 +51,8 @@ document.addEventListener('DOMContentLoaded', function () {
     'wrapper',
     'slider',
     'footer',
-    'Sign_In',
     'Sign_Up',
+    'Sign_In',
   ].forEach((component) => {
     loadComponent(component);
     try {
@@ -61,7 +61,7 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 
   // Loading services
-  ['renderCourses', 'newsService'].forEach((service) => {
+  ['renderCourses'].forEach((service) => {
     try {
       loadServices(service);
     } catch (e) {}

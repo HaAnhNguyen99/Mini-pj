@@ -32,14 +32,26 @@ function toggleVisibility(
 }
 
 // General function to toggle between different form options (e.g., Email or Phone)
-function toggleFormOptions(triggerBtn, targetForm, currentForm, mark) {
+function toggleFormOptions(
+  triggerBtn,
+  targetForm,
+  currentForm,
+  mark,
+  btnInBack
+) {
   // Show target form and hide the current form
   triggerBtn.addEventListener('click', function () {
     currentForm.classList.add('hide');
     targetForm.classList.remove('hide');
     targetForm.classList.add('active__email');
+    btnInBack.classList.remove('hide');
   });
-
+  btnInBack.addEventListener('click', function () {
+    currentForm.classList.remove('hide');
+    targetForm.classList.add('hide');
+    targetForm.classList.remove('active__email');
+    btnInBack.classList.add('hide');
+  });
   // Revert to the original form if the mark is clicked
   mark.addEventListener('click', function () {
     targetForm.classList.add('hide');
@@ -52,7 +64,7 @@ const btnSignIn = document.querySelector('#sign-in');
 const btnCloseIn = document.querySelector('.sign-in__btnClose');
 const formSignIn = document.querySelector('.sign-in--wrapper');
 const markSignIn = document.querySelector('.mark-in');
-
+const btnInBack = document.querySelector('.sign-in__btnBack');
 const btnSignInEmail = document.querySelector('#btnSign_In--Emaill');
 const formSignInOptions = document.querySelector('.sign-in__options');
 const formSignInOptionsEmail = document.querySelector('#sign-in__withEmaill');
@@ -63,7 +75,8 @@ toggleFormOptions(
   btnSignInEmail,
   formSignInOptionsEmail,
   formSignInOptions,
-  markSignIn
+  markSignIn,
+  btnInBack
 );
 
 // Additional logic for hiding specific forms when the mark is clicked

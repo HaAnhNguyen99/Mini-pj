@@ -16,9 +16,10 @@
 }
 .sign-up__container{
     width: 100%;
-    padding: 8px;
+    padding: 16px;
     height: 100%;
     overflow-y: scroll;
+    scrollbar-width: none;
     text-align: center;
     color: var(--colors-default-900);
     border-radius: 8px;
@@ -39,6 +40,9 @@
     margin-top: 10px;
     padding: 6px 6px;
     opacity: .6;
+    cursor: pointer;
+}
+.sign-up__btnBack img, label{
     cursor: pointer;
 }
 .sign-up__btnBack:hover{
