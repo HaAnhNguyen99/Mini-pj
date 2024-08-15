@@ -1,0 +1,32 @@
+<link rel="stylesheet" href="../components/review/review.css" />
+<script src="../components/review/review.js"></script>
+
+<div id="review">
+  <h2>Reviews</h2>
+  <div class="wysiwyg-editor">
+    <div class="toolbar">
+      <button type="button" onclick="execCmd('bold')"><b>B</b></button>
+      <button type="button" onclick="execCmd('italic')"><i>I</i></button>
+      <button type="button" onclick="execCmd('underline')"><u>U</u></button>
+      <button type="button" onclick="execCmd('insertUnorderedList')">
+        • List
+      </button>
+      <button type="button" onclick="execCmd('createLink')">🔗 Link</button>
+      <button type="button" id="imageButton">🖼️ Image</button>
+      <!-- Hidden file input for selecting image -->
+      <input
+        type="file"
+        id="imageInput"
+        accept="image/*"
+        style="display: none" />
+      <button type="button" onclick="execCmd('formatBlock', 'blockquote')">
+        “ Quote
+      </button>
+    </div>
+    <div id="editor" contenteditable="true" class="textarea"></div>
+    <div class="buttons">
+      <button class="cancel">Hủy</button>
+      <button class="submit">Bình luận</button>
+    </div>
+  </div>
+</div>
