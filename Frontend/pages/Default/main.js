@@ -1,51 +1,53 @@
 document.addEventListener('DOMContentLoaded', function () {
   function loadComponent(component) {
-    fetch(`../components/${component}/${component}.html`)
+    return fetch(`../components/${component}/${component}.html`)
       .then((response) => response.text())
       .then((html) => {
         const container = document.querySelector(`#${component}`);
-        const temp = document.createElement('template');
-        temp.innerHTML = html;
-        container.replaceWith(temp.content);
+        if (!container) throw new Error(`Container for ${component} not found`);
+        container.innerHTML = html;
       })
       .catch((error) => {
-        content.innerHTML =
-          '<p>Sorry, an error occurred while loading the content.</p>';
+        console.error(`Failed to load ${component}:`, error);
       });
   }
 
   function loadScript(component) {
-    fetch(`../components/${component}/${component}.js`)
+    return fetch(`../components/${component}/${component}.js`)
       .then((response) => {
         if (!response.ok) {
-          return 404;
+          console.warn(`No script found for ${component}`);
+          return null;
         }
         return response.text();
       })
       .then((js) => {
-        if (!js || js === 404) {
-          return;
+        if (js) {
+          const script = document.createElement('script');
+          script.text = js;
+          document.body.appendChild(script);
         }
-        const script = document.createElement('script');
-        script.text = js;
-        document.body?.appendChild(script);
       })
-      .catch((error) => {});
+      .catch((error) => {
+        console.error(`Failed to load script for ${component}:`, error);
+      });
   }
 
   function loadServices(service) {
-    fetch(`../../services/${service}.js`)
+    return fetch(`../../services/${service}.js`)
       .then((response) => response.text())
       .then((js) => {
         const script = document.createElement('script');
         script.text = js;
-        document.body?.appendChild(script);
+        document.body.appendChild(script);
       })
-      .catch((error) => {});
+      .catch((error) => {
+        console.error(`Failed to load service ${service}:`, error);
+      });
   }
 
-  // Loading components
-  [
+  // Loading components and scripts sequentially
+  const components = [
     'nav',
     'sidebar',
     'wrapper',
@@ -53,17 +55,19 @@ document.addEventListener('DOMContentLoaded', function () {
     'footer',
     'Sign_Up',
     'Sign_In',
-  ].forEach((component) => {
-    loadComponent(component);
-    try {
-      loadScript(component);
-    } catch (e) {}
+  ];
+
+  components.forEach((component) => {
+    loadComponent(component)
+      .then(() => loadScript(component))
+      .catch((error) => console.error(`Error loading ${component}:`, error));
   });
 
   // Loading services
-  ['renderCourses', 'env'].forEach((service) => {
-    try {
-      loadServices(service);
-    } catch (e) {}
+  const services = ['renderCourses', 'env'];
+  services.forEach((service) => {
+    loadServices(service).catch((error) =>
+      console.error(`Error loading service ${service}:`, error)
+    );
   });
 });

@@ -1,3 +1,14 @@
+// Selectors
+const btnSignUp = document.querySelector('#sign-up');
+const btnCloseUp = document.querySelector('.sign-up__btnClose');
+const formSignUp = document.querySelector('.sign-up--wrapper');
+const markSignUp = document.querySelector('.mark-up');
+const btnBack = document.querySelector('.sign-up__btnBack');
+const btnSignUpEmail = document.querySelector('#btnSign_Up--Emaill');
+const formSignUpOptions = document.querySelector('.sign-up__options');
+const formSignUpOptionsEmail = document.querySelector('#sign-up__withEmaill');
+console.log(formSignUp);
+
 // General function to show and hide forms
 function toggleVisibility(
   triggerBtn,
@@ -52,16 +63,6 @@ function toggleFormOptions(triggerBtn, targetForm, currentForm, mark, btnBack) {
     currentForm.classList.remove('hide');
   });
 }
-
-// Selectors
-const btnSignUp = document.querySelector('#sign-up');
-const btnCloseUp = document.querySelector('.sign-up__btnClose');
-const formSignUp = document.querySelector('.sign-up--wrapper');
-const markSignUp = document.querySelector('.mark-up');
-const btnBack = document.querySelector('.sign-up__btnBack');
-const btnSignUpEmail = document.querySelector('#btnSign_Up--Emaill');
-const formSignUpOptions = document.querySelector('.sign-up__options');
-const formSignUpOptionsEmail = document.querySelector('#sign-up__withEmaill');
 
 // Usage of the functions
 toggleVisibility(btnSignUp, btnCloseUp, formSignUp, markSignUp);
