@@ -1,7 +1,0 @@
-*.DS_Store
-Thumbs.db 
-.vscode/ 
-build/
-*.log
-*.cache
-*.tmp

@@ -1,0 +1,15 @@
+#logo {
+  position: absolute;
+  top: 20px;
+  left: 40px;
+  display: flex;
+}
+
+div#logo .slogan {
+  display: flex;
+  flex-direction: column;
+  font-weight: 800;
+  font-size: 1rem;
+  color: white;
+  margin: 10px;
+}

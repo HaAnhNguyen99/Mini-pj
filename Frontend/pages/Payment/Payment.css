@@ -1,0 +1,198 @@
+:root {
+  --color-payment-primary: #5ebbff;
+  --color-payment-secondary: #a174ff;
+
+  --color-payment-text: #52eeee;
+  --text-color-gray: #a2adbd;
+}
+body {
+  background: url('https://fullstack.edu.vn/assets/payment-bg-DGNLpUmL.png');
+  position: relative;
+  overflow-x: hidden;
+}
+
+body div#logo {
+  position: relative;
+  top: 20px;
+  left: 40px;
+}
+
+main {
+  margin-top: 80px;
+  min-height: 100vh;
+}
+
+h1,
+h2 {
+  color: white;
+  text-align: center;
+}
+
+h1 {
+  margin-top: 18px;
+  font-weight: 500;
+  font-size: 4.8rem;
+  line-height: 120%;
+  text-align: center;
+}
+
+.payment-container {
+  display: grid;
+  grid-template-columns: 60% minmax(30%, min-content);
+  column-gap: 20px;
+  margin: 40px auto;
+  padding: 50px;
+}
+
+.left {
+  padding: 20px;
+}
+
+.payment-container .left {
+  color: white;
+}
+
+.left .desc {
+  text-align: justify;
+  line-height: 1.8rem;
+}
+
+.price {
+  padding: 20px;
+}
+.left .price {
+  min-height: 200px;
+  background-color: #202425;
+  margin-top: 32px;
+  border-radius: 15px;
+}
+
+.price-title {
+  display: flex;
+  gap: 20px;
+  justify-content: flex-end;
+  padding: 20px;
+  border-bottom: 1px solid var(--color-payment-secondary);
+  font-weight: 400;
+  font-size: 1rem;
+  line-height: 16px;
+  text-align: right;
+  color: #a2adbd;
+}
+
+.price-title .old-price {
+  font-weight: 500;
+  font-size: 1.5rem;
+  color: var(--text-color-gray);
+  text-decoration: line-through;
+}
+
+.price-title .new-price {
+  font-weight: 500;
+  font-size: 1.5rem;
+  color: var(--color-payment-text);
+}
+
+.payment-container .right {
+  background-color: black;
+}
+
+.right {
+  background: linear-gradient(
+    90deg,
+    var(--color-payment-primary),
+    var(--color-payment-secondary)
+  );
+  border-radius: 10px;
+  padding: 8px;
+}
+
+.benefit-container {
+  background-color: black;
+  border-radius: 15px;
+  padding: 20px;
+  height: 100%;
+}
+
+.benefit-container h2 {
+  padding: 20px 20px 40px;
+}
+
+.colorful {
+  color: var(--color-payment-text);
+}
+
+.total::after {
+  position: relative;
+  top: 20px;
+  border: 1px solid white;
+  z-index: 1000;
+}
+
+.total {
+  display: flex;
+  justify-content: flex-end;
+  gap: 20px;
+  margin-top: 25px;
+}
+
+.total {
+  font-size: 1.8rem;
+  font-weight: 700;
+}
+
+.total span {
+  font-size: 2rem;
+  margin-left: 50px;
+}
+
+.button {
+  background: linear-gradient(90deg, #5ebbff, #a174ff);
+  padding: 10px;
+  border-radius: 10px;
+  margin-top: 30px;
+  text-align: center;
+  text-wrap: nowrap;
+  background-image: linear-gradient(
+    177.34deg,
+    rgb(33, 162, 255),
+    rgb(137, 81, 255) 73.36%
+  );
+  border-radius: 10px;
+  color: #fff;
+  font-family: system-ui;
+  font-size: 19px;
+  font-weight: 500;
+  letter-spacing: 1px;
+  line-height: 28px;
+  padding: 8px 24px;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.benefit-items {
+  display: flex;
+  align-items: flex-start;
+  font-weight: 400;
+  font-size: 1rem;
+  line-height: 24px;
+  color: #dae4f0;
+  margin-bottom: 16px;
+}
+
+.benefit-items img {
+  width: 14px;
+  position: relative;
+  top: 5px;
+  margin-right: 10px;
+}
+
+@media screen and (max-width: 1150px) {
+  .payment-container {
+    display: block;
+  }
+
+  .right {
+    display: none;
+  }
+}

@@ -99,3 +99,67 @@ document.addEventListener('DOMContentLoaded', function () {
 document.querySelector('.submit').addEventListener('click', function () {
   document.getElementById('editor').focus();
 });
+
+const API = {
+  id: '3',
+  price: 2999000,
+  title: 'Lập trình C++ cơ bản, nâng cao',
+  isRegister: false,
+  decs: 'Khóa học lập trình C++ từ cơ bản tới nâng cao dành cho người mới bắt đầu. Mục tiêu của khóa học này nhằm giúp các bạn nắm được các khái niệm căn cơ của lập trình, giúp các bạn có nền tảng vững chắc để chinh phục con đường trở thành một lập trình viên.',
+  target: [
+    'Biết cách xây dựng giao diện web với HTML, CSS',
+    'Biết cách phân tích giao diện website',
+    'Biết cách làm giao diện web responsive',
+    'Sở hữu 2 giao diện web khi học xong khóa học',
+    'Làm chủ Flexbox khi dựng bố cục website',
+  ],
+  thumbnail:
+    'https://res.cloudinary.com/dqnoopa0x/image/upload/v1723534318/w6km8a8dxmphrkelzgl5.jpg',
+  require: [
+    'Khi học nếu có khúc mắc hãy tham gia hỏi/đáp tại group FB: Học lập trình web (fullstack.edu.vn)',
+    'Không được nóng vội, bình tĩnh học, làm bài tập sau mỗi bài học',
+    'Ý thức tự học cao, trách nhiệm cao, kiên trì bền bỉ không ngại cái khó',
+  ],
+  chapter: [
+    {
+      id: 1,
+      chapter_title: 'Bắt đầu',
+      lessions: [
+        {
+          id: 1,
+          lession_title: 'Bạn sẽ làm được gì sau khóa học?',
+          duration: 195,
+          isDone: false,
+        },
+        {
+          id: 2,
+          lession_title: 'Tìm hiểu về HTML, CSS',
+          duration: 562,
+          isDone: false,
+        },
+        {
+          id: 3,
+          lession_title: 'Cài đặt VS Code, Page Ruler extension',
+          duration: 947,
+          isDone: false,
+        },
+      ],
+    },
+  ],
+  review: [
+    {
+      fullname: 'Nguyen Van A',
+      content:
+        'Khóa học rất thú vị và d�� học. Chắc chắn bạn s�� thành công trong lập trình web.',
+      rating: 5,
+      createdAt: '2023-06-10T14:30:00',
+    },
+    {
+      fullname: 'Nguyen Van A',
+      content:
+        'Khóa học rất thú vị và d�� học. Chắc chắn bạn s�� thành công trong lập trình web.',
+      rating: 5,
+      createdAt: '2023-06-10T14:30:00',
+    },
+  ],
+};
