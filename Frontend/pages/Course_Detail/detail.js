@@ -59,6 +59,7 @@ document.addEventListener('DOMContentLoaded', function () {
   // Loading services
   [
     'renderCourses',
+    'env',
     'convertSeconds',
     'renderChapter',
     'renderTarget',
@@ -78,12 +79,10 @@ document.addEventListener('DOMContentLoaded', function () {
     if (courseId) {
       // const API =
       //   'https://onlinecourse.up.railway.app/api/courses/get/the-complete-javascript-course';
-      const API = `https://66b83ef23ce57325ac76b541.mockapi.io/courses/${courseId}`;
-      console.log(`Course ID: ${courseId}`);
+      const API_CourseLink = `https://66b83ef23ce57325ac76b541.mockapi.io/courses/${courseId}`;
       // Bạn có thể sử dụng courseId để fetch dữ liệu hoặc xử lý khác ở đây
-      const response = await fetch(API);
+      const response = await fetch(API_CourseLink);
       const course = await response.json();
-      console.log(course);
       const container = document.querySelector('.course-container');
 
       //render duration to layout
@@ -123,7 +122,9 @@ document.addEventListener('DOMContentLoaded', function () {
       //render price
       const priceContainer = document.querySelector('span#course-price');
       priceContainer.textContent =
-        course.price > 0 ? `${course.price.toLocaleString('vi-VN')}đ` : 'z phí';
+        course.price > 0
+          ? `${course.price.toLocaleString('vi-VN')}đ`
+          : 'Miễn phí';
 
       //render img
       const imgContainer = document.querySelector('div#course-img');
