@@ -1,6 +1,8 @@
 .container {
   min-height: 100vh;
   background-color: var(--colors-default-50);
+  -webkit-font-smoothing: antialiased;
+  overscroll-behavior: none;
 }
 
 .bold {

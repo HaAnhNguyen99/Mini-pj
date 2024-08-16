@@ -5,14 +5,17 @@ let totalleaners = 0;
 (async function fetchCourses() {
   try {
     const response = await fetch(
-      'https://66b83ef23ce57325ac76b541.mockapi.io/courses'
+      'https://onlinecourse.up.railway.app/api/courses/home-page'
     );
     const courses = await response.json();
+
+    //log
+    console.log(courses.slug);
     const preContainer = document.querySelector('.premium-courses');
     const freeContainer = document.querySelector('.free-courses');
 
     courses.forEach((course) => {
-      if (Number(course.price) > 0) {
+      if (Number(course.new_price) > 0) {
         premiumCourse.push(course);
       } else {
         freeCourse.push(course);

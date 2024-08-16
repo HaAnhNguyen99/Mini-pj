@@ -7,7 +7,6 @@ const btnBack = document.querySelector('.sign-up__btnBack');
 const btnSignUpEmail = document.querySelector('#btnSign_Up--Emaill');
 const formSignUpOptions = document.querySelector('.sign-up__options');
 const formSignUpOptionsEmail = document.querySelector('#sign-up__withEmaill');
-console.log(formSignUp);
 
 // General function to show and hide forms
 function toggleVisibility(
