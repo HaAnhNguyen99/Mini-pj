@@ -8,6 +8,7 @@
 body {
   background: url('https://fullstack.edu.vn/assets/payment-bg-DGNLpUmL.png');
   position: relative;
+  overflow-x: hidden;
 }
 
 body div#logo {
@@ -49,6 +50,11 @@ h1 {
 
 .payment-container .left {
   color: white;
+}
+
+.left .desc {
+  text-align: justify;
+  line-height: 1.8rem;
 }
 
 .price {
