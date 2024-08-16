@@ -5,25 +5,34 @@ async function render(courseContainer, courses) {
         `
             <div class="course">
             ${
-              Number(course.price) > 0
+              Number(course.new_price) > 0
                 ? `<div class="pre-icon"><i class="fa-solid fa-crown"></i></div>`
                 : ''
             }
 
               <a class="top-card" id="course-detail" data-course-id="${
-                course.id
-              }" href="${path}pages/Course_Detail/detail.html?id=${course.id}">
+                course.slug
+              }" href="${path}pages/Course_Detail/detail.html?slug=${
+          course.slug
+        }">
                 <img src="${
                   course.thumbnail
                 }" alt="Course Image" loading="lazy" />
               </a>
               <div class="bot-card">
                 <h3 class="title">${course.title}</h3>
-                <p class="price">${
-                  Number(course.price) > 0
-                    ? Number(course.price).toLocaleString('vi-VN') + 'đ'
-                    : 'Miễn phí'
-                }</p>
+                <div class="prices">
+                  <p class="price oldPrice">${
+                    Number(course.old_price) > 0
+                      ? Number(course.new_price).toLocaleString('vi-VN') + 'đ'
+                      : ''
+                  }</p>
+                  <p class="price newPrice">${
+                    Number(course.new_price) > 0
+                      ? Number(course.new_price).toLocaleString('vi-VN') + 'đ'
+                      : 'Miễn phí'
+                  }</p>
+                </div>
 
                 <div class="more-inf">
                   <div class="author">
@@ -35,10 +44,10 @@ async function render(courseContainer, courses) {
                   </div>
                   <div class="total-duration">
                   <i class="fa-solid fa-play"></i>
-                   ${course.total_duration}</div>
+                   ${course.total_learners}</div>
                   <div class="total-minute">
                     <i class="fa-solid fa-clock"></i>
-                    <span id="total-minute">${course.total_minute}</span>
+                    <span id="total-minute">${course.total_learners}</span>
                   </div>
                 </div>
               </div>
