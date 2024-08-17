@@ -1,6 +1,6 @@
 #loader {
-  border: 8px solid #f3f3f3; /* Màu nền */
-  border-top: 8px solid #3498db; /* Màu của thanh loading */
+  border: 8px solid #e6d0d0; /* Màu nền */
+  border-top: 8px solid #f3aa72; /* Màu của thanh loading */
   border-radius: 50%;
   width: 200px;
   height: 200px;
@@ -10,7 +10,9 @@
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 1000;
-  transition: 3s;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
 }
 
 @keyframes spin {

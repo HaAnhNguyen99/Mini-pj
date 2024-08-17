@@ -9,11 +9,10 @@ let totalleaners = 0;
     );
     const courses = await response.json();
 
-    //log
-    console.log(courses.slug);
     const preContainer = document.querySelector('.premium-courses');
     const freeContainer = document.querySelector('.free-courses');
-
+    preContainer.style.opacity = '0';
+    freeContainer.style.opacity = '0';
     courses.forEach((course) => {
       if (Number(course.new_price) > 0) {
         premiumCourse.push(course);
@@ -27,6 +26,8 @@ let totalleaners = 0;
 
     render(preContainer, premiumCourse);
     render(freeContainer, freeCourse);
+    preContainer.style.opacity = '1';
+    freeContainer.style.opacity = '1';
   } catch (error) {
     console.error('Error fetching courses:', error);
   }
