@@ -71,12 +71,12 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 });
 
+// Lấy toàn bộ URL hiện tại
+const urlParams = new URLSearchParams(window.location.search);
+const slug = urlParams.get('slug');
+
 (async function fetchCourses() {
   try {
-    // Lấy toàn bộ URL hiện tại
-    const urlParams = new URLSearchParams(window.location.search);
-    const slug = urlParams.get('slug');
-
     if (slug) {
       const API_CourseLink = `${detailAPI}/${slug}`;
       // const API_CourseLink = `https://66b83ef23ce57325ac76b541.mockapi.io/courses/${courseId}`;
@@ -155,7 +155,7 @@ document.addEventListener('DOMContentLoaded', function () {
 document
   .querySelector('#registerCourse')
   .addEventListener('click', function () {
-    window.location.href = `${baseUrl}Frontend/pages/Payment/Payment.html`;
+    window.location.href = `${baseUrl}Frontend/pages/Payment/Payment.html?slug=${slug}`;
   });
 
 // payment

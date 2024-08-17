@@ -1,4 +1,16 @@
-document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener('DOMContentLoaded', function () {});
+import { showLoader, hideLoader } from '../components/loader/loader.js';
+
+const title = document.querySelectorAll('#course-title');
+const chapter = document.querySelector('#chapter');
+const oldPrice = document.querySelector('.old-price');
+const newPrice = document.querySelectorAll('.new-price');
+const lessons = document.querySelector('#total-lessons');
+
+const urlParams = new URLSearchParams(window.location.search);
+const slug = urlParams.get('slug');
+
+(async function fetchCourses() {
   function loadComponent(component) {
     fetch(`../components/${component}/${component}.html`)
       .then((response) => response.text())
@@ -47,7 +59,7 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   // Loading components
-  ['nav', 'footer', 'logo'].forEach((component) => {
+  ['nav', 'footer', 'logo', 'loader'].forEach((component) => {
     loadComponent(component);
     try {
       loadScript(component);
@@ -60,4 +72,40 @@ document.addEventListener('DOMContentLoaded', function () {
       loadServices(service);
     } catch (e) {}
   });
-});
+
+  try {
+    if (slug) {
+      const loader = document.querySelector('#loader');
+      console.log(loader);
+      const content = document.querySelector('main');
+      showLoader();
+      content.style.opacity = '0';
+      const API_CourseLink = `https://onlinecourse.up.railway.app/api/courses/get/${slug}`;
+      const response = await fetch(API_CourseLink);
+      const course = await response.json();
+      let totalCourse = 0;
+      course.chapter.map((x) => {
+        return (totalCourse += x.lessons.length);
+      });
+      lessons.textContent = totalCourse;
+
+      title.forEach((title) => {
+        title.textContent = course.title;
+      });
+
+      chapter.textContent = course.chapter.length;
+
+      oldPrice.textContent = course.old_price
+        ? `${course.old_price} đ`
+        : 'Miễn phí';
+
+      newPrice.forEach((price) => {
+        price.textContent = `${Number(course.new_price).toLocaleString()} đ`;
+      });
+      content.style.opacity = '1';
+      hideLoader();
+    }
+  } catch (error) {
+    console.error('Error:', error);
+  }
+})();
