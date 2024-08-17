@@ -45,7 +45,7 @@
   border-radius: 20px;
   overflow: hidden;
   position: relative;
-  /* transition: transform 0.2s, box-shadow 0.2s; */
+  transition: 1s;
 }
 
 .course .pre-icon {

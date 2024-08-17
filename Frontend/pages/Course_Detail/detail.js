@@ -1,4 +1,10 @@
+import { showLoader, hideLoader } from '../components/loader/loader.js';
 const detailAPI = `https://onlinecourse.up.railway.app/api/courses/get`;
+// Lấy toàn bộ URL hiện tại
+const urlParams = new URLSearchParams(window.location.search);
+const slug = urlParams.get('slug');
+const content = document.querySelector('.course-content');
+
 document.addEventListener('DOMContentLoaded', function () {
   // Loading components
   function loadComponent(component) {
@@ -35,14 +41,20 @@ document.addEventListener('DOMContentLoaded', function () {
       });
   }
 
-  ['nav', 'sidebar', 'footer', 'review', 'Sign_In', 'Sign_Up'].forEach(
-    (component) => {
-      loadComponent(component);
-      try {
-        loadScript(component);
-      } catch (e) {}
-    }
-  );
+  [
+    'nav',
+    'sidebar',
+    'footer',
+    'review',
+    'Sign_In',
+    'Sign_Up',
+    'loader',
+  ].forEach((component) => {
+    loadComponent(component);
+    try {
+      loadScript(component);
+    } catch (e) {}
+  });
 
   // Loading services
   function loadServices(service) {
@@ -69,15 +81,15 @@ document.addEventListener('DOMContentLoaded', function () {
       loadServices(service);
     } catch (e) {}
   });
+
+  fetchCourses();
 });
 
-// Lấy toàn bộ URL hiện tại
-const urlParams = new URLSearchParams(window.location.search);
-const slug = urlParams.get('slug');
-
-(async function fetchCourses() {
+async function fetchCourses() {
   try {
     if (slug) {
+      showLoader();
+      content.style.opacity = '0';
       const API_CourseLink = `${detailAPI}/${slug}`;
       // const API_CourseLink = `https://66b83ef23ce57325ac76b541.mockapi.io/courses/${courseId}`;
       const response = await fetch(API_CourseLink);
@@ -143,35 +155,19 @@ const slug = urlParams.get('slug');
           panelContent.classList.toggle('collapse');
         });
       });
+      hideLoader();
+      content.style.opacity = '1';
     } else {
       console.log('Course ID not found in the URL');
     }
   } catch (error) {
     console.error('Error fetching courses:', error);
   }
-})();
+}
 
-//navigate button "Đăng ký"
+//navigate registerCourse button
 document
   .querySelector('#registerCourse')
   .addEventListener('click', function () {
     window.location.href = `${baseUrl}Frontend/pages/Payment/Payment.html?slug=${slug}`;
   });
-
-// payment
-
-const API_Payment = {
-  User_ID: 'number',
-  Course_ID: 'number',
-  token: 'string',
-};
-
-// User ID
-
-const User_ID_API = {
-  User_ID: 'number',
-  Name: 'string',
-  Email: 'string',
-  Avatar: 'img link',
-  token: 'string',
-};

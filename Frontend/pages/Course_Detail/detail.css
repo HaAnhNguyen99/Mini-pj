@@ -5,6 +5,10 @@
   overscroll-behavior: none;
 }
 
+.container #loader {
+  top: 30% !important;
+}
+
 .bold {
   font-weight: var(--font-weight-bold);
 }
@@ -15,6 +19,7 @@
   grid-column-gap: 30px;
   margin-top: 30px;
   padding: 10px;
+  transition: 3s;
 }
 
 .course-content .left-content #course-title {
