@@ -7,7 +7,6 @@ const btnBack = document.querySelector('.sign-up__btnBack');
 const btnSignUpEmail = document.querySelector('#btnSign_Up--Emaill');
 const formSignUpOptions = document.querySelector('.sign-up__options');
 const formSignUpOptionsEmail = document.querySelector('#sign-up__withEmaill');
-console.log(formSignUp);
 
 // General function to show and hide forms
 function toggleVisibility(
@@ -61,6 +60,7 @@ function toggleFormOptions(triggerBtn, targetForm, currentForm, mark, btnBack) {
   mark.addEventListener('click', function () {
     targetForm.classList.add('hide');
     currentForm.classList.remove('hide');
+    btnBack.classList.add('hide');
   });
 }
 
@@ -81,4 +81,38 @@ markSignUp.addEventListener('click', function () {
 
   formSignUpOptions.classList.remove('hide');
   formSignUpOptionsEmail.classList.add('hide');
+});
+
+// Work with server api ----- REGISTER ACCOUNT --------
+document.querySelector('#register_account').addEventListener('click', (e) => {
+  e.preventDefault();
+  const inputFullName = document.querySelector('#fullname-sign-up').value;
+  const inputEmail_Sign_Up = document.querySelector('#email-sign-up').value;
+  const inputPassword_Sign_Up =
+    document.querySelector('#password-sign-up').value;
+  const accountNewUser = {
+    full_name: inputFullName,
+    email: inputEmail_Sign_Up,
+    password: inputPassword_Sign_Up,
+  };
+  async function getData() {
+    const url = 'https://onlinecourse.up.railway.app/api/users/register';
+    try {
+      const response = await fetch(url, {
+        method: 'POST',
+        body: JSON.stringify(accountNewUser),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+      if (!response.ok) {
+        throw new Error(`Response status: ${response.status}`);
+      }
+      const json = await response.json();
+      console.log(json);
+    } catch (error) {
+      console.error(error.message);
+    }
+  }
+  getData();
 });

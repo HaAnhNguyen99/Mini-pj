@@ -56,6 +56,7 @@ function toggleFormOptions(
   mark.addEventListener('click', function () {
     targetForm.classList.add('hide');
     currentForm.classList.remove('hide');
+    btnInBack.classList.add('hide');
   });
 }
 
@@ -86,4 +87,16 @@ markSignIn.addEventListener('click', function () {
 
   formSignInOptions.classList.remove('hide');
   formSignInOptionsEmail.classList.add('hide');
+});
+
+// LOGIN
+
+document.querySelector('#login').addEventListener('click', () => {
+  const inputEmail_Sign_In = document.querySelector('#email_sign_in').value;
+  const inputPassword_Sign_In =
+    document.querySelector('#password_sign_in').value;
+  const accountNewUser = {
+    email: inputEmail_Sign_In,
+    password: inputPassword_Sign_In,
+  };
 });
