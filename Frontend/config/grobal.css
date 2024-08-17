@@ -49,9 +49,12 @@ body {
   background-color: #f9f9f9;
   position: relative;
 }
-
 a {
   text-decoration: none;
+}
+
+.none {
+  display: none;
 }
 .container {
   display: grid;
