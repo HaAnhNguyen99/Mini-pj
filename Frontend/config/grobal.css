@@ -56,6 +56,7 @@ a {
 .none {
   display: none;
 }
+
 .container {
   display: grid;
   grid-template-columns: max-content 1fr;

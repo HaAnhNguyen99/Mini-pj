@@ -81,9 +81,11 @@ document.addEventListener('DOMContentLoaded', function () {
       loadServices(service);
     } catch (e) {}
   });
+
+  fetchCourses();
 });
 
-(async function fetchCourses() {
+async function fetchCourses() {
   try {
     if (slug) {
       showLoader();
@@ -161,9 +163,9 @@ document.addEventListener('DOMContentLoaded', function () {
   } catch (error) {
     console.error('Error fetching courses:', error);
   }
-})();
+}
 
-//navigate button "Đăng ký"
+//navigate registerCourse button
 document
   .querySelector('#registerCourse')
   .addEventListener('click', function () {

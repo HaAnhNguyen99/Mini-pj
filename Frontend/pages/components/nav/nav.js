@@ -1,7 +1,7 @@
 function updatePlaceholder() {
   const inputElement = document.querySelector('.search input#search');
   if (window.innerWidth <= 600) {
-    inputElement.placeholder = 'Tìm kiếm khoá học';
+    inputElement.placeholder = 'Tìm kiếm...';
   } else {
     inputElement.placeholder = 'Tìm kiếm khoá học, bài viết, video, ...';
   }

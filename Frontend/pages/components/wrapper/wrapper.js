@@ -13,6 +13,8 @@ let totalleaners = 0;
     const freeContainer = document.querySelector('.free-courses');
     preContainer.style.opacity = '0';
     freeContainer.style.opacity = '0';
+
+    // Filter courses by price
     courses.forEach((course) => {
       if (Number(course.new_price) > 0) {
         premiumCourse.push(course);
@@ -24,6 +26,7 @@ let totalleaners = 0;
     const totalleaners_container = document.querySelector('#total');
     totalleaners_container.textContent = totalleaners;
 
+    // Render courses
     render(preContainer, premiumCourse);
     render(freeContainer, freeCourse);
     preContainer.style.opacity = '1';

@@ -5,8 +5,6 @@ function renderChapter(container, chapters) {
   let durationCount;
 
   const body = document.createElement('div');
-  // console.log(chapters[0].lessons[0].duration);
-
   durationCount = sumTimes(durationList);
 
   body.innerHTML = chapters
