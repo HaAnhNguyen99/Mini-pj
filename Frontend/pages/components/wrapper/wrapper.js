@@ -11,8 +11,8 @@ let totalleaners = 0;
 
     const preContainer = document.querySelector('.premium-courses');
     const freeContainer = document.querySelector('.free-courses');
-    preContainer.style.opacity = '0';
-    freeContainer.style.opacity = '0';
+    const container = document.querySelector('#wrapper');
+    container.classList.toggle = 'hidden';
 
     // Filter courses by price
     courses.forEach((course) => {
@@ -23,14 +23,15 @@ let totalleaners = 0;
         totalleaners += Number(course.total_learners);
       }
     });
+
+    // Update total learner count
     const totalleaners_container = document.querySelector('#total');
     totalleaners_container.textContent = totalleaners;
 
     // Render courses
     render(preContainer, premiumCourse);
     render(freeContainer, freeCourse);
-    preContainer.style.opacity = '1';
-    freeContainer.style.opacity = '1';
+    container.classList.toggle = 'hidden';
   } catch (error) {
     console.error('Error fetching courses:', error);
   }
