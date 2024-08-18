@@ -199,6 +199,13 @@
     color: var(--colors-default-50);
     background-color: var(--color-secondary);
 }
+
+.error-message {
+    color: red;
+    font-size: 12px;
+    margin-top: 4px;
+    display: block;
+  }
 .active__email{
     display: block;
 }

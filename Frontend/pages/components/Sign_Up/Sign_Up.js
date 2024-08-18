@@ -86,16 +86,53 @@ markSignUp.addEventListener('click', function () {
 // Work with server api ----- REGISTER ACCOUNT --------
 document.querySelector('#register_account').addEventListener('click', (e) => {
   e.preventDefault();
-  const inputFullName = document.querySelector('#fullname-sign-up').value;
-  const inputEmail_Sign_Up = document.querySelector('#email-sign-up').value;
-  const inputPassword_Sign_Up =
-    document.querySelector('#password-sign-up').value;
+
+  const inputFullName = document
+    .querySelector('#fullname-sign-up')
+    .value.trim();
+  const inputEmail_Sign_Up = document
+    .querySelector('#email-sign-up')
+    .value.trim();
+  const inputPassword_Sign_Up = document
+    .querySelector('#password-sign-up')
+    .value.trim();
+
+  // Clear previous error messages
+  document.querySelector('#error-fullname-sign-up').textContent = '';
+  document.querySelector('#error-email-sign-up').textContent = '';
+  document.querySelector('#error-password-sign-up').textContent = '';
+
+  let hasError = false;
+
+  // Validation checks
+  if (!inputFullName) {
+    document.querySelector('#error-fullname-sign-up').textContent =
+      'Vui lòng nhập họ và tên của bạn.';
+    hasError = true;
+  }
+  if (!inputEmail_Sign_Up) {
+    document.querySelector('#error-email-sign-up').textContent =
+      'Vui lòng nhập địa chỉ email của bạn.';
+    hasError = true;
+  }
+  if (!inputPassword_Sign_Up) {
+    document.querySelector('#error-password-sign-up').textContent =
+      'Vui lòng nhập mật khẩu của bạn.';
+    hasError = true;
+  }
+
+  // Stop the submission if there's an error
+  if (hasError) {
+    return;
+  }
+
   const accountNewUser = {
     full_name: inputFullName,
     email: inputEmail_Sign_Up,
     password: inputPassword_Sign_Up,
   };
-  async function getData() {
+
+  async function registerUser() {
     const url = 'https://onlinecourse.up.railway.app/api/users/register';
     try {
       const response = await fetch(url, {
@@ -109,10 +146,62 @@ document.querySelector('#register_account').addEventListener('click', (e) => {
         throw new Error(`Response status: ${response.status}`);
       }
       const json = await response.json();
-      console.log(json);
+      console.log('User registered successfully:', json);
+
+      // Wait for 1 minute (60000 milliseconds) before checking email verification status
+      setTimeout(async () => {
+        await checkEmailVerification(inputEmail_Sign_Up);
+      }, 60000);
     } catch (error) {
-      console.error(error.message);
+      console.error('Registration failed:', error.message);
     }
   }
-  getData();
+
+  async function checkEmailVerification(email) {
+    const verificationUrl = `https://onlinecourse.up.railway.app/api/users/verify?email=${email}`; // Replace with your actual API endpoint
+    try {
+      const response = await fetch(verificationUrl, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+      if (!response.ok) {
+        throw new Error(
+          `Verification check failed with status: ${response.status}`
+        );
+      }
+      const json = await response.json();
+      console.log('Email verification status:', json);
+
+      // Show success or error toast based on verification status
+      if (json.verified) {
+        toast({
+          title: 'Success',
+          message: 'Email đã được xác thực thành công !',
+          type: 'success',
+          duration: 5000,
+        });
+      } else {
+        toast({
+          title: 'Error',
+          message: 'Email đã xác thực !',
+          type: 'error',
+          duration: 5000,
+        });
+      }
+    } catch (error) {
+      console.error('Error checking verification status:', error.message);
+
+      // Show error toast if API call fails
+      toast({
+        title: 'Error',
+        message: 'Email chưa được xác thực. Vui lòng thử lại',
+        type: 'error',
+        duration: 5000,
+      });
+    }
+  }
+
+  registerUser();
 });
