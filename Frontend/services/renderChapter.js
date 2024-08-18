@@ -1,43 +1,44 @@
 function renderChapter(container, chapters) {
   let chapterCount = 0,
-    lessionCount = 0,
-    durationCount = 0;
+    lessionCount = 0;
+  const durationList = [];
+  let durationCount;
+
   const body = document.createElement('div');
+  durationCount = sumTimes(durationList);
 
   body.innerHTML = chapters
     .map((chapter, i) => {
       chapterCount += 1;
-      lessionCount += chapter.lessions.length;
-      durationCount += chapter.lessions.reduce(
-        (sum, lession) => sum + lession.duration,
-        0
-      );
+      lessionCount += chapter.lessons.length;
+
+      chapter.lessons.forEach((lesson) => {
+        durationList.push(lesson.duration);
+      });
+
+      durationCount = sumTimes(durationList);
 
       return `
         <div class="panel">
           <div class="panel-header">
             <strong>${i + 1}. ${chapter.chapter_title}</strong>
             <p>
-              <span>${chapter.lessions.length}</span>
+              <span>${chapter.lessons.length}</span>
               <span>Bài học</span>
             </p>
           </div>
 
           <div class="panel-body collapse">
-            ${chapter.lessions
+            ${chapter.lessons
               .map(
-                (lession, index) => `
+                (lesson, index) => `
                 <div class="panel-item">
                   <div>
                     <img src="../../assets/icons/play.svg" alt="" />
-                    <span>${index + 1}. ${lession.lession_title}</span>
+                    <span>${index + 1}. ${lesson.lesson_title}</span>
                   </div>
                   <p>
-                    <span>${convertSeconds(lession.duration).minutes}:${
-                  convertSeconds(lession.duration).seconds >= 10
-                    ? convertSeconds(lession.duration).seconds
-                    : `0${convertSeconds(lession.duration).seconds}`
-                }</span>
+                    <span>${lesson.duration}</span>
                   </p>
                 </div>`
               )

@@ -1,6 +1,12 @@
 .container {
   min-height: 100vh;
   background-color: var(--colors-default-50);
+  -webkit-font-smoothing: antialiased;
+  overscroll-behavior: none;
+}
+
+.container #loader {
+  top: 30% !important;
 }
 
 .bold {
@@ -13,6 +19,7 @@
   grid-column-gap: 30px;
   margin-top: 30px;
   padding: 10px;
+  transition: 3s;
 }
 
 .course-content .left-content #course-title {
@@ -30,12 +37,17 @@
   text-align: justify;
 }
 
+.left-content #learning-goals {
+  margin-top: 30px;
+}
+
 .left-content #learning-goals .content-details {
-  margin-top: 5px;
+  margin-top: 10px;
 }
 
 .content-details .goal-item {
   margin-top: 12px;
+  line-height: 1.5rem;
 }
 
 .content-details .goal-item img {
@@ -128,10 +140,15 @@
 }
 
 .right-content {
+  text-align: center;
+  align-items: center;
+}
+
+.right-content .right-container {
   display: flex;
   flex-direction: column;
   gap: 10px;
-  text-align: center;
+  justify-content: center;
   align-items: center;
 }
 
@@ -153,8 +170,8 @@
 }
 
 #registerCourse {
-  background-color: var(--color-primary);
-  color: var(--colors-default-100);
+  background-color: var(--color-secondary);
+  color: var(--colors-default-50);
   padding: 10px 20px;
   border: none;
   border-radius: 20px;
@@ -165,7 +182,7 @@
 }
 
 #registerCourse:hover {
-  background-color: var(--color-secondary);
+  background-color: var(--color-primary);
 }
 
 .course-info {
@@ -193,7 +210,7 @@
 }
 
 .course-require {
-  margin-top: 20px;
+  margin-top: 30px;
 }
 
 .course-require .require-item {
@@ -203,4 +220,8 @@
 .require-item img {
   position: relative;
   top: 2px;
+}
+
+.require-items #require-container {
+  line-height: 1.5rem;
 }

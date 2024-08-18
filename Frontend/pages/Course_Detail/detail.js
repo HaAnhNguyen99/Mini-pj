@@ -1,100 +1,108 @@
+import { showLoader, hideLoader } from '../components/loader/loader.js';
+const detailAPI = `https://onlinecourse.up.railway.app/api/courses/get`;
+// Lấy toàn bộ URL hiện tại
+const urlParams = new URLSearchParams(window.location.search);
+const slug = urlParams.get('slug');
+const content = document.querySelector('.course-content');
+
 document.addEventListener('DOMContentLoaded', function () {
+  // Loading components
   function loadComponent(component) {
-    fetch(`../components/${component}/${component}.html`)
+    return fetch(`../components/${component}/${component}.html`)
       .then((response) => response.text())
       .then((html) => {
         const container = document.querySelector(`#${component}`);
-        const temp = document.createElement('template');
-        temp.innerHTML = html;
-        container.replaceWith(temp.content);
+        if (!container) throw new Error(`Container for ${component} not found`);
+        container.innerHTML = html;
       })
       .catch((error) => {
-        const right_content = document.querySelector('.right-content');
-        content.innerHTML =
-          '<p>Sorry, an error occurred while loading the content.</p>';
-        console.log(error);
+        console.error(`Failed to load ${component}:`, error);
       });
   }
 
   function loadScript(component) {
-    fetch(`../components/${component}/${component}.js`)
+    return fetch(`../components/${component}/${component}.js`)
       .then((response) => {
         if (!response.ok) {
-          return 404;
+          console.warn(`No script found for ${component}`);
+          return null;
         }
         return response.text();
       })
       .then((js) => {
-        if (!js || js === 404) {
-          return;
+        if (js) {
+          const script = document.createElement('script');
+          script.text = js;
+          document.body.appendChild(script);
         }
-        const script = document.createElement('script');
-        script.text = js;
-        document.body?.appendChild(script);
       })
-      .catch((error) => {});
+      .catch((error) => {
+        console.error(`Failed to load script for ${component}:`, error);
+      });
   }
 
+  [
+    'nav',
+    'sidebar',
+    'footer',
+    'review',
+    'Sign_In',
+    'Sign_Up',
+    'loader',
+  ].forEach((component) => {
+    loadComponent(component);
+    try {
+      loadScript(component);
+    } catch (e) {}
+  });
+
+  // Loading services
   function loadServices(service) {
-    fetch(`../../services/${service}.js`)
+    return fetch(`../../services/${service}.js`)
       .then((response) => response.text())
       .then((js) => {
         const script = document.createElement('script');
         script.text = js;
-        document.body?.appendChild(script);
+        document.body.appendChild(script);
       })
-      .catch((error) => {});
+      .catch((error) => {
+        console.error(`Failed to load service ${service}:`, error);
+      });
   }
 
-  // Loading components
-  ['nav', 'sidebar', 'footer', 'review', 'Sign_In', 'Sign_Up'].forEach(
-    (component) => {
-      loadComponent(component);
-      try {
-        loadScript(component);
-      } catch (e) {}
-    }
-  );
-
-  // Loading services
   [
-    'renderCourses',
-    'env',
     'convertSeconds',
     'renderChapter',
     'renderTarget',
     'renderRequire',
+    'env',
   ].forEach((service) => {
     try {
       loadServices(service);
     } catch (e) {}
   });
+
+  fetchCourses();
 });
 
-(async function fetchCourses() {
+async function fetchCourses() {
   try {
-    // Lấy toàn bộ URL hiện tại
-    const urlParams = new URLSearchParams(window.location.search);
-    const courseId = urlParams.get('id');
-    if (courseId) {
-      // const API =
-      //   'https://onlinecourse.up.railway.app/api/courses/get/the-complete-javascript-course';
-      const API_CourseLink = `https://66b83ef23ce57325ac76b541.mockapi.io/courses/${courseId}`;
-      // Bạn có thể sử dụng courseId để fetch dữ liệu hoặc xử lý khác ở đây
+    if (slug) {
+      showLoader();
+      content.style.opacity = '0';
+      const API_CourseLink = `${detailAPI}/${slug}`;
+      // const API_CourseLink = `https://66b83ef23ce57325ac76b541.mockapi.io/courses/${courseId}`;
       const response = await fetch(API_CourseLink);
       const course = await response.json();
       const container = document.querySelector('.course-container');
 
       //render duration to layout
       const counts = renderChapter(container, course.chapter);
+
       let durationContainer = document.querySelectorAll('.duration');
-      let duration = convertSeconds(counts.durationCount);
+      let duration = counts.durationCount;
       durationContainer.forEach((x) => {
-        x.textContent = duration.hours
-          ? `${duration.hours} giờ ${
-              duration.minutes >= 10 ? duration.minutes : `0${duration.minutes}`
-            } phút`
-          : `${duration.minutes} phút`;
+        x.textContent = duration;
       });
 
       //render lessions
@@ -122,8 +130,8 @@ document.addEventListener('DOMContentLoaded', function () {
       //render price
       const priceContainer = document.querySelector('span#course-price');
       priceContainer.textContent =
-        course.price > 0
-          ? `${course.price.toLocaleString('vi-VN')}đ`
+        course.new_price > 0
+          ? `${course.new_price.toLocaleString('vi-VN')}đ`
           : 'Miễn phí';
 
       //render img
@@ -132,7 +140,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
       //render required
       const requiredContainer = document.querySelector('div.require-items');
-      console.log(requiredContainer);
       renderRequire(requiredContainer, course.require);
 
       /**
@@ -148,28 +155,19 @@ document.addEventListener('DOMContentLoaded', function () {
           panelContent.classList.toggle('collapse');
         });
       });
+      hideLoader();
+      content.style.opacity = '1';
     } else {
       console.log('Course ID not found in the URL');
     }
   } catch (error) {
     console.error('Error fetching courses:', error);
   }
-})();
+}
 
-// payment
-
-const API_Payment = {
-  User_ID: 'number',
-  Course_ID: 'number',
-  token: 'string',
-};
-
-// User ID
-
-const User_ID_API = {
-  User_ID: 'number',
-  Name: 'string',
-  Email: 'string',
-  Avatar: 'img link',
-  token: 'string',
-};
+//navigate registerCourse button
+document
+  .querySelector('#registerCourse')
+  .addEventListener('click', function () {
+    window.location.href = `${baseUrl}Frontend/pages/Payment/Payment.html?slug=${slug}`;
+  });

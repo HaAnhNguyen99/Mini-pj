@@ -45,7 +45,7 @@
   border-radius: 20px;
   overflow: hidden;
   position: relative;
-  /* transition: transform 0.2s, box-shadow 0.2s; */
+  transition: 1s;
 }
 
 .course .pre-icon {
@@ -98,6 +98,17 @@
 .course .bot-card .more-inf .total-minute {
   display: flex;
 }
+
+.prices {
+  display: flex;
+  gap: 20px;
+}
+
+.oldPrice {
+  text-decoration: line-through;
+  color: var(--colors-default-400) !important;
+}
+
 @media screen and (max-width: 1080px) {
   .courses {
     grid-template-columns: repeat(3, 1fr);

@@ -33,6 +33,8 @@
   --font-size-large: 20px;
 
   --text-color: #333;
+  --system-ui: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif,
+    'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
 }
 *,
 *::after,
@@ -43,15 +45,18 @@
 }
 
 body {
-  font-family: 'Segoe UI', 'Roboto', Helvetica, Arial, sans-serif,
-    'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+  font-family: var(--system-ui);
   background-color: #f9f9f9;
   position: relative;
 }
-
 a {
   text-decoration: none;
 }
+
+.none {
+  display: none;
+}
+
 .container {
   display: grid;
   grid-template-columns: max-content 1fr;

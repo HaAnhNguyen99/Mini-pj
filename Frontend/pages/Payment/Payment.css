@@ -1,10 +1,13 @@
+@import url(https://fonts.googleapis.com/css?family=Montserrat);
 :root {
   --color-payment-primary: #5ebbff;
   --color-payment-secondary: #a174ff;
 
   --color-payment-text: #52eeee;
   --text-color-gray: #a2adbd;
+  --hover: #a2adbd;
 }
+
 body {
   background: url('https://fullstack.edu.vn/assets/payment-bg-DGNLpUmL.png');
   position: relative;
@@ -20,6 +23,7 @@ body div#logo {
 main {
   margin-top: 80px;
   min-height: 100vh;
+  transition: 2s;
 }
 
 h1,
@@ -34,6 +38,11 @@ h1 {
   font-size: 4.8rem;
   line-height: 120%;
   text-align: center;
+}
+
+body #loader {
+  top: 30%;
+  left: 45%;
 }
 
 .payment-container {
@@ -168,8 +177,19 @@ h1 {
   padding: 8px 24px;
   text-align: center;
   text-transform: uppercase;
+  transition: 0.25s;
 }
 
+.button:hover,
+.button:focus {
+  border-color: var(--hover);
+  color: #fff;
+}
+.raise:hover,
+.raise:focus {
+  box-shadow: 0 0.5em 0.5em -0.4em var(--hover);
+  transform: translateY(-0.25em);
+}
 .benefit-items {
   display: flex;
   align-items: flex-start;
