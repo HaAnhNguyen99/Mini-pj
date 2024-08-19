@@ -25,6 +25,36 @@
 
   <body>
     <div>
+      <!-- overlay content -->
+
+      <div class="overlay-wrapper ">
+        <div class="overlay-content">
+          <div class="close-btn">
+            <img src="../../assets/icons/close.svg" alt="" />
+          </div>
+          <div class="title">
+            <h2>Cập nhật tên của bạn</h2>
+            <p>
+              Tên của bạn sẽ được hiển thị trên trang cá nhân, trong các bình
+              luận và bài viết
+            </p>
+          </div>
+          <div class="form-wrapper">
+            <form id="profile-form">
+              <div class="form-group">
+                <label for="name">Họ và tên</label>
+                <input type="text" id="name" name="name" required />
+              </div>
+              <div class="form-group none ">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" required />
+              </div>
+                <button type="submit" class="btn-update">Cập nhật</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
       <!-- Container -->
       <div class="container">
         <div id="sidebar"></div>
@@ -50,28 +80,47 @@
             </div>
           </div>
           <div class="profile-details">
-            <div class="about">
+            <div class="header">
               <h2>Thông tin cá nhân</h2>
               <p>Quản lý thông tin cá nhân của bạn</p>
             </div>
-            <div class="contact">
-              <h2>Họ và tên</h2>
-              <ul>
-                <li>Email: johndoe@example.com</li>
-                <li>Phone: (123) 456-7890</li>
-              </ul>
-            </div>
-            <div class="education">
-              <h2>Education</h2>
-              <ul>
-                <li>
-                  Bachelor's Degree in Computer Science, University of Example
-                </li>
-                <li>
-                  Master's Degree in Software Engineering, University of Another
-                  Example
-                </li>
-              </ul>
+            <div class="contents">
+              <div class="name wrapper">
+                <div class="left">
+                  <h4>Họ và tên</h4>
+                  <p type="text" id="name">John Doe</p>
+                </div>
+                <button>
+                  <img src="../../assets/icons/arrow_right.svg" alt="" />
+                </button>
+              </div>
+              <div class="email wrapper">
+                <div class="left">
+                  <h4>Email</h4>
+                  <p type="text" id="name">JohnDoe@gmail.com</p>
+                </div>
+                <button>
+                  <img src="../../assets/icons/arrow_right.svg" alt="" />
+                </button>
+              </div>
+              <div class="picture wrapper">
+                <div class="left">
+                  <h4>Picture</h4>
+                  <img
+                    src="../../assets/images/avt_placeholder.jpg"
+                    alt="Profile Picture"
+                    class="profile-picture"
+                    style="
+                      max-width: 3rem;
+                      height: 3rem;
+                      object-fit: cover;
+                      border-radius: 50%;
+                    " />
+                </div>
+                <button>
+                  <img src="../../assets/icons/arrow_right.svg" alt="" />
+                </button>
+              </div>
             </div>
           </div>
         </div>

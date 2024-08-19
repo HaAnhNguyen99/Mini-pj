@@ -1,10 +1,3 @@
-import { showLoader, hideLoader } from '../components/loader/loader.js';
-const detailAPI = `https://onlinecourse.up.railway.app/api/courses/get`;
-// Lấy toàn bộ URL hiện tại
-const urlParams = new URLSearchParams(window.location.search);
-const slug = urlParams.get('slug');
-const content = document.querySelector('.course-content');
-
 document.addEventListener('DOMContentLoaded', function () {
   // Loading components
   function loadComponent(component) {
@@ -41,7 +34,7 @@ document.addEventListener('DOMContentLoaded', function () {
       });
   }
 
-  ['sidebar', 'footer'].forEach((component) => {
+  ['footer', 'review', 'loader'].forEach((component) => {
     loadComponent(component);
     try {
       loadScript(component);
@@ -62,15 +55,15 @@ document.addEventListener('DOMContentLoaded', function () {
       });
   }
 
-  ['env'].forEach((service) => {
+  [
+    'convertSeconds',
+    'renderChapter',
+    'renderTarget',
+    'renderRequire',
+    'env',
+  ].forEach((service) => {
     try {
       loadServices(service);
     } catch (e) {}
-  });
-});
-const wrapper = document.querySelectorAll('.wrapper');
-wrapper.forEach((element) => {
-  element.addEventListener('click', (e) => {
-    console.log(e);
   });
 });
