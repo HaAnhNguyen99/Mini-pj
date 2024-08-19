@@ -118,6 +118,20 @@ button img {
   border-radius: 10px;
   transform: translate(-50%, -50%);
   background: linear-gradient(180.06deg, #e0eafc -5%, #cfdef3 106%);
+  border: 1px solid #cfdef3;
+  transition: all 1s;
+}
+
+#tv {
+  border-radius: 10% / 10%;
+  color: black;
+  box-shadow: 20px 20px rgba(0, 0, 0, 0.15);
+  transition: all 0.4s ease;
+}
+
+#tv:hover {
+  border-radius: 10% 10% 50% 50% / 10% 10% 8% 8%;
+  box-shadow: 10px 10px rgba(0, 0, 0, 0.25);
 }
 
 .close-btn {
@@ -131,7 +145,7 @@ button img {
 
 .close-btn:hover {
   padding: 5px;
-  background-color: #ceefec;
+  background-color: #64d4cb;
   cursor: pointer;
 }
 
@@ -172,6 +186,7 @@ button img {
   border-radius: 8px;
   outline: none;
   border: none;
+  line-height: 1.4rem;
 }
 
 #profile-form button {
@@ -185,4 +200,78 @@ button img {
 
 #profile-form button:hover {
   background-color: #ea8181;
+}
+
+.btn-update {
+  margin-bottom: 20px;
+  font-size: var(--font-size-medium);
+  font-weight: var(--font-weight-bold);
+}
+
+.upload-btn button {
+  background: #f0f0f0;
+  border: none;
+  padding: 10px 20px;
+  font-size: 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  width: fit-content !important;
+  font-size: var(--font-size-small);
+  font-weight: var(--font-weight-medium);
+  white-space: 1.8rem !important;
+  line-height: 1.4rem !important;
+  background: #f0f0f0 !important;
+}
+
+.avatar-upload {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.upload-btn button:hover {
+  background: #e0e0e0;
+}
+
+.avatar-preview {
+  border-radius: 50%;
+  overflow: hidden;
+  position: relative;
+  cursor: pointer;
+}
+
+.avatar-preview img {
+  max-width: 200px;
+  max-height: 200px;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  transition: all 0.5s;
+  object-fit: cover;
+  z-index: -1;
+}
+
+.avatar-preview img:hover {
+  transform: scale(1.5);
+}
+
+.cover {
+  transition: all 0.2s;
+  color: white;
+  opacity: 0;
+  visibility: hidden;
+  display: none;
+}
+
+.avatar-preview img:hover ~ .cover {
+  display: block;
+  background-color: black;
+  position: absolute;
+  top: 130px;
+  left: -10px;
+  width: 200px;
+  padding-top: 10px;
+  height: 200px;
+  font-size: 1.5rem;
+  text-align: center;
+  opacity: 0.5;
+  visibility: visible;
 }

@@ -69,8 +69,46 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 });
 const wrapper = document.querySelectorAll('.wrapper');
+const close_btn = document.querySelector('.close-btn');
+const overlay = document.querySelector('#tv');
+const name = document.querySelector('#name-wrapper');
+const email = document.querySelector('#email-wrapper');
+const picture = document.querySelector('#picture-wrapper');
+const title = document.querySelector('.overlay-content .title h2');
+const desc = document.querySelector('.overlay-content .title p');
+const email_container = document.querySelector('.form-group.email');
+const name_container = document.querySelector('.form-group.name');
+const picture_container = document.querySelector('.form-group.picture');
+
 wrapper.forEach((element) => {
   element.addEventListener('click', (e) => {
-    console.log(e);
+    overlay.classList.toggle('none');
+    name_container.classList.add('none');
+    picture_container.classList.add('none');
+    email_container.classList.add('none');
   });
+});
+
+close_btn.addEventListener('click', (e) => {
+  overlay.classList.toggle('none');
+});
+
+name.addEventListener('click', (e) => {
+  e.preventDefault();
+  name_container.classList.toggle('none');
+});
+
+console.log(email);
+email.addEventListener('click', () => {
+  console.log(true);
+  title.textContent = 'Cập nhật email của bạn';
+  desc.textContent =
+    'Vui lòng nhập email mới để đăng nhập vào hộp thư. Tên email của bạn sẽ được hiển thị trên trang cá nhân, đăng nhập và đăng ký khoá học';
+  console.log(email_container);
+  email_container.classList.toggle('none');
+});
+
+picture.addEventListener('click', (e) => {
+  e.preventDefault();
+  picture_container.classList.toggle('none');
 });

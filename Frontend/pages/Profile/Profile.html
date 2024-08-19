@@ -11,12 +11,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
-      rel="stylesheet" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Quicksand:wght@300..700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100..900&family=Plus+Jakarta+Sans:wght@200..800&family=Poppins:wght@100..900&family=Quicksand:wght@300..700&display=swap"
       rel="stylesheet" />
 
     <link rel="stylesheet" href="Profile.css" />
@@ -25,12 +20,11 @@
 
   <body>
     <div>
-      <!-- overlay content -->
-
-      <div class="overlay-wrapper ">
+      <!-- Overlay Content -->
+      <div class="overlay-wrapper none" id="tv">
         <div class="overlay-content">
           <div class="close-btn">
-            <img src="../../assets/icons/close.svg" alt="" />
+            <img src="../../assets/icons/close.svg" alt="Close Button" />
           </div>
           <div class="title">
             <h2>Cập nhật tên của bạn</h2>
@@ -41,21 +35,35 @@
           </div>
           <div class="form-wrapper">
             <form id="profile-form">
-              <div class="form-group">
+              <div class="form-group none name">
                 <label for="name">Họ và tên</label>
-                <input type="text" id="name" name="name" required />
+                <input type="text" id="name" name="name" />
               </div>
-              <div class="form-group none ">
+              <div class="form-group none email">
                 <label for="email">Email</label>
-                <input type="email" id="email" name="email" required />
+                <input type="email" id="email" name="email" />
               </div>
-                <button type="submit" class="btn-update">Cập nhật</button>
+              <div class="form-group picture none">
+                <div class="avatar-upload">
+                  <div class="avatar-preview">
+                    <img
+                      id="avatar-image"
+                      src="../../assets/images/avt_placeholder.jpg"
+                      alt="Avatar" />
+                    <div class="cover"><p>Thay đổi</p></div>
+                  </div>
+                  <div class="upload-btn">
+                    <button type="button">+ Tải ảnh mới lên</button>
+                  </div>
+                </div>
               </div>
+              <button type="submit" class="btn-update">Cập nhật</button>
             </form>
           </div>
         </div>
       </div>
-      <!-- Container -->
+
+      <!-- Main Container -->
       <div class="container">
         <div id="sidebar"></div>
         <div class="content">
@@ -85,25 +93,29 @@
               <p>Quản lý thông tin cá nhân của bạn</p>
             </div>
             <div class="contents">
-              <div class="name wrapper">
+              <div class="wrapper" id="name-wrapper">
                 <div class="left">
                   <h4>Họ và tên</h4>
-                  <p type="text" id="name">John Doe</p>
+                  <p id="name">John Doe</p>
                 </div>
                 <button>
-                  <img src="../../assets/icons/arrow_right.svg" alt="" />
+                  <img
+                    src="../../assets/icons/arrow_right.svg"
+                    alt="Edit Button" />
                 </button>
               </div>
-              <div class="email wrapper">
+              <div class="wrapper" id="email-wrapper">
                 <div class="left">
                   <h4>Email</h4>
-                  <p type="text" id="name">JohnDoe@gmail.com</p>
+                  <p id="email">JohnDoe@gmail.com</p>
                 </div>
                 <button>
-                  <img src="../../assets/icons/arrow_right.svg" alt="" />
+                  <img
+                    src="../../assets/icons/arrow_right.svg"
+                    alt="Edit Button" />
                 </button>
               </div>
-              <div class="picture wrapper">
+              <div class="wrapper" id="picture-wrapper">
                 <div class="left">
                   <h4>Picture</h4>
                   <img
@@ -118,7 +130,9 @@
                     " />
                 </div>
                 <button>
-                  <img src="../../assets/icons/arrow_right.svg" alt="" />
+                  <img
+                    src="../../assets/icons/arrow_right.svg"
+                    alt="Edit Button" />
                 </button>
               </div>
             </div>
@@ -128,7 +142,6 @@
       <div id="footer"></div>
     </div>
 
-    <!-- Write a hero section with a background image, heading, and a call to action button -->
     <script type="module" defer src="Profile.js"></script>
   </body>
 </html>
