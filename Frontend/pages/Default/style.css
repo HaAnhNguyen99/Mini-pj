@@ -1,0 +1,4 @@
+header:has(.slide.active) ~ .container #slider {
+  position: relative;
+  z-index: -1;
+}
