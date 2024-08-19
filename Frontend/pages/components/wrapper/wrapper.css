@@ -47,6 +47,7 @@
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-gap: 20px;
+  row-gap: 40px;
 }
 
 .course {
@@ -57,6 +58,7 @@
   transition: 1s;
   display: flex;
   flex-direction: column;
+  box-shadow: rgba(33, 35, 38, 0.1) 0px 10px 10px -10px;
 }
 
 .course > .top-card {

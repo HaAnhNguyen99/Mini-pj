@@ -156,6 +156,7 @@ body #loader {
 }
 
 .button {
+  width: 100%;
   background: linear-gradient(90deg, #5ebbff, #a174ff);
   padding: 10px;
   border-radius: 10px;
@@ -178,6 +179,8 @@ body #loader {
   text-align: center;
   text-transform: uppercase;
   transition: 0.25s;
+  cursor: pointer;
+  float: right;
 }
 
 .button:hover,
