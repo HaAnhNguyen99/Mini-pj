@@ -143,14 +143,24 @@ document.querySelector('#register_account').addEventListener('click', (e) => {
         },
       });
       if (!response.ok) {
-        throw new Error(`Response status: ${response.status}`);
+        if (response.status === 409) {
+          toast({
+            title: 'Error',
+            message: 'Email đã được đăng ký trước đó',
+            type: 'error',
+            duration: 5000,
+          });
+          document.querySelector('#email-sign-up').focus();
+        }
       }
       const json = await response.json();
       console.log('User registered successfully:', json);
 
       // Wait for 1 minute (60000 milliseconds) before checking email verification status
       setTimeout(async () => {
-        await checkEmailVerification(inputEmail_Sign_Up);
+        if (json.id) {
+          await checkEmailVerification(inputEmail_Sign_Up);
+        }
       }, 60000);
     } catch (error) {
       console.error('Registration failed:', error.message);
@@ -167,39 +177,30 @@ document.querySelector('#register_account').addEventListener('click', (e) => {
         },
       });
       if (!response.ok) {
-        throw new Error(
-          `Verification check failed with status: ${response.status}`
-        );
       }
-      const json = await response.json();
-      console.log('Email verification status:', json);
+      const data = await response.json();
+      console.log('data', data);
 
       // Show success or error toast based on verification status
-      if (json.verified) {
+      if (response.status === 200) {
         toast({
           title: 'Success',
           message: 'Email đã được xác thực thành công !',
           type: 'success',
           duration: 5000,
         });
-      } else {
+        formSignUp.classList.remove('show');
+        markSignUp.classList.remove('show');
+      } else if (response.status !== 200) {
         toast({
           title: 'Error',
-          message: 'Email đã xác thực !',
+          message: 'Email xác thực thất bại !',
           type: 'error',
           duration: 5000,
         });
       }
     } catch (error) {
       console.error('Error checking verification status:', error.message);
-
-      // Show error toast if API call fails
-      toast({
-        title: 'Error',
-        message: 'Email chưa được xác thực. Vui lòng thử lại',
-        type: 'error',
-        duration: 5000,
-      });
     }
   }
 

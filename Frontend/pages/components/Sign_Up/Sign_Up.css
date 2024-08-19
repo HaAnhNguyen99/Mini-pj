@@ -1,4 +1,3 @@
-
 #sign-up--wrapper{
     position: absolute;
     top: 70px;
@@ -16,7 +15,7 @@
 }
 .sign-up__container{
     width: 100%;
-    padding: 16px;
+    padding: 25px;
     height: 100%;
     overflow-y: scroll;
     scrollbar-width: none;

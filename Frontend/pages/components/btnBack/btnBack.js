@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', function () {
-  const backButton = document.getElementById('backButton');
+  const backButton = document.querySelector('#backButton');
 
   // Check if the current page is the homepage
   if (window.location.pathname !== '/') {

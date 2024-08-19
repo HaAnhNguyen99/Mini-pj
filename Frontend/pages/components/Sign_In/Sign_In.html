@@ -43,16 +43,20 @@
         </div>
         <div id="sign-in__withEmaill" class="hide">
             <ul class="sign-in__withEmaill">
-                <li class="sign-in__withEmaill-item">
-                    <label for="username">Tên đăng nhập</label>
-                    <input type="text" placeholder="Emaill hoặc Username" id="email_sign_in" required="Trường này không được để trống">
-                    <input type="password" placeholder="Mật khẩu" id="password_sign_in" required="Trường này không được để trống">
-                </li>
-                <li class="sign-in__withEmaill-remember">
-                    <input type="checkbox"/>
-                    <label>Ghi nhớ đăng nhập</label>
-                </li>
-                <button type="button" id="login">Đăng nhập</button>
+                <form>
+                    <li class="sign-in__withEmaill-item">
+                        <label for="username">Tên đăng nhập</label>
+                        <input type="text" placeholder="Emaill hoặc Username" id="email_sign_in" >
+                        <span id="error-email-sign-in" class="error-message"></span>
+                        <input type="password" placeholder="Mật khẩu" id="password_sign_in" >
+                        <span id="error-password-sign-in" class="error-message"></span>
+                    </li>
+                    <li class="sign-in__withEmaill-remember">
+                        <input type="checkbox"/>
+                        <label>Ghi nhớ đăng nhập</label>
+                    </li>
+                    <button type="button" id="login">Đăng nhập</button>
+                </form>
             </ul>
         </div>
         <div class="sign-in__footer">

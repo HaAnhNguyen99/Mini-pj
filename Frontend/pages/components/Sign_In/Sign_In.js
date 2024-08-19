@@ -92,11 +92,90 @@ markSignIn.addEventListener('click', function () {
 // LOGIN
 
 document.querySelector('#login').addEventListener('click', () => {
-  const inputEmail_Sign_In = document.querySelector('#email_sign_in').value;
-  const inputPassword_Sign_In =
-    document.querySelector('#password_sign_in').value;
+  const inputEmail_Sign_In = document
+    .querySelector('#email_sign_in')
+    .value.trim();
+  const inputPassword_Sign_In = document
+    .querySelector('#password_sign_in')
+    .value.trim();
+
+  document.querySelector('#error-email-sign-in').textContent = '';
+  document.querySelector('#error-password-sign-in').textContent = '';
+
+  let hasError = false;
+
+  // Validation checks
+  if (!inputEmail_Sign_In) {
+    document.querySelector('#error-email-sign-in').textContent =
+      'Vui lòng nhập email của bạn.';
+    hasError = true;
+  }
+  if (!inputPassword_Sign_In) {
+    document.querySelector('#error-password-sign-in').textContent =
+      'Vui lòng nhập password của bạn.';
+    hasError = true;
+  }
+  if (hasError) {
+    return;
+  }
   const accountNewUser = {
     email: inputEmail_Sign_In,
     password: inputPassword_Sign_In,
   };
+  async function loginUser() {
+    const url = 'https://onlinecourse.up.railway.app/api/auth/token';
+    try {
+      const response = await fetch(url, {
+        method: 'POST',
+        body: JSON.stringify(accountNewUser),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+      if (!response.ok) {
+        if (response.status === 404) {
+          toast({
+            title: 'Error',
+            message: 'Email không tồn tại',
+            type: 'error',
+            duration: 5000,
+          });
+          document.querySelector('#email_sign_in').focus();
+        } else if (response.status === 400) {
+          toast({
+            title: 'Error',
+            message: 'Sai mật khẩu',
+            type: 'error',
+            duration: 5000,
+          });
+          document.querySelector('#password_sign_in').focus();
+        } else if (response.status === 401) {
+          toast({
+            title: 'Error',
+            message: 'Email chưa được xác thực',
+            type: 'error',
+            duration: 5000,
+          });
+          document.querySelector('#password_sign_in').focus();
+        }
+      }
+      const data = await response.json();
+
+      if (data.token) {
+        toast({
+          title: 'Success',
+          message: 'Đăng nhập thành công',
+          type: 'success',
+          duration: 5000,
+        });
+        formSignIn.classList.remove('show');
+        markSignIn.classList.remove('show');
+        localStorage.setItem('user', JSON.stringify(data));
+        location.reload();
+      }
+    } catch (error) {
+      console.error('Registration failed:', error.message);
+    }
+  }
+  loginUser();
 });

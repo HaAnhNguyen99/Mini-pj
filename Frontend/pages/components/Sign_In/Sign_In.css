@@ -1,22 +1,21 @@
-
 #sign-in--wrapper{
     position: absolute;
-    top: 70px;
     left: 0;
     right: 0;
+    top: 70px;
     z-index: 10;
     width: 530px;
     height: 600px;
     margin: 0 auto;
-    animation-name: _inline-u6mwo5o_8ox72_1;
     animation-duration: .3s;
+    animation-name: _inline-u6mwo5o_8ox72_1;
 }
 .sign-in--wrapper{
     display: none;
 }
 .sign-in__container{
     width: 100%;
-    padding: 16px;
+    padding: 25px;
     height: 100%;
     text-align: center;
     color: var(--colors-default-900);
