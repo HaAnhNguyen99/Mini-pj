@@ -92,6 +92,15 @@
     flex: 2;
     font-size: var(--font-size-small);
 }
+#register_account{
+    cursor: pointer;
+}
+#register_account:active{
+    opacity: .7;
+}
+#register_account:hover{
+    opacity: .7;
+}
 .sign-up__footer{
     margin: 20px 0;
 }
@@ -190,6 +199,13 @@
     color: var(--colors-default-50);
     background-color: var(--color-secondary);
 }
+
+.error-message {
+    color: red;
+    font-size: 12px;
+    margin-top: 4px;
+    display: block;
+  }
 .active__email{
     display: block;
 }

@@ -43,18 +43,23 @@
         </div>
         <div id="sign-up__withEmaill" class="hide">
             <ul class="sign-up__withEmaill">
+              <form>
                 <li class="sign-up__withEmaill-item">
-                    <label for="username">Tên của bạn?</label> 
-                    <input type="text" placeholder="Họ và tên của bạn" id="fullname">
+                  <label for="fullname-sign-up">Tên của bạn?</label>
+                  <input type="text" placeholder="Họ và tên của bạn" id="fullname-sign-up">
+                  <span id="error-fullname-sign-up" class="error-message"></span>
                 </li>
                 <li class="sign-up__withEmaill-item">
-                    <label for="username">Emaill của bạn</label>
-                    <input type="text" placeholder="Địa chỉ email" id="email-sign-up">
-                    <input type="password" placeholder="Mật khẩu" id="password-sign-up">
+                  <label for="email-sign-up">Email của bạn</label>
+                  <input type="text" placeholder="Địa chỉ email" id="email-sign-up">
+                  <span id="error-email-sign-up" class="error-message"></span>
+                  <input type="password" placeholder="Mật khẩu" id="password-sign-up">
+                  <span id="error-password-sign-up" class="error-message"></span>
                 </li>
-                <button>Đăng ký</button>
+                <button id="register_account">Đăng ký</button>
+              </form>
             </ul>
-        </div>
+          </div>
         <div class="sign-up__footer">
             <p>Bạn đã có tài khoản? <a href="#">Đăng nhập</a></p>
             <p><a href="#">Quên mật khẩu?</a></p>

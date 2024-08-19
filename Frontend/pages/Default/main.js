@@ -55,6 +55,7 @@ document.addEventListener('DOMContentLoaded', function () {
     'footer',
     'Sign_Up',
     'Sign_In',
+    'toastMessage',
   ];
 
   components.forEach((component) => {
