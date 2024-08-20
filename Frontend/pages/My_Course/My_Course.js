@@ -64,9 +64,58 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 });
 
-function goBack() {
-  const currentUrl = window.location.href;
-  const lastSlashIndex = currentUrl.lastIndexOf('/');
-  const newUrl = currentUrl.substring(0, lastSlashIndex);
+async function getMyCourse() {
+  let token = localStorage.getItem('user');
+  const myCourses = document.querySelector('.myCourse__list');
+
+  if (token) {
+    token = token.replace(/\\\"/g, ''); // Remove backslashes
+    token = token.replace(/\"/g, ''); // Remove double quotes
+  }
+  const url = 'https://onlinecourse.up.railway.app/api/orders/my-course';
+  try {
+    const response = await fetch(url, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`, // Add Bearer token here
+      },
+    });
+    if (!response.ok) {
+      throw new Error(`Have error ${response.status}`);
+    }
+    const responseText = await response.text();
+    const data = responseText ? JSON.parse(responseText) : null;
+
+    if (data) {
+      data.forEach((course, index) => {
+        let html = `
+          <div class="myCourse__item" key=${index}>
+            <div class="myCourse_item__inner">
+              <img src="${course.course_thumbnail}" alt="Course Thumbnail"/>
+              <div class="item_infor">
+                <h1>${course.course_title}</h1>
+                <div class="item_paymentDate">
+                  <span>Ngày mua </span>
+                  <span>${new Date(
+                    course.date_purchase
+                  ).toLocaleDateString()}</span>
+                </div>
+              </div>
+            </div> 
+          </div>
+        `;
+        myCourses.innerHTML += html;
+      });
+    } else {
+      const heading = document.createElement('h1');
+      heading.textContent = 'Bạn chưa đăng ký khóa học nào !';
+      heading.className = 'notifi_course';
+      document.querySelector('.myCourse').append(heading);
+    }
+  } catch (error) {
+    console.error('Fetching course data failed:', error.message);
+  }
 }
-goBack();
+
+getMyCourse();

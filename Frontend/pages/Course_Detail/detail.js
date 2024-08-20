@@ -1,5 +1,6 @@
 import { showLoader, hideLoader } from '../components/loader/loader.js';
 const detailAPI = `https://onlinecourse.up.railway.app/api/courses/get`;
+
 // Lấy toàn bộ URL hiện tại
 const urlParams = new URLSearchParams(window.location.search);
 const slug = urlParams.get('slug');
@@ -16,6 +17,7 @@ document.addEventListener('DOMContentLoaded', function () {
       'Sign_Up',
       'loader',
       'btnBack',
+      'toastMessage',
     ];
 
     for (const component of components) {
