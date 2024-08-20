@@ -21,36 +21,34 @@
   <body>
     <div>
       <!-- Overlay Content -->
-      <div class="overlay-wrapper none" id="tv">
+      <div class="overlay-wrapper none" id="overlay">
         <div class="overlay-content">
           <div class="close-btn">
             <img src="../../assets/icons/close.svg" alt="Close Button" />
           </div>
           <div class="title">
-            <h2>Cập nhật tên của bạn</h2>
+            <h2>Cập nhật thông tin</h2>
             <p>
-              Tên của bạn sẽ được hiển thị trên trang cá nhân, trong các bình
-              luận và bài viết
+              Thông tin của bạn sẽ được hiển thị trên trang cá nhân, bình luận, và
+              bài viết
             </p>
           </div>
           <div class="form-wrapper">
             <form id="profile-form">
-              <div class="form-group none name">
+              <div class="form-group none" id="name-group">
                 <label for="name">Họ và tên</label>
                 <input type="text" id="name" name="name" />
               </div>
-              <div class="form-group none email">
-                <label for="email">Email</label>
-                <input type="email" id="email" name="email" />
-              </div>
-              <div class="form-group picture none">
+              <div class="form-group none" id="picture-group">
                 <div class="avatar-upload">
                   <div class="avatar-preview">
                     <img
                       id="avatar-image"
                       src="../../assets/images/avt_placeholder.jpg"
                       alt="Avatar" />
-                    <div class="cover"><p>Thay đổi</p></div>
+                    <div class="cover">
+                      <p>Thay đổi</p>
+                    </div>
                   </div>
                   <div class="upload-btn">
                     <input
@@ -58,7 +56,7 @@
                       id="file-input"
                       accept="image/*"
                       style="display: none" />
-                    <button type="button" id="btn_upload">
+                    <button type="button" id="btn-upload">
                       + Tải ảnh mới lên
                     </button>
                   </div>
@@ -69,85 +67,17 @@
           </div>
         </div>
       </div>
-
+    
       <!-- Main Container -->
       <div class="container">
         <div id="sidebar"></div>
         <div class="content">
-          <div class="profile-wrapper">
-            <div class="profile-background">
-              <div class="profile-info">
-                <div class="avt">
-                  <img
-                    src="../../assets/images/avt_placeholder.jpg"
-                    alt="Profile Picture"
-                    style="
-                      max-width: 9rem;
-                      height: 9rem;
-                      object-fit: cover;
-                      border-radius: 50%;
-                    " />
-                </div>
-                <div class="name">
-                  <h1>John Doe</h1>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="profile-details">
-            <div class="header">
-              <h2>Thông tin cá nhân</h2>
-              <p>Quản lý thông tin cá nhân của bạn</p>
-            </div>
-            <div class="contents">
-              <div class="wrapper" id="name-wrapper">
-                <div class="left">
-                  <h4>Họ và tên</h4>
-                  <p id="name">John Doe</p>
-                </div>
-                <button>
-                  <img
-                    src="../../assets/icons/arrow_right.svg"
-                    alt="Edit Button" />
-                </button>
-              </div>
-              <div class="wrapper" id="email-wrapper">
-                <div class="left">
-                  <h4>Email</h4>
-                  <p id="email">JohnDoe@gmail.com</p>
-                </div>
-                <button>
-                  <img
-                    src="../../assets/icons/arrow_right.svg"
-                    alt="Edit Button" />
-                </button>
-              </div>
-              <div class="wrapper" id="picture-wrapper">
-                <div class="left">
-                  <h4>Picture</h4>
-                  <img
-                    src="../../assets/images/avt_placeholder.jpg"
-                    alt="Profile Picture"
-                    class="profile-picture"
-                    style="
-                      max-width: 3rem;
-                      height: 3rem;
-                      object-fit: cover;
-                      border-radius: 50%;
-                    " />
-                </div>
-                <button>
-                  <img
-                    src="../../assets/icons/arrow_right.svg"
-                    alt="Edit Button" />
-                </button>
-              </div>
-            </div>
-          </div>
+          <div id="infor_user_container"></div>
         </div>
       </div>
       <div id="footer"></div>
     </div>
+    
 
     <script type="module" defer src="Profile.js"></script>
   </body>

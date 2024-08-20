@@ -141,7 +141,7 @@ document.querySelector('#login').addEventListener('click', () => {
             duration: 5000,
           });
           document.querySelector('#email_sign_in').focus();
-        } else if (response.status === 400) {
+        } else if (response.status === 401) {
           toast({
             title: 'Error',
             message: 'Sai mật khẩu',
@@ -149,17 +149,10 @@ document.querySelector('#login').addEventListener('click', () => {
             duration: 5000,
           });
           document.querySelector('#password_sign_in').focus();
-        } else if (response.status === 401) {
-          toast({
-            title: 'Error',
-            message: 'Email chưa được xác thực',
-            type: 'error',
-            duration: 5000,
-          });
-          document.querySelector('#password_sign_in').focus();
         }
       }
       const data = await response.json();
+      console.log(data);
 
       if (data.token) {
         formSignIn.classList.remove('show');
