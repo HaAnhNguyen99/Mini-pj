@@ -7,20 +7,20 @@
 //   this.classList.add('choose');
 // });
 
-document.addEventListener('click', function () {
-  const btnBack = document.getElementById('btnBack');
+// document.addEventListener('click', function () {
+//   const btnBack = document.getElementById('btnBack');
 
-  // Check if the current URL is the homepage
-  const isHomePage =
-    window.location.pathname === '/' ||
-    window.location.pathname === '/index.html';
+//   // Check if the current URL is the homepage
+//   const isHomePage =
+//     window.location.pathname === '/' ||
+//     window.location.pathname === '/index.html';
 
-  if (!isHomePage) {
-    btnBack.classList.remove('hidden');
-  }
+//   if (!isHomePage) {
+//     btnBack.classList.remove('hidden');
+//   }
 
-  // Add event listener to the Back button
-  btnBack.addEventListener('click', function () {
-    window.history.back();
-  });
-});
+//   // Add event listener to the Back button
+//   btnBack.addEventListener('click', function () {
+//     window.history.back();
+//   });
+// });

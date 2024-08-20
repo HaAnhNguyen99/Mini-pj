@@ -59,18 +59,22 @@ const desc = document.querySelector('.overlay-content .title p');
 const email_container = document.querySelector('.form-group.email');
 const name_container = document.querySelector('.form-group.name');
 const picture_container = document.querySelector('.form-group.picture');
+const form_group = document.querySelectorAll('.form-group');
+const main_content = document.querySelector('.container');
 
 wrapper.forEach((element) => {
   element.addEventListener('click', (e) => {
     overlay.classList.toggle('none');
-    name_container.classList.add('none');
-    picture_container.classList.add('none');
-    email_container.classList.add('none');
+    main_content.classList.toggle('blur');
+    form_group.forEach((group) => {
+      group.classList.add('none');
+    });
   });
 });
 
 close_btn.addEventListener('click', (e) => {
   overlay.classList.toggle('none');
+  main_content.classList.toggle('blur');
 });
 
 name.addEventListener('click', (e) => {
@@ -79,11 +83,9 @@ name.addEventListener('click', (e) => {
 });
 
 email.addEventListener('click', () => {
-  console.log(true);
   title.textContent = 'Cập nhật email của bạn';
   desc.textContent =
     'Vui lòng nhập email mới để đăng nhập vào hộp thư. Tên email của bạn sẽ được hiển thị trên trang cá nhân, đăng nhập và đăng ký khoá học';
-  console.log(email_container);
   email_container.classList.toggle('none');
 });
 
@@ -91,3 +93,28 @@ picture.addEventListener('click', (e) => {
   e.preventDefault();
   picture_container.classList.toggle('none');
 });
+
+const upload_btn = document.querySelector('button#btn_upload');
+const avatar_container = document.querySelector('.avatar-preview');
+avatar_container.addEventListener('click', (e) => {
+  document.getElementById('file-input').click();
+});
+upload_btn.addEventListener('click', function () {
+  document.getElementById('file-input').click();
+});
+
+document
+  .getElementById('file-input')
+  .addEventListener('change', function (event) {
+    const file = event.target.files[0]; // Lấy file người dùng chọn
+
+    if (file) {
+      const reader = new FileReader();
+
+      reader.onload = function (e) {
+        document.getElementById('avatar-image').src = e.target.result; // Cập nhật ảnh hiển thị
+      };
+
+      reader.readAsDataURL(file); // Đọc file và trả về URL
+    }
+  });

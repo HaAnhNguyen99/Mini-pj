@@ -169,10 +169,13 @@ async function fetchCourses() {
       });
 
       hideLoader();
+
       content.style.opacity = '1';
+      content.classList.toggle('none');
     } else {
       console.log('Course ID not found in the URL');
     }
+    hideLoader();
   } catch (error) {
     console.error('Error fetching courses:', error);
   }
