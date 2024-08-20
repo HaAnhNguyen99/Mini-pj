@@ -47,26 +47,6 @@ document.addEventListener('DOMContentLoaded', function () {
       loadScript(component);
     } catch (e) {}
   });
-
-  // Loading services
-  function loadServices(service) {
-    return fetch(`../../services/${service}.js`)
-      .then((response) => response.text())
-      .then((js) => {
-        const script = document.createElement('script');
-        script.text = js;
-        document.body.appendChild(script);
-      })
-      .catch((error) => {
-        console.error(`Failed to load service ${service}:`, error);
-      });
-  }
-
-  ['env'].forEach((service) => {
-    try {
-      loadServices(service);
-    } catch (e) {}
-  });
 });
 const wrapper = document.querySelectorAll('.wrapper');
 const close_btn = document.querySelector('.close-btn');

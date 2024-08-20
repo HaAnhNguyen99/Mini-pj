@@ -41,3 +41,45 @@ document.addEventListener('click', function (event) {
     slide.classList.remove('active');
   }
 });
+
+// LOGOUT USER
+const btnLogout = document.querySelector('#logout');
+
+btnLogout.addEventListener('click', () => {
+  let token = localStorage.getItem('user');
+  if (token) {
+    token = token.replace(/\\\"/g, ''); // Remove backslashes
+    token = token.replace(/\"/g, ''); // Remove double quotes
+  }
+
+  // Create the userLogout object with the parsed token
+  const userLogout = {
+    token: token,
+  };
+
+  async function logoutUser() {
+    const url = 'https://onlinecourse.up.railway.app/api/auth/logout';
+    try {
+      const response = await fetch(url, {
+        method: 'POST',
+        body: JSON.stringify(userLogout),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+      if (!response.ok) {
+      }
+      const data = await response;
+      console.log(data);
+      console.log(response.status);
+
+      if (response.status === 200) {
+        localStorage.removeItem('user');
+        location.reload();
+      }
+    } catch (error) {
+      console.error('Registration failed:', error.message);
+    }
+  }
+  logoutUser();
+});
