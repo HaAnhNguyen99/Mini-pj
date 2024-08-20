@@ -162,15 +162,9 @@ document.querySelector('#login').addEventListener('click', () => {
       const data = await response.json();
 
       if (data.token) {
-        toast({
-          title: 'Success',
-          message: 'Đăng nhập thành công',
-          type: 'success',
-          duration: 5000,
-        });
         formSignIn.classList.remove('show');
         markSignIn.classList.remove('show');
-        localStorage.setItem('user', JSON.stringify(data));
+        localStorage.setItem('user', JSON.stringify(data.token));
         location.reload();
       }
     } catch (error) {

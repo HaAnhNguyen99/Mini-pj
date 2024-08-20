@@ -6,85 +6,102 @@ const slug = urlParams.get('slug');
 const content = document.querySelector('.course-content');
 
 document.addEventListener('DOMContentLoaded', function () {
-  // Loading components
-  function loadComponent(component) {
-    return fetch(`../components/${component}/${component}.html`)
-      .then((response) => response.text())
-      .then((html) => {
-        const container = document.querySelector(`#${component}`);
-        if (!container) throw new Error(`Container for ${component} not found`);
-        container.innerHTML = html;
-      })
-      .catch((error) => {
-        console.error(`Failed to load ${component}:`, error);
-      });
+  async function initializeComponents() {
+    const components = [
+      'nav',
+      'sidebar',
+      'footer',
+      'review',
+      'Sign_In',
+      'Sign_Up',
+      'loader',
+      'btnBack',
+    ];
+
+    for (const component of components) {
+      await loadComponent(component);
+      await loadScript(component);
+    }
   }
 
-  function loadScript(component) {
-    return fetch(`../components/${component}/${component}.js`)
-      .then((response) => {
-        if (!response.ok) {
-          console.warn(`No script found for ${component}`);
-          return null;
-        }
-        return response.text();
-      })
-      .then((js) => {
-        if (js) {
-          const script = document.createElement('script');
-          script.text = js;
-          document.body.appendChild(script);
-        }
-      })
-      .catch((error) => {
-        console.error(`Failed to load script for ${component}:`, error);
-      });
+  async function initializeServices() {
+    const services = [
+      'convertSeconds',
+      'renderChapter',
+      'renderTarget',
+      'renderRequire',
+      'env',
+    ];
+
+    for (const service of services) {
+      await loadServices(service);
+    }
   }
 
-  [
-    'nav',
-    'sidebar',
-    'footer',
-    'review',
-    'Sign_In',
-    'Sign_Up',
-    'loader',
-    'btnBack',
-  ].forEach((component) => {
-    loadComponent(component);
-    try {
-      loadScript(component);
-    } catch (e) {}
-  });
+  // Initialize components and services
+  initializeComponents()
+    .then(() => initializeServices())
+    .then(fetchCourses)
+    .then(() => {
+      // Add event listeners after everything is loaded
+      const registerButton = document.querySelector('#registerCourse');
+      if (registerButton) {
+        registerButton.addEventListener('click', function () {
+          window.location.href = `${baseUrl}Frontend/pages/Payment/Payment.html?slug=${slug}`;
+        });
+      } else {
+        console.error('Register course button not found.');
+      }
+    })
+    .catch((error) => console.error('Initialization failed:', error));
+});
 
-  // Loading services
-  function loadServices(service) {
-    return fetch(`../../services/${service}.js`)
-      .then((response) => response.text())
-      .then((js) => {
+async function loadComponent(component) {
+  return fetch(`../components/${component}/${component}.html`)
+    .then((response) => response.text())
+    .then((html) => {
+      const container = document.querySelector(`#${component}`);
+      if (!container) throw new Error(`Container for ${component} not found`);
+      container.innerHTML = html;
+    })
+    .catch((error) => {
+      console.error(`Failed to load ${component}:`, error);
+    });
+}
+
+async function loadScript(component) {
+  return fetch(`../components/${component}/${component}.js`)
+    .then((response) => {
+      if (!response.ok) {
+        console.warn(`No script found for ${component}`);
+        return null;
+      }
+      return response.text();
+    })
+    .then((js) => {
+      if (js) {
         const script = document.createElement('script');
         script.text = js;
         document.body.appendChild(script);
-      })
-      .catch((error) => {
-        console.error(`Failed to load service ${service}:`, error);
-      });
-  }
+      }
+    })
+    .catch((error) => {
+      console.error(`Failed to load script for ${component}:`, error);
+    });
+}
 
-  [
-    'convertSeconds',
-    'renderChapter',
-    'renderTarget',
-    'renderRequire',
-    'env',
-  ].forEach((service) => {
-    try {
-      loadServices(service);
-    } catch (e) {}
-  });
-
-  fetchCourses();
-});
+async function loadServices(service) {
+  return fetch(`../../services/${service}.js`)
+    .then((response) => response.text())
+    .then((js) => {
+      const script = document.createElement('script');
+      script.text = js;
+      document.body.appendChild(script);
+    })
+    .catch((error) => {
+      console.error(`Failed to load service ${service}:`, error);
+    });
+}
 
 async function fetchCourses() {
   try {
@@ -92,12 +109,11 @@ async function fetchCourses() {
       showLoader();
       content.style.opacity = '0';
       const API_CourseLink = `${detailAPI}/${slug}`;
-      // const API_CourseLink = `https://66b83ef23ce57325ac76b541.mockapi.io/courses/${courseId}`;
       const response = await fetch(API_CourseLink);
       const course = await response.json();
       const container = document.querySelector('.course-container');
 
-      //render duration to layout
+      // Render duration to layout
       const counts = renderChapter(container, course.chapter);
 
       let durationContainer = document.querySelectorAll('.duration');
@@ -106,56 +122,52 @@ async function fetchCourses() {
         x.textContent = duration;
       });
 
-      //render lessions
-      let lessionsContainer = document.querySelectorAll('.lessions');
-      lessionsContainer.forEach((x) => {
+      // Render lessons
+      let lessonsContainer = document.querySelectorAll('.lessons');
+      lessonsContainer.forEach((x) => {
         x.textContent = counts.lessionCount;
       });
 
-      //render chapters
+      // Render chapters
       let chapterContainer = document.querySelector('.chapters');
       chapterContainer.textContent = counts.chapterCount;
 
-      //render target
+      // Render target
       const targetContainer = document.querySelector('.content-details');
       renderTarget(targetContainer, course.target);
 
-      //render descriptions
+      // Render descriptions
       const descriptionContainer = document.querySelector('p#course-desc');
       descriptionContainer.textContent = course.decs;
 
-      //render title
+      // Render title
       const titleContainer = document.querySelector('h1#course-title');
       titleContainer.textContent = course.title;
 
-      //render price
+      // Render price
       const priceContainer = document.querySelector('span#course-price');
       priceContainer.textContent =
         course.new_price > 0
           ? `${course.new_price.toLocaleString('vi-VN')}đ`
           : 'Miễn phí';
 
-      //render img
+      // Render image
       const imgContainer = document.querySelector('div#course-img');
       imgContainer.style.backgroundImage = `url(${course.thumbnail})`;
 
-      //render required
+      // Render required
       const requiredContainer = document.querySelector('div.require-items');
       renderRequire(requiredContainer, course.require);
 
-      /**
-       * Handles the collapse/expand functionality for panel headers.
-       * When a panel header is clicked, it toggles the 'collapse' class on the next sibling element,
-       * which is assumed to be the panel content.
-       */
+      // Handles the collapse/expand functionality for panel headers
       const headers = document.querySelectorAll('.panel-header');
-
       headers.forEach((header) => {
         header.addEventListener('click', () => {
-          const panelContent = header.nextElementSibling; // Assuming .panel-body is the next sibling
+          const panelContent = header.nextElementSibling;
           panelContent.classList.toggle('collapse');
         });
       });
+
       hideLoader();
       content.style.opacity = '1';
     } else {
@@ -165,10 +177,3 @@ async function fetchCourses() {
     console.error('Error fetching courses:', error);
   }
 }
-
-//navigate registerCourse button
-document
-  .querySelector('#registerCourse')
-  .addEventListener('click', function () {
-    window.location.href = `${baseUrl}Frontend/pages/Payment/Payment.html?slug=${slug}`;
-  });

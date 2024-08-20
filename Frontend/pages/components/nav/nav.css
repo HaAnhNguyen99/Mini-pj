@@ -115,18 +115,25 @@ nav .nav-links #sign-up nav .nav-links *:not(:first-child) {
   padding: 0;
   margin: 0;
   z-index: 10;
+  overflow: hidden;
   border-radius: 8px;
   list-style-type: none;
   background-color: #fff !important;
   box-shadow: 0 -4px 32px #0003;
+  cursor: pointer;
 }
 .slide li {
   display: flex;
   align-items: center;
   padding: 20px;
 }
+.slide .dropdown-toggle li img {
+  max-width: 20px;
+  height: 20px;
+  margin-right: 10px;
+}
 .slide .dropdown-toggle li:hover {
-  background-color: red;
+  opacity: .7;
 }
 /* Show the slide when the 'active' class is added */
 .slide.active {
