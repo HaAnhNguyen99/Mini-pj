@@ -271,7 +271,7 @@ button img {
   background-color: black;
   position: absolute;
   top: 130px;
-  left: -10px;
+  left: 0;
   width: 200px;
   padding-top: 10px;
   height: 200px;
