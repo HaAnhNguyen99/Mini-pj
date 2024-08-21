@@ -63,6 +63,7 @@ document.addEventListener('DOMContentLoaded', () => {
         console.error(`Failed to load script for ${component}:`, error)
       );
   }
+<<<<<<< Updated upstream
 });
 
 // GET INFORMATION USER
@@ -86,6 +87,44 @@ async function getInfoUser() {
     }
     const data = await response.json();
     let userData = data; // Lưu dữ liệu người dùng vào biến userData
+=======
+
+  ['sidebar', 'footer'].forEach((component) => {
+    loadComponent(component);
+    try {
+      loadScript(component);
+    } catch (e) {}
+  });
+});
+const wrapper = document.querySelectorAll('.wrapper');
+const close_btn = document.querySelector('.close-btn');
+const overlay = document.querySelector('#tv');
+const name = document.querySelector('#name-wrapper');
+const email = document.querySelector('#email-wrapper');
+const picture = document.querySelector('#picture-wrapper');
+const title = document.querySelector('.overlay-content .title h2');
+const desc = document.querySelector('.overlay-content .title p');
+const email_container = document.querySelector('.form-group.email');
+const name_container = document.querySelector('.form-group.name');
+const picture_container = document.querySelector('.form-group.picture');
+const form_group = document.querySelectorAll('.form-group');
+const main_content = document.querySelector('.container');
+
+wrapper.forEach((element) => {
+  element.addEventListener('click', (e) => {
+    overlay.classList.toggle('none');
+    main_content.classList.toggle('blur');
+    form_group.forEach((group) => {
+      group.classList.add('none');
+    });
+  });
+});
+
+close_btn.addEventListener('click', (e) => {
+  overlay.classList.toggle('none');
+  main_content.classList.toggle('blur');
+});
+>>>>>>> Stashed changes
 
     if (data) {
       const infor_user_container = document.querySelector(
@@ -144,6 +183,7 @@ async function getInfoUser() {
       infor_user_container.innerHTML = html;
     }
 
+<<<<<<< Updated upstream
     // Re-select elements after they are added to DOM
     const nameWrapper = document.querySelector('#name-wrapper');
     const pictureWrapper = document.querySelector('#picture-wrapper');
@@ -169,3 +209,41 @@ async function getInfoUser() {
 }
 
 getInfoUser();
+=======
+email.addEventListener('click', () => {
+  title.textContent = 'Cập nhật email của bạn';
+  desc.textContent =
+    'Vui lòng nhập email mới để đăng nhập vào hộp thư. Tên email của bạn sẽ được hiển thị trên trang cá nhân, đăng nhập và đăng ký khoá học';
+  email_container.classList.toggle('none');
+});
+
+picture.addEventListener('click', (e) => {
+  e.preventDefault();
+  picture_container.classList.toggle('none');
+});
+
+const upload_btn = document.querySelector('button#btn_upload');
+const avatar_container = document.querySelector('.avatar-preview');
+avatar_container.addEventListener('click', (e) => {
+  document.getElementById('file-input').click();
+});
+upload_btn.addEventListener('click', function () {
+  document.getElementById('file-input').click();
+});
+
+document
+  .getElementById('file-input')
+  .addEventListener('change', function (event) {
+    const file = event.target.files[0]; // Lấy file người dùng chọn
+
+    if (file) {
+      const reader = new FileReader();
+
+      reader.onload = function (e) {
+        document.getElementById('avatar-image').src = e.target.result; // Cập nhật ảnh hiển thị
+      };
+
+      reader.readAsDataURL(file); // Đọc file và trả về URL
+    }
+  });
+>>>>>>> Stashed changes
