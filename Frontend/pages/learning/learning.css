@@ -1,0 +1,38 @@
+body .container {
+  min-height: 100vh;
+}
+
+body nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 2;
+}
+
+.right-container {
+  width: 23%;
+  position: fixed;
+  top: 0;
+  right: 0;
+  z-index: 2;
+  height: 100%;
+  margin-top: 60px;
+}
+
+.right-container title {
+  color: black;
+}
+
+.left-container {
+  margin-top: 60px;
+  background-color: #e37d7d;
+  height: 1200px;
+  padding: 60px;
+  width: 77%;
+
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 2;
+}
