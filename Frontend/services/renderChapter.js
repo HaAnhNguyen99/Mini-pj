@@ -32,14 +32,21 @@ function renderChapter(container, chapters) {
             ${chapter.lessons
               .map(
                 (lesson, index) => `
-                <div class="panel-item">
-                  <div>
-                    <img src="../../assets/icons/play.svg" alt="" />
-                    <span>${index + 1}. ${lesson.lesson_title}</span>
+                <div class="panel-item" id="${lesson.id}">
+                  <div class="lesson-content">
+                    <div>
+                      <img src="../../assets/icons/play.svg" alt="" />
+                      <span>${index + 1}. ${lesson.lesson_title}</span>
+                    </div>
+                    <p>
+                      <span>${lesson.duration}</span>
+                    </p>
                   </div>
-                  <p>
-                    <span>${lesson.duration}</span>
-                  </p>
+                 ${
+                   lesson.is_done
+                     ? `<img class="done-icon" src="../../assets/icons/ok.svg" alt="" />`
+                     : ''
+                 }
                 </div>`
               )
               .join('')}
