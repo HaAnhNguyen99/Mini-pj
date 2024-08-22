@@ -1,13 +1,13 @@
 import { showLoader, hideLoader } from '../components/loader/loader.js';
 const baseAPI = `https://onlinecourse.up.railway.app/api/courses/get`;
-
+const content = document.querySelector('.container');
 // Lấy toàn bộ URL hiện tại
 const urlParams = new URLSearchParams(window.location.search);
 const slug = urlParams.get('slug');
 
 document.addEventListener('DOMContentLoaded', function () {
   async function initializeComponents() {
-    const components = ['learning_bottom', 'footer', 'learning-header'];
+    const components = ['learning_bottom', 'learning-header'];
 
     for (const component of components) {
       await loadComponent(component);
@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   async function initializeServices() {
-    const services = ['renderChapter', 'env'];
+    const services = ['renderChapter', 'env', 'convertSeconds'];
 
     for (const service of services) {
       await loadServices(service);
@@ -32,23 +32,15 @@ document.addEventListener('DOMContentLoaded', function () {
 
 async function fetchCourses() {
   try {
-    console.log(slug);
     if (slug) {
       content.style.opacity = '0';
-      const API_CourseLink = `${detailAPI}/${slug}`;
+      const API_CourseLink = `${baseAPI}/${slug}`;
+      console.log(API_CourseLink);
       const response = await fetch(API_CourseLink);
       const course = await response.json();
       console.log(course);
       const container = document.querySelector('.content');
-
-      // Render duration to layout
-      const counts = renderChapter(container, course.chapter);
-
-      let durationContainer = document.querySelectorAll('.duration');
-      let duration = counts.durationCount;
-      durationContainer.forEach((x) => {
-        x.textContent = duration;
-      });
+      renderChapter(container, course.chapter);
 
       // Handles the collapse/expand functionality for panel headers
       const headers = document.querySelectorAll('.panel-header');
@@ -58,6 +50,10 @@ async function fetchCourses() {
           panelContent.classList.toggle('collapse');
         });
       });
+
+      // Handle on click event for select course
+      const selectCourse = document.querySelector('.panel-item');
+      selectCourse.addEventListener('click', () => {});
 
       content.style.opacity = '1';
       content.classList.toggle('none');
@@ -115,3 +111,17 @@ async function loadServices(service) {
       console.error(`Failed to load service ${service}:`, error);
     });
 }
+
+document.getElementById('playButton').addEventListener('click', function () {
+  const videoPlayer = document.getElementById('videoPlayer');
+  const thumbnail = document.getElementById('thumbnail');
+  const playButton = document.getElementById('playButton');
+
+  // Hide the thumbnail and play button, show the video player
+  thumbnail.style.display = 'none';
+  playButton.style.display = 'none';
+  videoPlayer.style.display = 'block';
+
+  // Play the video
+  videoPlayer.play();
+});

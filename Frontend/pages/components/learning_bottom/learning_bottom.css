@@ -36,6 +36,43 @@
 .prev-lesson svg {
   margin-right: 5px;
 }
+
 .next-lesson svg {
   margin-left: 5px;
+}
+
+.prev-lesson:hover {
+  animation-name: bounce;
+  animation-timing-function: ease;
+}
+
+.next-lesson:hover {
+  animation-name: bounce;
+  animation-timing-function: ease;
+}
+
+.bounce:hover {
+  animation-name: bounce;
+  animation-timing-function: ease;
+  animation-duration: 0.6s;
+  animation-iteration-count: infinite;
+}
+
+@keyframes bounce {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-5px); /* Điều chỉnh khoảng cách nhảy */
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+main {
+  padding: 10px;
+}
+main h2 {
+  text-align: center;
 }
