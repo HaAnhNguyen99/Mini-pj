@@ -140,6 +140,7 @@ body nav {
   line-height: 1.5;
   color: var(--text-color);
   cursor: pointer;
+  margin-left: 10px !important;
 }
 
 .panel .panel-item:hover {
@@ -169,6 +170,23 @@ body nav {
   left: -2px;
 }
 
-.panel-item:has(img) {
-  display: none;
+.panel-item:has(.done-icon) {
+  display: flex;
+  justify-content: space-between;
+}
+
+.blur {
+  filter: blur(5px);
+  transition: filter 0.3s;
+  height: 50px;
+  background-color: #a8a8a8;
+  position: sticky;
+  bottom: -40px;
+  width: 100%;
+  opacity: 1;
+}
+
+.learned {
+  opacity: 0.6;
+  border-radius: 10px;
 }
