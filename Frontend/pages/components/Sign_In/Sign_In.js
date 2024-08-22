@@ -4,6 +4,8 @@ function toggleVisibility(
   closeBtn,
   form,
   mark,
+  formSignInOptionsEmail,
+  formSignInOptions,
   hideOnMarkClick = true
 ) {
   // Show form
@@ -16,6 +18,9 @@ function toggleVisibility(
   closeBtn?.addEventListener('click', function () {
     form.classList.remove('show');
     mark.classList.remove('show');
+
+    formSignInOptions.classList.remove('hide');
+    formSignInOptionsEmail.classList.add('hide');
   });
 
   // Hide form when clicking outside (on the mark)
@@ -71,7 +76,14 @@ const formSignInOptions = document.querySelector('.sign-in__options');
 const formSignInOptionsEmail = document.querySelector('#sign-in__withEmaill');
 
 // Usage of the functions
-toggleVisibility(btnSignIn, btnCloseIn, formSignIn, markSignIn);
+toggleVisibility(
+  btnSignIn,
+  btnCloseIn,
+  formSignIn,
+  markSignIn,
+  formSignInOptionsEmail,
+  formSignInOptions
+);
 toggleFormOptions(
   btnSignInEmail,
   formSignInOptionsEmail,

@@ -8,14 +8,20 @@
     <i class="fa-brands fa-stumbleupon"></i>
     <span>Tri thức mở, thành công tới.</span>
   </a>
-  
-  <div class="search">
-    <i class="fa-solid fa-magnifying-glass"></i>
-    <input
-      type="text"
-      id="search"
-      placeholder="Tìm kiếm khoá học, bài viết, video, ..." />
+  <div id="search-container" class="search">
+    <div id="search">
+      <i class="fa-solid fa-magnifying-glass"></i>
+      <input id="search-input" placeholder="Tìm kiếm khóa học ......" spellcheck="false" />
+      <img src="../../assets/icons/remove.svg"id="clear-btn" style="display: none;"/>
+    </div>
+    <div id="search-result-container" class="none">
+      <div id="search-result">
+          <div id="search-title">Khóa học</div>
+          <div id="account-items"></div>
+          <div id="no-results" style="display: none;">No results found.</div>
+      </div>
   </div>
+</div>
   <div class="nav-links">
     <button id="sign-up">Đăng ký</button>
     <button id="sign-in">Đăng nhập</button>
