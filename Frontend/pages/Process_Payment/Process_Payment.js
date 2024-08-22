@@ -34,7 +34,7 @@ document.addEventListener('DOMContentLoaded', function () {
       });
   }
 
-  ['footer', 'review', 'loader'].forEach((component) => {
+  ['footer'].forEach((component) => {
     loadComponent(component);
     try {
       loadScript(component);
@@ -55,15 +55,65 @@ document.addEventListener('DOMContentLoaded', function () {
       });
   }
 
-  [
-    'convertSeconds',
-    'renderChapter',
-    'renderTarget',
-    'renderRequire',
-    'env',
-  ].forEach((service) => {
+  [].forEach((service) => {
     try {
       loadServices(service);
     } catch (e) {}
   });
 });
+
+// Step 1: Kiểm tra tham số `vnp_ResponseCode` trong URL
+window.addEventListener('load', async () => {
+  const urlParams = new URLSearchParams(window.location.search);
+  const responseCode = urlParams.get('vnp_ResponseCode');
+
+  if (responseCode) {
+    // Step 2: Nếu `vnp_ResponseCode` tồn tại, thực hiện fetch API
+    const API = 'https://onlinecourse.up.railway.app/api/orders/create';
+    let token = localStorage.getItem('user');
+    token = token.replace(/"/g, '');
+    const course_id = Number(localStorage.getItem('course_id'));
+
+    try {
+      const response = await fetch(API, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ course_id: course_id }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to fetch data from API');
+      }
+
+      const data = await response.json();
+      console.log(data);
+
+      // Start the countdown and redirect process
+      await redirectToHome(10);
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  } else {
+    console.log('vnp_ResponseCode not found in URL.');
+  }
+});
+
+async function redirectToHome(time) {
+  let countdownElement = document.getElementById('countdown');
+  let timeLeft = time;
+
+  // Update the countdown every second
+  const countdownInterval = setInterval(() => {
+    timeLeft--;
+    countdownElement.textContent = timeLeft;
+
+    // When the countdown reaches 0, redirect to the homepage
+    if (timeLeft <= 0) {
+      clearInterval(countdownInterval);
+      window.location.href = '/Frontend/pages/Default/index.html'; // Change this URL to your homepage if it's different
+    }
+  }, 1000);
+}

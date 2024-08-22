@@ -9,6 +9,8 @@ const lessons = document.querySelector('#total-lessons');
 
 const urlParams = new URLSearchParams(window.location.search);
 const slug = urlParams.get('slug');
+
+let courseID = null;
 let coursePrice = null;
 document.addEventListener('DOMContentLoaded', function () {
   // Loading components
@@ -89,6 +91,10 @@ document.addEventListener('DOMContentLoaded', function () {
       const API_CourseLink = `https://onlinecourse.up.railway.app/api/courses/get/${slug}`;
       const response = await fetch(API_CourseLink);
       const course = await response.json();
+
+      courseID = course.id;
+      console.log(course.id);
+      // total courses
       let totalCourse = 0;
       course.chapter.map((x) => {
         return (totalCourse += x.lessons.length);
@@ -119,19 +125,27 @@ document.addEventListener('DOMContentLoaded', function () {
 
 const paymentbtn = document.querySelector('#paymentbtn');
 paymentbtn.addEventListener('click', async (e) => {
+  localStorage.setItem('course_id', courseID);
   const urlParams = new URLSearchParams(window.location.search);
-  const vnp_PayUrl = 'https://sandbox.vnpayment.vn/paymentv2/vpcpay.html';
-  const vnp_ReturnUrl = 'http://localhost:/TechWorld/payment_info';
-  const vnp_TmnCode = 'HUWJVPVM';
-  const secretKey = 'JTQDOZVNOADCXAQDJTKVQDJXOPTJTPLF';
-  const vnp_ApiUrl =
-    'https://sandbox.vnpayment.vn/merchant_webapi/api/transaction';
-  const vnp_Version = '2.1.0';
-  const vnp_Command = 'pay';
 
-  const API_VNPAY = `https://sandbox.vnpayment.vn/paymentv2/vpcpay.html?vnp_Amount=${coursePrice}&vnp_Command=pay&vnp_CreateDate=20210801153333&vnp_CurrCode=VND&vnp_IpAddr=127.0.0.1&vnp_Locale=vn&vnp_OrderInfo=Thanh+toan+don+hang+%3A5&vnp_OrderType=other&vnp_ReturnUrl=https%3A%2F%2Fdomainmerchant.vn%2FReturnUrl&vnp_TmnCode=DEMOV210&vnp_TxnRef=5&vnp_Version=2.1.0&vnp_SecureHash=3e0d61a0c0534b2e36680b3f7277743e8784cc4e1d68fa7d276e79c23be7d6318d338b477910a27992f5057bb1582bd44bd82ae8009ffaf6d141219218625c42`;
-  const response = await fetch(API_VNPAY);
-  const data = await response.json();
-  console.log(data);
-  window.location.href = `${API_VNPAY}`;
+  let token = localStorage.getItem('user');
+  token = token.replace(/"/g, '');
+  const API_VNPAY = `https://onlinecourse.up.railway.app/api/orders/vn-pay?amount=${coursePrice}`;
+
+  try {
+    const response = await fetch(API_VNPAY, {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    const data = await response.json();
+    window.location.href = `${data.paymentUrl}`;
+
+    if (!response.ok) {
+      throw new Error('Failed to fetch data from API');
+    }
+  } catch (error) {
+    console.error('Error:', error);
+  }
 });

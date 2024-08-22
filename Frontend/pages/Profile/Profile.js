@@ -81,6 +81,118 @@ const getInfoUser = async () => {
     userData = await response.json();
     if (userData) {
       updateUserProfile();
+
+      ['sidebar', 'footer'].forEach((component) => {
+        loadComponent(component);
+        try {
+          loadScript(component);
+        } catch (e) {}
+      });
+    }
+    const wrapper = document.querySelectorAll('.wrapper');
+    const close_btn = document.querySelector('.close-btn');
+    const overlay = document.querySelector('#tv');
+    const name = document.querySelector('#name-wrapper');
+    const email = document.querySelector('#email-wrapper');
+    const picture = document.querySelector('#picture-wrapper');
+    const title = document.querySelector('.overlay-content .title h2');
+    const desc = document.querySelector('.overlay-content .title p');
+    const email_container = document.querySelector('.form-group.email');
+    const name_container = document.querySelector('.form-group.name');
+    const picture_container = document.querySelector('.form-group.picture');
+    const form_group = document.querySelectorAll('.form-group');
+    const main_content = document.querySelector('.container');
+
+    wrapper.forEach((element) => {
+      element.addEventListener('click', (e) => {
+        overlay.classList.toggle('none');
+        main_content.classList.toggle('blur');
+        form_group.forEach((group) => {
+          group.classList.add('none');
+        });
+      });
+    });
+
+    close_btn.addEventListener('click', (e) => {
+      overlay.classList.toggle('none');
+      main_content.classList.toggle('blur');
+    });
+
+    if (data) {
+      const infor_user_container = document.querySelector(
+        '#infor_user_container'
+      );
+      let html = `
+        <div class="profile-wrapper">
+            <div class="profile-background">
+              <div class="profile-info">
+                <div class="avatar-upload" id="picture-wrapper">
+                  <div class="avatar-preview">
+                    <img
+                      id="avatar-preview"
+                      src=${data.avatar}
+                      alt="Avatar" />
+                  </div>
+                  <input
+                    type="file"
+                    id="file-input-preview"
+                    accept="image/*"
+                    style="display: none" />
+                </div>
+                <div class="name">
+                  <h1>${data.full_name}</h1>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="profile-details">
+            <div class="header">
+              <h2>Thông tin cá nhân</h2>
+              <p>Quản lý thông tin cá nhân của bạn</p>
+            </div>
+            <div class="contents">
+              <div class="wrapper" id="name-wrapper">
+                <div class="left">
+                  <h4>Họ và tên</h4>
+                  <p id="name-display">${data.full_name}</p>
+                </div>
+                <button>
+                  <img
+                    src="../../assets/icons/arrow_right.svg"
+                    alt="Edit Button" />
+                </button>
+              </div>
+              <div class="email" disabled>
+                <div class="left">
+                  <h4>Email</h4>
+                  <p id="email-display">${data.email}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+      
+      `;
+      infor_user_container.innerHTML = html;
+    }
+
+    // Re-select elements after they are added to DOM
+    const nameWrapper = document.querySelector('#name-wrapper');
+    const pictureWrapper = document.querySelector('#picture-wrapper');
+
+    if (nameWrapper) {
+      nameWrapper.addEventListener('click', () => {
+        toggleOverlay();
+        document.getElementById('name-group').classList.remove('none');
+        document.getElementById('name').value = userData.full_name;
+      });
+    }
+
+    if (pictureWrapper) {
+      pictureWrapper.addEventListener('click', () => {
+        toggleOverlay();
+        document.getElementById('picture-group').classList.remove('none');
+        document.getElementById('avatar-image').src = userData.avatar;
+      });
     }
   } catch (error) {
     console.error('Failed to fetch user info:', error.message);
