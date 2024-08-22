@@ -89,6 +89,12 @@
     flex: 2;
     font-size: var(--font-size-small);
 }
+#login:active{
+    opacity: .7;
+}
+#login:hover{
+    opacity: .7;
+}
 .sign-in__footer{
     margin: 20px 0;
 }

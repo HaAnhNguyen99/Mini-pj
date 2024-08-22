@@ -1,19 +1,11 @@
-// Selectors
-const btnSignUp = document.querySelector('#sign-up');
-const btnCloseUp = document.querySelector('.sign-up__btnClose');
-const formSignUp = document.querySelector('.sign-up--wrapper');
-const markSignUp = document.querySelector('.mark-up');
-const btnBack = document.querySelector('.sign-up__btnBack');
-const btnSignUpEmail = document.querySelector('#btnSign_Up--Emaill');
-const formSignUpOptions = document.querySelector('.sign-up__options');
-const formSignUpOptionsEmail = document.querySelector('#sign-up__withEmaill');
-
 // General function to show and hide forms
 function toggleVisibility(
   triggerBtn,
   closeBtn,
   form,
   mark,
+  formSignUpOptionsEmail,
+  formSignUpOptions,
   hideOnMarkClick = true
 ) {
   // Show form
@@ -26,6 +18,9 @@ function toggleVisibility(
   closeBtn?.addEventListener('click', function () {
     form.classList.remove('show');
     mark.classList.remove('show');
+
+    formSignUpOptions.classList.remove('hide');
+    formSignUpOptionsEmail.classList.add('hide');
   });
 
   // Hide form when clicking outside (on the mark)
@@ -64,8 +59,25 @@ function toggleFormOptions(triggerBtn, targetForm, currentForm, mark, btnBack) {
   });
 }
 
+// Selectors
+const btnSignUp = document.querySelector('#sign-up');
+const btnCloseUp = document.querySelector('.sign-up__btnClose');
+const formSignUp = document.querySelector('.sign-up--wrapper');
+const markSignUp = document.querySelector('.mark-up');
+const btnBack = document.querySelector('.sign-up__btnBack');
+const btnSignUpEmail = document.querySelector('#btnSign_Up--Email');
+const formSignUpOptions = document.querySelector('.sign-up__options');
+const formSignUpOptionsEmail = document.querySelector('#sign-up__withEmail');
+
 // Usage of the functions
-toggleVisibility(btnSignUp, btnCloseUp, formSignUp, markSignUp);
+toggleVisibility(
+  btnSignUp,
+  btnCloseUp,
+  formSignUp,
+  markSignUp,
+  formSignUpOptionsEmail,
+  formSignUpOptions
+);
 toggleFormOptions(
   btnSignUpEmail,
   formSignUpOptionsEmail,

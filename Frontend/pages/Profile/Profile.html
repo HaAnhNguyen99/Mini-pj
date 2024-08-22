@@ -42,23 +42,15 @@
               <div class="form-group none" id="picture-group">
                 <div class="avatar-upload">
                   <div class="avatar-preview">
-                    <img
-                      id="avatar-image"
-                      src="../../assets/images/avt_placeholder.jpg"
-                      alt="Avatar" />
-                    <div class="cover">
-                      <p>Thay đổi</p>
-                    </div>
+                    <img id="avatar-image" alt="Avatar" />
                   </div>
                   <div class="upload-btn">
                     <input
                       type="file"
                       id="file-input"
-                      accept="image/*"
-                      style="display: none" />
-                    <button type="button" id="btn-upload">
-                      + Tải ảnh mới lên
-                    </button>
+                      style="display: none"
+                    />
+                    <button type="button" id="btn-upload" onclick="document.getElementById('file-input').click()">Upload Image</button>
                   </div>
                 </div>
               </div>

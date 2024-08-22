@@ -46,41 +46,8 @@ document.addEventListener('click', function (event) {
 const btnLogout = document.querySelector('#logout');
 
 btnLogout.addEventListener('click', () => {
-  let token = localStorage.getItem('user');
-  if (token) {
-    token = token.replace(/\\\"/g, ''); // Remove backslashes
-    token = token.replace(/\"/g, ''); // Remove double quotes
-  }
-
-  // Create the userLogout object with the parsed token
-  const userLogout = {
-    token: token,
-  };
-
-  async function logoutUser() {
-    const url = 'https://onlinecourse.up.railway.app/api/auth/logout';
-    try {
-      const response = await fetch(url, {
-        method: 'POST',
-        body: JSON.stringify(userLogout),
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
-      if (!response.ok) {
-      }
-      const data = await response;
-      console.log(data);
-      console.log(response.status);
-
-      if (response.status === 200) {
-        localStorage.removeItem('user');
-        location.reload();
-      }
-    } catch (error) {
-      console.error('Registration failed:', error.message);
-    }
-  }
+  localStorage.removeItem('user');
+  location.reload();
   logoutUser();
 });
 
@@ -110,6 +77,7 @@ async function search(query) {
 // Function to handle input change and trigger search
 function handleSearch(event) {
   const searchValue = event.target.value.trim();
+  document.querySelector('#clear-btn').style.display = 'block';
   if (searchValue) {
     search(searchValue).then((result) => {
       updateSearchResults(result);
@@ -130,7 +98,7 @@ function updateSearchResults(results) {
   accountItems.innerHTML = ''; // Clear previous results
 
   if (results.length > 0) {
-    searchResultContainer.style.display = 'block';
+    searchResultContainer.classList.remove('none');
     noResults.style.display = 'none';
 
     results.forEach((result) => {
@@ -165,7 +133,8 @@ function updateSearchResults(results) {
 function clearSearchResults() {
   document.getElementById('account-items').innerHTML = '';
   document.getElementById('no-results').style.display = 'none';
-  document.getElementById('search-result-container').style.display = 'none';
+  document.getElementById('search-result-container').classList.add('none');
+  document.querySelector('#clear-btn').style.display = 'none';
 }
 
 // Add event listeners
@@ -182,13 +151,13 @@ document.getElementById('clear-btn').addEventListener('click', function () {
 document.getElementById('search-input').addEventListener('focus', function () {
   const searchValue = this.value.trim();
   if (searchValue) {
-    document.getElementById('search-result-container').style.display = 'block';
+    document.getElementById('search-result-container').classList.remove('none');
   }
 });
 
 document.addEventListener('click', function (event) {
   const searchContainer = document.getElementById('search-container');
   if (!searchContainer.contains(event.target)) {
-    document.getElementById('search-result-container').style.display = 'none';
+    document.getElementById('search-result-container').classList.add('none');
   }
 });
