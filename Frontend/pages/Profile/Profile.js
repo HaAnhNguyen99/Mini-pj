@@ -78,11 +78,11 @@ if (profileForm) {
       fileInput &&
       fileInput.files.length > 0
     ) {
-      formData.append('avatar', fileInput.files[0]); // Chỉ lấy file đầu tiên
+      formData.append('image', fileInput.files[0]); // Chỉ lấy file đầu tiên
     }
 
     // Chỉ gửi dữ liệu nếu có trường hợp cần cập nhật
-    if (formData.has('full_name') || formData.has('avatar')) {
+    if (formData.has('full_name') || formData.has('image')) {
       // Gọi hàm updateInfor để gửi yêu cầu cập nhật
       await updateInfor(formData);
 

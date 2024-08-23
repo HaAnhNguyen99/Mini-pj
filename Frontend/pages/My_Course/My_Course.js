@@ -81,8 +81,11 @@ async function getMyCourse() {
         Authorization: `Bearer ${token}`, // Add Bearer token here
       },
     });
-    if (!response.ok) {
-      throw new Error(`Have error ${response.status}`);
+    if (response.status === 404) {
+      const heading = document.createElement('h1');
+      heading.textContent = 'Bạn chưa đăng ký khóa học nào !';
+      heading.className = 'notifi_course';
+      document.querySelector('.myCourse').append(heading);
     }
     const responseText = await response.text();
     const data = responseText ? JSON.parse(responseText) : null;
@@ -107,11 +110,6 @@ async function getMyCourse() {
         `;
         myCourses.innerHTML += html;
       });
-    } else {
-      const heading = document.createElement('h1');
-      heading.textContent = 'Bạn chưa đăng ký khóa học nào !';
-      heading.className = 'notifi_course';
-      document.querySelector('.myCourse').append(heading);
     }
   } catch (error) {
     console.error('Fetching course data failed:', error.message);

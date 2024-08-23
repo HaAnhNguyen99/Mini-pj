@@ -91,10 +91,70 @@ document
       }
     }
   });
-document.addEventListener('DOMContentLoaded', function () {
-  document.getElementById('editor').focus();
-});
+async function getReviews() {
+  const urlParams = new URLSearchParams(window.location.search);
+  const slug = urlParams.get('slug');
+  let token = localStorage.getItem('user');
+  if (token) {
+    token = token.replace(/\\\"/g, '').replace(/\"/g, ''); // Clean token
+  }
+  const url = 'https://onlinecourse.up.railway.app/api/reviews/get-all';
+  try {
+    const response = await fetch(url, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    if (!response.ok) {
+    }
+    const data = await response.json();
+    if (data) {
+    }
+  } catch (error) {
+    console.error('Registration failed:', error.message);
+  }
+}
+getReviews();
+const btnReview = document.querySelector('.submit_review');
+const inputReview = document.querySelector('.wysiwyg-editor');
+const btnSubmitReview = document.querySelector('.avatar_user');
+const btnCancel = document.querySelector('.cancel');
 
+const btnReport = document.querySelector('.btnReport');
+const btnDelete = document.querySelector('#btnDelete');
+
+function toggleShowReview(btnReview, inputReview, btnSubmitReview, btnCancel) {
+  btnReview.addEventListener('click', () => {
+    btnSubmitReview.classList.add('none');
+    inputReview.classList.remove('none');
+  });
+  btnCancel.addEventListener('click', () => {
+    btnSubmitReview.classList.remove('none');
+    inputReview.classList.add('none');
+  });
+}
+toggleShowReview(btnReview, inputReview, btnSubmitReview, btnCancel);
+
+function toggleShowReport(btnReport, btnDelete) {
+  btnReport.addEventListener('click', () => {
+    btnDelete.classList.remove('none');
+  });
+  btnCancel.addEventListener('click', () => {
+    btnSubmitReview.classList.remove('none');
+    inputReview.classList.add('none');
+  });
+  document.addEventListener('click', (event) => {
+    if (
+      !btnReport.contains(event.target) &&
+      !btnDelete.contains(event.target)
+    ) {
+      btnDelete.classList.add('none');
+    }
+  });
+}
+toggleShowReport(btnReport, btnDelete);
 // Focus editor when submit button is clicked
 document.querySelector('.submit').addEventListener('click', function () {
   document.getElementById('editor').focus();
