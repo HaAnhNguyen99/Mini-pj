@@ -190,3 +190,26 @@ body nav {
   opacity: 0.6;
   border-radius: 10px;
 }
+
+/* .comment-container {
+  width: 50%;
+  height: 100vh;
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  background-color: black;
+  z-index: 10000;
+  animation: fadeInRight ease 0.5s;
+} */
+
+@keyframes fadeInRight {
+  0% {
+    right: -200px;
+    opacity: 0;
+  }
+  100% {
+    /* right: 0%; */
+    transform: translateX(50%);
+    opacity: 1;
+  }
+}
