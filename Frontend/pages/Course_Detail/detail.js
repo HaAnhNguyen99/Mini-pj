@@ -113,6 +113,7 @@ async function fetchCourses() {
       const API_CourseLink = `${detailAPI}/${slug}`;
       const response = await fetch(API_CourseLink);
       const course = await response.json();
+      console.log(course);
       const container = document.querySelector('.course-container');
 
       // Render duration to layout
