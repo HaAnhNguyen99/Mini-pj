@@ -4,6 +4,7 @@ const content = document.querySelector('.container');
 // Get token form local storage
 let token = localStorage.getItem('user');
 token = token.replace(/"/g, '');
+console.log(token);
 
 // Lấy toàn bộ URL hiện tại
 const urlParams = new URLSearchParams(window.location.search);
@@ -92,6 +93,15 @@ async function fetchCourses() {
       const nextButton = document.querySelector('#next-lesson');
 
       console.log('lesson_current: ' + course.lesson_current);
+
+      // render video source
+      let source = document.querySelector('source');
+      source.src = course.lesson_url;
+      console.log(document.querySelector('source'));
+      const videoElement = document.querySelector('video');
+      console.log(videoElement);
+      videoElement.load();
+
       if (course.lesson_current === 1) {
         prevButton.disabled = true;
       } else if (course.lesson_current === course.total_lesson_of_course) {
@@ -234,35 +244,11 @@ video.ontimeupdate = (evt) => {
 };
 
 function updatePanelItemBackground(total_lesson_done_of_course) {
-  console.log(total_lesson_done_of_course);
+  // console.log(total_lesson_done_of_course);
   const panelItems = document.querySelectorAll('.panel-item');
   panelItems.forEach((item) => {
     const itemId = Number(item.id);
-    console.log('itemId: ' + itemId);
+    // console.log('itemId: ' + itemId);
     itemId <= total_lesson_done_of_course && item.classList.add('learned');
   });
 }
-
-const commentAPI = {
-  id: 1,
-  name: 'username',
-  content: 'This is a great course!',
-  created_at: '2022-01-01T12:00:00',
-  replies: [
-    {
-      id: 2,
-      name: 'admin',
-      content: 'I agree with your opinion!',
-      created_at: '2022-01-02T14:00:00',
-      replies: [],
-    },
-  ],
-};
-
-const reviewAPI = {
-  id: 1,
-  name: 'username',
-  content: 'This is a great course!',
-  rating: 4,
-  created_at: '2022-01-01T12:00:00',
-};
