@@ -5,6 +5,16 @@
 #review h2 {
   margin-bottom: 20px;
 }
+#review .avatar_user div{
+  flex: 1;
+  padding: 8px 16px;
+  border-radius: 8px;
+  color: #808b9a;
+  background-color: var(--colors-default-100);
+  cursor: text;
+}
+
+
 .wysiwyg-editor {
   border: 1px solid #cfd8dc;
   border-radius: 8px;
@@ -32,7 +42,6 @@
 
 #editor {
   width: 100%;
-  min-height: 150px;
   padding: 10px;
   font-size: 14px;
   border: none;
@@ -103,4 +112,72 @@
 
 #editor img::after {
   display: none;
+}
+
+
+
+.list_review{
+  margin-top: 20px;
+}
+.list_review .list_review__item{
+  margin: 30px 0;
+  padding: 30px 0 ;
+}
+.list_review__item .author{
+  display: flex;
+  align-items: center;
+}
+.list_review__item .author img{
+  width: 50px ;
+  border-radius: 50%;
+}
+.author .author_infor{
+  flex: 1;
+  margin-top: 10px;
+  margin-left: 10px;
+}
+.author .author_infor .author_infor__name span{
+  color: var(--colors-info);
+  font-weight: var(--font-weight-medium);
+  font-size: var(--font-size-normal);
+}
+.author .author_infor .author_infor__name div{
+  float: right;
+  color: var(--colors-default-500);
+  font-weight: var(--font-weight-normal);
+  font-size: var(--font-size-small);
+}
+.author_infor .star{
+  font-size: 20px;
+  color: #ee4d2d;
+}
+
+.list_review__item .content_reviews{
+  margin-top: 15px;
+  font-weight: var(--font-weight-normal);
+  font-size: var(--font-size-small);
+}
+
+.content_reviews .btnReport{
+  float: right;
+  position: relative;
+}
+.content_reviews .btnReport .moreBtn{
+  cursor: pointer;
+  font-size: 20px;
+}
+.content_reviews .btnReport .btnDelete{
+  position: absolute;
+  width: 139px;
+  right: 14px;
+  background-color: #eef4fc;
+  padding: 10px;
+  cursor: pointer;
+  border-radius: 8px;
+  text-align: center;
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+}
+
+.content_reviews .btnReport .btnDelete:hover{
+  opacity: .7;
 }
