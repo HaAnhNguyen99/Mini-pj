@@ -123,7 +123,7 @@ async function fetchCourses() {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
+        Authorization: token ? `Bearer ${token}` : '',
       },
     });
     const course = await response.json();
@@ -186,15 +186,10 @@ async function fetchCourses() {
     });
 
     // Change text content of a element when user is purchase
-    console.log('is_purchase' + course.is_purchase);
     let purchase_btn = document.getElementById('registerCourse');
-    console.log(purchase_btn);
-
     purchase_btn.textContent = course.is_purchase ? 'Học ngay' : 'Đăng ký học';
-    console.log(purchase_btn);
 
     hideLoader();
-
     content.classList.toggle('none');
     content.style.opacity = '1';
 
