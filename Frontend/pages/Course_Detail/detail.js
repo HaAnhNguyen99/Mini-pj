@@ -16,7 +16,6 @@ document.addEventListener('DOMContentLoaded', function () {
       'Sign_In',
       'Sign_Up',
       'loader',
-      'btnBack',
       'toastMessage',
     ];
 

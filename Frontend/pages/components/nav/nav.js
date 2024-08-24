@@ -1,15 +1,3 @@
-function updatePlaceholder() {
-  const inputElement = document.querySelector('.search input#search');
-  if (window.innerWidth <= 600) {
-    inputElement.placeholder = 'Tìm kiếm...';
-  } else {
-    inputElement.placeholder = 'Tìm kiếm khoá học, bài viết, video, ...';
-  }
-}
-
-// Gọi hàm khi thay đổi kích thước màn hình
-window.addEventListener('resize', updatePlaceholder);
-
 // SHOW AND HIDE USE WHEN LOGIN
 const btn_nav_links = document.querySelector('.nav-links');
 const avt_User = document.querySelector('.Profile_user');

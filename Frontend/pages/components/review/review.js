@@ -91,14 +91,16 @@ document
       }
     }
   });
+
 async function getReviews() {
   const urlParams = new URLSearchParams(window.location.search);
+  const listReviewContainer = document.querySelector('.list_review');
   const slug = urlParams.get('slug');
   let token = localStorage.getItem('user');
   if (token) {
     token = token.replace(/\\\"/g, '').replace(/\"/g, ''); // Clean token
   }
-  const url = 'https://onlinecourse.up.railway.app/api/reviews/get-all';
+  const url = `https://onlinecourse.up.railway.app/api/reviews/get-all?slug=${slug}`;
   try {
     const response = await fetch(url, {
       method: 'GET',
@@ -107,23 +109,66 @@ async function getReviews() {
         Authorization: `Bearer ${token}`,
       },
     });
-    if (!response.ok) {
+    if (response.status === 404) {
+      const notReviews = document.createElement('h1');
+      notReviews.textContent = 'Chưa có review nào cho khóa học này!';
+      notReviews.className = 'noReview';
+      listReviewContainer.append(notReviews);
     }
     const data = await response.json();
+
     if (data) {
+      let html = ''; // Khởi tạo html rỗng để gom các đánh giá lại
+      data.forEach((review, index) => {
+        // Tạo các sao dựa trên rating
+        let stars = '';
+        for (let i = 1; i <= 5; i++) {
+          stars += `<span class="star" data-value="${i}" style="color: ${
+            i <= review.rating ? '#ee4d2d' : '#CCCCCC'
+          }">&#9733;</span>`;
+        }
+
+        html += `
+            <div class="list_review__item" key=${index}>
+              <div class="author">
+                <img src=${review.thumbnail} alt="profile picture">
+                <div class="author_infor">
+                  <div class="author_infor__name">
+                    <span>${review.full_name}</span>
+                    <div>${review.time_ago}</div>
+                  </div>
+                  <div id="star-container">
+                    ${stars} <!-- Hiển thị các sao -->
+                  </div>
+                </div>
+              </div>
+              <div class="content_reviews">
+                <span>${review.comment}</span>
+                <div class="btnReport">
+                  <img src="../../assets/icons/dots.svg" alt="" class="moreBtn">
+                  <div id="btnDelete" class="btnDelete none">
+                    Xóa bình luận
+                  </div>
+                </div>
+              </div>
+            </div>
+          `;
+      });
+      listReviewContainer.innerHTML = html; // Đặt toàn bộ HTML vào container
     }
   } catch (error) {
-    console.error('Registration failed:', error.message);
+    console.error('Failed to fetch reviews:', error.message);
   }
+  toggleShowReport();
 }
 getReviews();
+
 const btnReview = document.querySelector('.submit_review');
 const inputReview = document.querySelector('.wysiwyg-editor');
 const btnSubmitReview = document.querySelector('.avatar_user');
 const btnCancel = document.querySelector('.cancel');
 
-const btnReport = document.querySelector('.btnReport');
-const btnDelete = document.querySelector('#btnDelete');
+// IF YOU HAVE LOGIN
 
 function toggleShowReview(btnReview, inputReview, btnSubmitReview, btnCancel) {
   btnReview.addEventListener('click', () => {
@@ -137,24 +182,32 @@ function toggleShowReview(btnReview, inputReview, btnSubmitReview, btnCancel) {
 }
 toggleShowReview(btnReview, inputReview, btnSubmitReview, btnCancel);
 
-function toggleShowReport(btnReport, btnDelete) {
-  btnReport.addEventListener('click', () => {
-    btnDelete.classList.remove('none');
-  });
-  btnCancel.addEventListener('click', () => {
-    btnSubmitReview.classList.remove('none');
-    inputReview.classList.add('none');
-  });
-  document.addEventListener('click', (event) => {
-    if (
-      !btnReport.contains(event.target) &&
-      !btnDelete.contains(event.target)
-    ) {
-      btnDelete.classList.add('none');
-    }
+function toggleShowReport() {
+  // Select all btnReport and btnDelete elements
+  const btnReports = document.querySelectorAll('.btnReport');
+  const btnDeletes = document.querySelectorAll('#btnDelete');
+
+  // Loop through each btnReport and attach the click event
+  btnReports.forEach((btnReport, index) => {
+    const btnDelete = btnDeletes[index];
+
+    btnReport.addEventListener('click', (event) => {
+      event.stopPropagation(); // Prevent the click from bubbling up to the document
+      btnDelete.classList.toggle('none'); // Toggle visibility
+    });
+
+    // Hide btnDelete when clicking outside
+    document.addEventListener('click', (event) => {
+      if (
+        !btnReport.contains(event.target) &&
+        !btnDelete.contains(event.target)
+      ) {
+        btnDelete.classList.add('none');
+      }
+    });
   });
 }
-toggleShowReport(btnReport, btnDelete);
+toggleShowReport();
 // Focus editor when submit button is clicked
 document.querySelector('.submit').addEventListener('click', function () {
   document.getElementById('editor').focus();
