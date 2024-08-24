@@ -1,6 +1,6 @@
 import { showLoader, hideLoader } from '../components/loader/loader.js';
 const detailAPI = `https://onlinecourse.up.railway.app/api/courses/get`;
-
+let is_purchase = false;
 // Lấy toàn bộ URL hiện tại
 const urlParams = new URLSearchParams(window.location.search);
 const slug = urlParams.get('slug');
@@ -50,7 +50,11 @@ document.addEventListener('DOMContentLoaded', function () {
       const registerButton = document.querySelector('#registerCourse');
       if (registerButton) {
         registerButton.addEventListener('click', function () {
-          window.location.href = `${baseUrl}Frontend/pages/Payment/Payment.html?slug=${slug}`;
+          if (is_purchase)
+            window.location.href = `${baseUrl}Frontend/pages/learning/learning.html?slug=${slug}`;
+          else {
+            window.location.href = `${baseUrl}Frontend/pages/Payment/Payment.html?slug=${slug}`;
+          }
         });
       } else {
         console.error('Register course button not found.');
@@ -187,7 +191,9 @@ async function fetchCourses() {
 
     // Change text content of a element when user is purchase
     let purchase_btn = document.getElementById('registerCourse');
-    purchase_btn.textContent = course.is_purchase ? 'Học ngay' : 'Đăng ký học';
+    is_purchase = course.is_purchase;
+    purchase_btn.textContent = is_purchase ? 'Học ngay' : 'Đăng ký học';
+    purchase_btn.src;
 
     hideLoader();
     content.classList.toggle('none');
