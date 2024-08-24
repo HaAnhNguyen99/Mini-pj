@@ -91,19 +91,26 @@ async function getMyCourse() {
     const data = responseText ? JSON.parse(responseText) : null;
 
     if (data) {
+      console.log(data);
       data.forEach((course, index) => {
         let html = `
           <div class="myCourse__item" key=${index}>
             <div class="myCourse_item__inner">
-              <img src="${course.course_thumbnail}" alt="Course Thumbnail"/>
-              <div class="item_infor">
-                <h1>${course.course_title}</h1>
-                <div class="item_paymentDate">
+              <a class="top-card" id="course-detail" data-course-id="${
+                course.slug
+              }" href="${path}pages/Course_Detail/detail.html?slug=${
+          course.slug
+        }">
+                  <img src="${course.course_thumbnail}" alt="Course Thumbnail"/>
+                  <div class="item_infor">
+                  <h1>${course.course_title}</h1>
+                  <div class="item_paymentDate">
                   <span>Ngày mua </span>
                   <span>${new Date(
                     course.date_purchase
                   ).toLocaleDateString()}</span>
-                </div>
+                  </div>
+                </a>
               </div>
             </div> 
           </div>
