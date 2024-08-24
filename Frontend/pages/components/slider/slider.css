@@ -2,7 +2,6 @@
   position: relative;
   margin: auto;
   max-width: calc(100% - 50px);
-  z-index: -1;
 }
 
 .mySlides {

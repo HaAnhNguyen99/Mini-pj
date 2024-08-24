@@ -1,4 +1,9 @@
 import { showLoader, hideLoader } from '../components/loader/loader.js';
+let token = localStorage.getItem('user');
+if (token) {
+  token = token.replace(/\\\"/g, '');
+  token = token.replace(/\"/g, '');
+}
 const detailAPI = `https://onlinecourse.up.railway.app/api/courses/get`;
 let is_purchase = false;
 // Lấy toàn bộ URL hiện tại
@@ -16,7 +21,6 @@ document.addEventListener('DOMContentLoaded', function () {
       'Sign_In',
       'Sign_Up',
       'loader',
-      'btnBack',
       'toastMessage',
     ];
 
@@ -42,14 +46,25 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // Initialize components and services
   initializeComponents()
-    .then(() => showLoader())
-    .then(() => initializeServices())
+    .then(() => {
+      showLoader();
+      initializeServices();
+    })
     .then(fetchCourses)
     .then(() => {
       // Add event listeners after everything is loaded
       const registerButton = document.querySelector('#registerCourse');
       if (registerButton) {
         registerButton.addEventListener('click', function () {
+          if (!token) {
+            toast({
+              title: 'Cần đăng nhập',
+              message: 'Vui lòng đăng nhập để mua khoá học',
+              type: 'warning',
+              duration: 5000,
+            });
+            return;
+          }
           if (is_purchase)
             window.location.href = `${baseUrl}Frontend/pages/learning/learning.html?slug=${slug}`;
           else {
@@ -112,24 +127,24 @@ async function loadServices(service) {
 
 async function fetchCourses() {
   try {
-    let token = localStorage.getItem('user');
-    if (token) {
-      token = token.replace(/\\\"/g, '');
-      token = token.replace(/\"/g, '');
-    }
-
     if (!slug) {
       console.log('Course ID not found in the URL');
     }
 
     const API_CourseLink = `${detailAPI}/${slug}`;
-    const response = await fetch(API_CourseLink, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: token ? `Bearer ${token}` : '',
-      },
-    });
+    const response = await fetch(
+      API_CourseLink,
+      token && {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    if (response.errors) {
+      response = await fetch(API_CourseLink);
+    }
     const course = await response.json();
     console.log(course);
     const container = document.querySelector('.course-container');
@@ -193,13 +208,10 @@ async function fetchCourses() {
     let purchase_btn = document.getElementById('registerCourse');
     is_purchase = course.is_purchase;
     purchase_btn.textContent = is_purchase ? 'Học ngay' : 'Đăng ký học';
-    purchase_btn.src;
 
     hideLoader();
     content.classList.toggle('none');
     content.style.opacity = '1';
-
-    hideLoader();
   } catch (error) {
     console.error('Error fetching courses:', error);
   }
