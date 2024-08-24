@@ -7,31 +7,21 @@
     <div class="submit_review">Nhập bình luận mới của bạn</div>
   </div>
   <div class="wysiwyg-editor none">
-    <div class="toolbar">
-      <button type="button" onclick="execCmd('bold')"><b>B</b></button>
-      <button type="button" onclick="execCmd('italic')"><i>I</i></button>
-      <button type="button" onclick="execCmd('underline')"><u>U</u></button>
-      <button type="button" onclick="execCmd('insertUnorderedList')">
-        • List
-      </button>
-      <button type="button" onclick="execCmd('createLink')">🔗 Link</button>
-      <button type="button" id="imageButton">🖼️ Image</button>
-      <!-- Hidden file input for selecting image -->
-      <input
-        type="file"
-        id="imageInput"
-        accept="image/*"
-        style="display: none" />
-      <button type="button" onclick="execCmd('formatBlock', 'blockquote')">
-        “ Quote
-      </button>
-    </div>
-    <div id="editor" contenteditable="true" class="textarea"></div>
-    <div class="buttons">
-      <button class="cancel">Hủy</button>
-      <button class="submit">Bình luận</button>
-    </div>
-  </div> 
-
+      <!-- Star Rating -->
+      <div class="star-rating">
+        <span class="star" data-value="1">&#9733;</span>
+        <span class="star" data-value="2">&#9733;</span>
+        <span class="star" data-value="3">&#9733;</span>
+        <span class="star" data-value="4">&#9733;</span>
+        <span class="star" data-value="5">&#9733;</span>
+      </div>
+      <div class="opinion_reviews">
+        <div id="editor" contenteditable="true" class="textarea"></div>
+        <div class="buttons">
+          <button class="cancelReviews">Hủy</button>
+          <button class="submitReviews">Bình luận</button>
+        </div>
+      </div>
+  </div>
   <div class="list_review"></div>
 </div>

@@ -194,6 +194,90 @@ async function fetchCourses() {
     purchase_btn.textContent = is_purchase ? 'Học ngay' : 'Đăng ký học';
     purchase_btn.src;
 
+    const btnReview = document.querySelector('.avatar_user');
+    if (course.is_purchase) {
+      if (course.is_review) {
+        btnReview.classList.add('none');
+      }
+    } else if (!course.is_purchase) {
+      btnReview.classList.add('none');
+    }
+    // CREATE NEW REVIEWS
+    document.querySelectorAll('.star-rating .star').forEach((star) => {
+      star.addEventListener('click', function () {
+        const value = this.getAttribute('data-value');
+
+        // Remove the selected class from all stars
+        document.querySelectorAll('.star-rating .star').forEach((s) => {
+          s.classList.remove('selected');
+        });
+
+        // Add the selected class to the clicked star and all previous stars
+        for (let i = 0; i < value; i++) {
+          document
+            .querySelectorAll('.star-rating .star')
+            [i].classList.add('selected');
+        }
+
+        // Store the selected rating value
+        document
+          .querySelector('.wysiwyg-editor')
+          .setAttribute('data-rating', value);
+      });
+    });
+
+    // Handle form submission
+    document
+      .querySelector('.submitReviews')
+      .addEventListener('click', function () {
+        // Get the selected star rating from the data-rating attribute
+        const rating = document
+          .querySelector('.wysiwyg-editor')
+          .getAttribute('data-rating');
+
+        // Get the content from the WYSIWYG editor
+        const content = document.getElementById('editor').innerHTML.trim();
+
+        // Validate the rating and content
+        if (!rating) {
+          toast({
+            title: 'Warning',
+            message: 'Vui lòng chọn số sao đánh giá',
+            type: 'warning',
+            duration: 5000,
+          });
+          return;
+        }
+
+        if (!content) {
+          toast({
+            title: 'Warning',
+            message: 'Vui lòng nhập nội dung bình luận.',
+            type: 'warning',
+            duration: 5000,
+          });
+          return;
+        }
+        const newReviews = {
+          comment: content,
+          rating: Number(rating),
+          course_id: course.id,
+        };
+        createReviews(newReviews);
+        document
+          .querySelector('.wysiwyg-editor')
+          .removeAttribute('data-rating');
+        document.getElementById('editor').innerHTML = '';
+
+        // Optionally hide the editor after submission
+        document.querySelector('.wysiwyg-editor').classList.add('none');
+
+        // Reset the selected stars
+        document.querySelectorAll('.star-rating .star').forEach((star) => {
+          star.classList.remove('selected');
+        });
+        // Here you can add the logic to submit the data to the server
+      });
     hideLoader();
     content.classList.toggle('none');
     content.style.opacity = '1';
