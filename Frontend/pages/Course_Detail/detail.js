@@ -1,6 +1,6 @@
 import { showLoader, hideLoader } from '../components/loader/loader.js';
 const detailAPI = `https://onlinecourse.up.railway.app/api/courses/get`;
-
+let is_purchase = false;
 // Lấy toàn bộ URL hiện tại
 const urlParams = new URLSearchParams(window.location.search);
 const slug = urlParams.get('slug');
@@ -41,6 +41,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // Initialize components and services
   initializeComponents()
+    .then(() => showLoader())
     .then(() => initializeServices())
     .then(fetchCourses)
     .then(() => {
@@ -48,7 +49,11 @@ document.addEventListener('DOMContentLoaded', function () {
       const registerButton = document.querySelector('#registerCourse');
       if (registerButton) {
         registerButton.addEventListener('click', function () {
-          window.location.href = `${baseUrl}Frontend/pages/Payment/Payment.html?slug=${slug}`;
+          if (is_purchase)
+            window.location.href = `${baseUrl}Frontend/pages/learning/learning.html?slug=${slug}`;
+          else {
+            window.location.href = `${baseUrl}Frontend/pages/Payment/Payment.html?slug=${slug}`;
+          }
         });
       } else {
         console.error('Register course button not found.');
@@ -106,76 +111,93 @@ async function loadServices(service) {
 
 async function fetchCourses() {
   try {
-    if (slug) {
-      showLoader();
-      content.style.opacity = '0';
-      const API_CourseLink = `${detailAPI}/${slug}`;
-      const response = await fetch(API_CourseLink);
-      const course = await response.json();
-      const container = document.querySelector('.course-container');
+    let token = localStorage.getItem('user');
+    if (token) {
+      token = token.replace(/\\\"/g, '');
+      token = token.replace(/\"/g, '');
+    }
 
-      // Render duration to layout
-      const counts = renderChapter(container, course.chapter);
-
-      let durationContainer = document.querySelectorAll('.duration');
-      let duration = counts.durationCount;
-      durationContainer.forEach((x) => {
-        x.textContent = duration;
-      });
-
-      // Render lessons
-      let lessonsContainer = document.querySelectorAll('.lessons');
-      lessonsContainer.forEach((x) => {
-        x.textContent = counts.lessionCount;
-      });
-
-      // Render chapters
-      let chapterContainer = document.querySelector('.chapters');
-      chapterContainer.textContent = counts.chapterCount;
-
-      // Render target
-      const targetContainer = document.querySelector('.content-details');
-      renderTarget(targetContainer, course.target);
-
-      // Render descriptions
-      const descriptionContainer = document.querySelector('p#course-desc');
-      descriptionContainer.textContent = course.decs;
-
-      // Render title
-      const titleContainer = document.querySelector('h1#course-title');
-      titleContainer.textContent = course.title;
-
-      // Render price
-      const priceContainer = document.querySelector('span#course-price');
-      priceContainer.textContent =
-        course.new_price > 0
-          ? `${course.new_price.toLocaleString('vi-VN')}đ`
-          : 'Miễn phí';
-
-      // Render image
-      const imgContainer = document.querySelector('div#course-img');
-      imgContainer.style.backgroundImage = `url(${course.thumbnail})`;
-
-      // Render required
-      const requiredContainer = document.querySelector('div.require-items');
-      renderRequire(requiredContainer, course.require);
-
-      // Handles the collapse/expand functionality for panel headers
-      const headers = document.querySelectorAll('.panel-header');
-      headers.forEach((header) => {
-        header.addEventListener('click', () => {
-          const panelContent = header.nextElementSibling;
-          panelContent.classList.toggle('collapse');
-        });
-      });
-
-      hideLoader();
-
-      content.style.opacity = '1';
-      content.classList.toggle('none');
-    } else {
+    if (!slug) {
       console.log('Course ID not found in the URL');
     }
+
+    const API_CourseLink = `${detailAPI}/${slug}`;
+    const response = await fetch(API_CourseLink, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: token ? `Bearer ${token}` : '',
+      },
+    });
+    const course = await response.json();
+    console.log(course);
+    const container = document.querySelector('.course-container');
+
+    // Render duration to layout
+    const counts = renderChapter(container, course.chapter);
+
+    let durationContainer = document.querySelectorAll('.duration');
+    let duration = counts.durationCount;
+    durationContainer.forEach((x) => {
+      x.textContent = duration;
+    });
+
+    // Render lessons
+    let lessonsContainer = document.querySelectorAll('.lessons');
+    lessonsContainer.forEach((x) => {
+      x.textContent = counts.lessionCount;
+    });
+
+    // Render chapters
+    let chapterContainer = document.querySelector('.chapters');
+    chapterContainer.textContent = counts.chapterCount;
+
+    // Render target
+    const targetContainer = document.querySelector('.content-details');
+    renderTarget(targetContainer, course.target);
+
+    // Render descriptions
+    const descriptionContainer = document.querySelector('p#course-desc');
+    descriptionContainer.textContent = course.decs;
+
+    // Render title
+    const titleContainer = document.querySelector('h1#course-title');
+    titleContainer.textContent = course.title;
+
+    // Render price
+    const priceContainer = document.querySelector('span#course-price');
+    priceContainer.textContent =
+      course.new_price > 0
+        ? `${course.new_price.toLocaleString('vi-VN')}đ`
+        : 'Miễn phí';
+
+    // Render image
+    const imgContainer = document.querySelector('div#course-img');
+    imgContainer.style.backgroundImage = `url(${course.thumbnail})`;
+
+    // Render required
+    const requiredContainer = document.querySelector('div.require-items');
+    renderRequire(requiredContainer, course.require);
+
+    // Handles the collapse/expand functionality for panel headers
+    const headers = document.querySelectorAll('.panel-header');
+    headers.forEach((header) => {
+      header.addEventListener('click', () => {
+        const panelContent = header.nextElementSibling;
+        panelContent.classList.toggle('collapse');
+      });
+    });
+
+    // Change text content of a element when user is purchase
+    let purchase_btn = document.getElementById('registerCourse');
+    is_purchase = course.is_purchase;
+    purchase_btn.textContent = is_purchase ? 'Học ngay' : 'Đăng ký học';
+    purchase_btn.src;
+
+    hideLoader();
+    content.classList.toggle('none');
+    content.style.opacity = '1';
+
     hideLoader();
   } catch (error) {
     console.error('Error fetching courses:', error);

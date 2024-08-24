@@ -1,6 +1,7 @@
 import { showLoader, hideLoader } from '../components/loader/loader.js';
 const baseAPI = `https://onlinecourse.up.railway.app/api/course/learning`;
 const content = document.querySelector('.container');
+let course_id = null;
 // Get token form local storage
 let token = localStorage.getItem('user');
 token = token.replace(/"/g, '');
@@ -11,7 +12,7 @@ const slug = urlParams.get('slug');
 
 document.addEventListener('DOMContentLoaded', function () {
   async function initializeComponents() {
-    const components = ['learning_bottom', 'learning-header'];
+    const components = ['learning_bottom', 'learning-header', 'comments'];
 
     for (const component of components) {
       await loadComponent(component);
@@ -48,6 +49,7 @@ async function fetchCourses() {
       });
       const course = await response.json();
       console.log(course);
+      course_id = course.id;
       const container = document.querySelector('.content');
       renderChapter(container, course.chapter);
 
@@ -65,8 +67,24 @@ async function fetchCourses() {
 
       panelItems.forEach((item) => {
         item.addEventListener('click', async function () {
-          const id = this.id;
-          await updateCourse(id, token);
+          const targetLesson = this.id;
+          // await updateCourse(course_id, token, targetId);
+
+          Promise.all([
+            updateCourse(course_id, token),
+            updateCurrentLesson(targetLesson),
+          ])
+            .then(([result1, result2]) => {
+              console.log('API 1 result:', result1);
+              console.log('API 2 result:', result2);
+
+              // Nếu cả hai hàm đều thành công, reload trang
+              // window.location.reload();
+              console.log(`all done`);
+            })
+            .catch((error) => {
+              console.error('Có lỗi xảy ra:', error);
+            });
         });
       });
 
@@ -92,6 +110,14 @@ async function fetchCourses() {
       const nextButton = document.querySelector('#next-lesson');
 
       console.log('lesson_current: ' + course.lesson_current);
+
+      // render video source
+      const source = document.querySelector('source');
+      source.src = course.lesson_url;
+      const videoElement = document.querySelector('video');
+      console.log(videoElement);
+      videoElement.load();
+
       if (course.lesson_current === 1) {
         prevButton.disabled = true;
       } else if (course.lesson_current === course.total_lesson_of_course) {
@@ -192,12 +218,9 @@ rightContainer.addEventListener('scroll', function () {
   }
 });
 
-const video = document.querySelector('video');
-
 // Hàm riêng để call API
-async function updateCourse(id, token) {
-  console.log('id_clicked_lesson: ' + id);
-  fetch(
+async function updateCourse(id, token, currentTime) {
+  return fetch(
     `https://onlinecourse.up.railway.app/api/course/learning/update/${id}`,
     {
       method: 'PUT',
@@ -205,23 +228,46 @@ async function updateCourse(id, token) {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${token}`,
       },
-      body: JSON.stringify({
-        courseId: id,
-      }),
+      body: currentTime
+        ? JSON.stringify({
+            lesson_current: id,
+          })
+        : '',
     }
-  )
-    .then((response) => response.json())
-    .then((data) => {
-      console.log('API response:', data);
+  ).then((response) => response.json());
+  // .then((data) => {
+  //   console.log('API response:', data);
 
-      // Xử lý phản hồi từ API
-      // window.location.reload();
-    })
-    .catch((error) => {
-      console.error('Error:', error);
-    });
+  // Xử lý phản hồi từ API
+  // window.location.reload();
+  // targetLesson && updateCurrentLesson(targetLesson);
+  // })
+  // .catch((error) => {
+  //   console.error('Error:', error);
+  // });
 }
 
+async function updateCurrentLesson(lessonID) {
+  console.log(lessonID);
+  const targetAPI = `https://onlinecourse.up.railway.app/api/course/learning/java-the-complete-java-developer-course?id=${lessonID}`;
+  return fetch(targetAPI, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+  }).then((response) => response.json());
+  // .then((data) => {
+  //   console.log('API response:', data);
+
+  // Xử lý phản hồi từ API
+  // window.location.reload();
+  // });
+}
+
+let currentTime = null;
+
+const video = document.querySelector('video');
 // Check if the video is done
 video.ontimeupdate = (evt) => {
   if (video.duration === evt.target.currentTime) {
@@ -229,40 +275,49 @@ video.ontimeupdate = (evt) => {
     console.log(evt.target.currentTime);
 
     // Gọi hàm updateCourse với id tương ứng
-    updateCourse(slug, token);
+    // updateCourse(slug, token);
   }
+  currentTime = evt.target.currentTime;
+};
+
+let pauseStartTime = null;
+let pauseCheckInterval = null;
+let apiCalled = false;
+
+// handle pause 10s auto send PUT
+video.onpause = (evt) => {
+  if (apiCalled) return;
+
+  pauseStartTime = new Date();
+  const pauseTime = 10;
+
+  pauseCheckInterval = setInterval(() => {
+    const currentTime = new Date();
+    const pauseDuration = (currentTime - pauseStartTime) / 1000;
+
+    if (pauseDuration > pauseTime) {
+      clearInterval(pauseCheckInterval);
+      apiCalled = true;
+
+      updateCourse(course_id, token, video.currentTime);
+    }
+  }, 1000);
+  console.log(evt.target.currentTime);
+};
+
+video.onplay = () => {
+  // Clear the interval and reset the flag if the video resumes playing
+  clearInterval(pauseCheckInterval);
+  pauseCheckInterval = null;
+  apiCalled = false; // Reset the flag
 };
 
 function updatePanelItemBackground(total_lesson_done_of_course) {
-  console.log(total_lesson_done_of_course);
+  // console.log(total_lesson_done_of_course);
   const panelItems = document.querySelectorAll('.panel-item');
   panelItems.forEach((item) => {
     const itemId = Number(item.id);
-    console.log('itemId: ' + itemId);
+    // console.log('itemId: ' + itemId);
     itemId <= total_lesson_done_of_course && item.classList.add('learned');
   });
 }
-
-const commentAPI = {
-  id: 1,
-  name: 'username',
-  content: 'This is a great course!',
-  created_at: '2022-01-01T12:00:00',
-  replies: [
-    {
-      id: 2,
-      name: 'admin',
-      content: 'I agree with your opinion!',
-      created_at: '2022-01-02T14:00:00',
-      replies: [],
-    },
-  ],
-};
-
-const reviewAPI = {
-  id: 1,
-  name: 'username',
-  content: 'This is a great course!',
-  rating: 4,
-  created_at: '2022-01-01T12:00:00',
-};
