@@ -100,8 +100,26 @@
   display: none;
 }
 
-
-
+.list_review__sort{
+  display: flex;
+  align-items: center;
+  padding: 10px 0;
+}
+.list_review__sort h1 {
+  font-size: var( --font-size-small);
+  font-weight: var(--font-weight-medium);
+  margin-right: 20px;
+}
+.list_review__sort .sort_btn {
+  padding: 2px 15px;
+  background-color: var( --color-primary);
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: var(--colors-default-500);
+}
+.list_review__sort .sort_btn:hover {
+  opacity: .7;
+}
 .list_review{
   margin-top: 20px;
 }
