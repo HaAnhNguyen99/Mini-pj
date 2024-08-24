@@ -1,7 +1,7 @@
 .header-container {
   display: flex;
   justify-content: flex-end;
-  background-color: rgba(91, 86, 86, 0.704);
+  background-color: var(--colors-default-300);
   color: white;
   font-size: var(--font-size-small);
 }
@@ -22,6 +22,7 @@ nav.header-container .left {
 
 nav.header-container .right {
   flex: 1;
+  color: black;
 }
 
 nav.header-container .right-content.flex {
@@ -35,11 +36,12 @@ nav.header-container .left .logo {
 
 .left .back-btn {
   cursor: pointer;
+  color: black;
 }
 
 .back-btn svg {
   position: relative;
-  top: 3px;
+  top: 2px;
 }
 
 .back-btn {
@@ -63,7 +65,7 @@ nav.header-container .left .logo {
   border-radius: 50%;
 
   /* percent for circle */
-  background: conic-gradient(#f56545 94%, #4e4e4e 0%);
+  background: conic-gradient(var(--colors-default-50) 94%, #4e4e4e 0%);
 
   display: flex;
   justify-content: center;
@@ -77,7 +79,7 @@ nav.header-container .left .logo {
   position: absolute;
   width: 40px;
   height: 40px;
-  background-color: white;
+  background-color: var(--colors-default-300);
   border-radius: 50%;
   z-index: 1;
 }
