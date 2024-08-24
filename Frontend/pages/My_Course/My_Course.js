@@ -91,7 +91,6 @@ async function getMyCourse() {
     const data = responseText ? JSON.parse(responseText) : null;
 
     if (data) {
-      console.log(data);
       data.forEach((course, index) => {
         let html = `
           <div class="myCourse__item" key=${index}>
