@@ -15,30 +15,16 @@
 }
 
 
-.wysiwyg-editor {
+.opinion_reviews{
   border: 1px solid #cfd8dc;
   border-radius: 8px;
   padding: 10px;
   width: 100%;
   max-width: 100%;
   background-color: #ffffff;
+  
 }
 
-.toolbar {
-  display: flex;
-  margin-bottom: 5px;
-  border-bottom: 1px solid #cfd8dc;
-  padding-bottom: 5px;
-}
-
-.toolbar button {
-  background: none;
-  border: none;
-  color: #90a4ae;
-  margin-right: 10px;
-  cursor: pointer;
-  font-size: 16px;
-}
 
 #editor {
   width: 100%;
@@ -56,7 +42,7 @@
   margin-top: 10px;
 }
 
-.buttons .cancel {
+.buttons .cancelReviews {
   background: none;
   border: 1px solid #cfd8dc;
   border-radius: 5px;
@@ -66,7 +52,7 @@
   cursor: pointer;
 }
 
-.buttons .submit {
+.buttons .submitReviews {
   background-color: #42a5f5;
   color: #fff;
   border: none;
@@ -75,7 +61,7 @@
   cursor: pointer;
 }
 
-.buttons .submit:hover {
+.buttons .submitReviews:hover {
   background-color: #1e88e5;
 }
 
@@ -121,7 +107,7 @@
 }
 .list_review .list_review__item{
   margin: 30px 0;
-  padding: 30px 0 ;
+  padding: 10px 0;
 }
 .list_review__item .author{
   display: flex;
@@ -149,9 +135,23 @@
 }
 .author_infor .star{
   font-size: 20px;
-  color: #ee4d2d;
+}
+.star-rating {
+  display: flex;
+  justify-content: start;
+  margin-bottom: 10px;
 }
 
+.star {
+  font-size: 24px;
+  color: #CCCCCC; /* Default color for unselected stars */
+  cursor: pointer;
+  margin-right: 5px;
+}
+
+.star.selected {
+  color: #ee4d2d; /* Color for selected stars */
+}
 .list_review__item .content_reviews{
   margin-top: 15px;
   font-weight: var(--font-weight-normal);
@@ -180,4 +180,9 @@
 
 .content_reviews .btnReport .btnDelete:hover{
   opacity: .7;
+}
+.noReview{
+  font-size: var(--font-size-normal);
+  font-weight: var(--colors-default-500);
+  text-align: center;
 }
