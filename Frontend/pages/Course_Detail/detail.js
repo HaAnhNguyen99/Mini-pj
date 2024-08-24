@@ -193,13 +193,10 @@ async function fetchCourses() {
     let purchase_btn = document.getElementById('registerCourse');
     is_purchase = course.is_purchase;
     purchase_btn.textContent = is_purchase ? 'Học ngay' : 'Đăng ký học';
-    purchase_btn.src;
 
     hideLoader();
     content.classList.toggle('none');
     content.style.opacity = '1';
-
-    hideLoader();
   } catch (error) {
     console.error('Error fetching courses:', error);
   }
