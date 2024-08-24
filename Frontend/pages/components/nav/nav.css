@@ -33,10 +33,9 @@ nav .search {
   max-width: 400px;
   border: 1px solid var(--colors-default-200);
   border-radius: 20px;
-  
 }
-.search #search{
-  display: flex; 
+.search #search {
+  display: flex;
   cursor: pointer;
 }
 nav #search * {
@@ -67,9 +66,9 @@ nav .search input {
   box-shadow: 0 -4px 32px #0003;
   border-radius: 4px;
   z-index: 1000;
-  padding: 15px;
+  padding: 15px 15px 8px 15px;
 }
- #search-title{
+#search-title {
   text-transform: uppercase;
   font-size: var(--font-size-medium);
   font-weight: var(--font-weight-bold);
@@ -77,13 +76,18 @@ nav .search input {
   border-bottom: 1px solid #eee;
 }
 
-
 #account-items .account-item {
   padding: 8px;
-  border-bottom: 1px solid #eee;
   cursor: pointer;
   display: flex;
   align-items: center;
+}
+
+#account-items .account-item:not(:last-child) {
+  border-bottom: 1px solid #eee;
+}
+
+#account-items .account-item:last-child {
 }
 
 #account-items img {
@@ -92,7 +96,6 @@ nav .search input {
   border-radius: 44px;
   margin-right: 5px;
 }
-
 
 nav .nav-links {
   padding: 7px;
@@ -170,7 +173,7 @@ nav .nav-links #sign-up nav .nav-links *:not(:first-child) {
 .slide .dropdown-toggle li {
   display: flex;
   align-items: center;
-  padding: 20px; 
+  padding: 20px;
 }
 .slide .dropdown-toggle li img {
   max-width: 20px;
@@ -178,9 +181,12 @@ nav .nav-links #sign-up nav .nav-links *:not(:first-child) {
   margin-right: 10px;
 }
 .slide .dropdown-toggle li:hover {
-  opacity: .7;
+  opacity: 0.7;
 }
 /* Show the slide when the 'active' class is added */
 .slide.active {
+  display: block;
+}
+.visible {
   display: block;
 }

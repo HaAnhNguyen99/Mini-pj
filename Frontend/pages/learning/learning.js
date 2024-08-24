@@ -48,6 +48,14 @@ async function fetchCourses() {
         },
       });
       const course = await response.json();
+      if (course.errors) {
+        toast({
+          title: 'Đăng nhập lại',
+          message: 'Vui lòng đăng nhập lại để học tiếp',
+          type: 'warning',
+          duration: 5000,
+        });
+      }
       console.log(course);
       course_id = course.id;
       const container = document.querySelector('.content');
@@ -115,7 +123,6 @@ async function fetchCourses() {
       const source = document.querySelector('source');
       source.src = course.lesson_url;
       const videoElement = document.querySelector('video');
-      console.log(videoElement);
       videoElement.load();
 
       if (course.lesson_current === 1) {
@@ -207,7 +214,6 @@ const limit = 100;
 
 rightContainer.addEventListener('scroll', function () {
   // Kiểm tra nếu cuộn tới cuối của right-container
-  // console.log(typeof rightContainer.scrollHeight);
   if (
     rightContainer.scrollTop + rightContainer.clientHeight >=
     rightContainer.scrollHeight
@@ -235,18 +241,9 @@ async function updateCourse(id, token, currentTime) {
         : '',
     }
   ).then((response) => response.json());
-  // .then((data) => {
-  //   console.log('API response:', data);
-
-  // Xử lý phản hồi từ API
-  // window.location.reload();
-  // targetLesson && updateCurrentLesson(targetLesson);
-  // })
-  // .catch((error) => {
-  //   console.error('Error:', error);
-  // });
 }
 
+// Update current lesson to server
 async function updateCurrentLesson(lessonID) {
   console.log(lessonID);
   const targetAPI = `https://onlinecourse.up.railway.app/api/course/learning/java-the-complete-java-developer-course?id=${lessonID}`;
@@ -265,10 +262,18 @@ async function updateCurrentLesson(lessonID) {
   // });
 }
 
-let currentTime = null;
+//Handle back button on click
+const backButton = document.querySelectorAll('.left .back-btn');
+console.log('backButton: ' + backButton);
+backButton.forEach((element) => {
+  element.addEventListener('click', function () {
+    console.log('click');
+  });
+});
 
+// Check if the video is done send PUT request to server update done lesson
+let currentTime = null;
 const video = document.querySelector('video');
-// Check if the video is done
 video.ontimeupdate = (evt) => {
   if (video.duration === evt.target.currentTime) {
     console.log(video.duration);
@@ -284,7 +289,7 @@ let pauseStartTime = null;
 let pauseCheckInterval = null;
 let apiCalled = false;
 
-// handle pause 10s auto send PUT
+// handle pause 10s automatically send PUT request to update current learning time
 video.onpause = (evt) => {
   if (apiCalled) return;
 
@@ -306,10 +311,9 @@ video.onpause = (evt) => {
 };
 
 video.onplay = () => {
-  // Clear the interval and reset the flag if the video resumes playing
   clearInterval(pauseCheckInterval);
   pauseCheckInterval = null;
-  apiCalled = false; // Reset the flag
+  apiCalled = false;
 };
 
 function updatePanelItemBackground(total_lesson_done_of_course) {
