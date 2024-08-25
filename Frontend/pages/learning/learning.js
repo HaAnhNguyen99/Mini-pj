@@ -2,6 +2,10 @@ import { showLoader, hideLoader } from '../components/loader/loader.js';
 const baseAPI = `https://onlinecourse.up.railway.app/api/course/learning`;
 const content = document.querySelector('.container');
 let course_id = null;
+let videoTime = null;
+let currentTime = null;
+let current_lesson_isLearnded;
+
 // Get token form local storage
 let token = localStorage.getItem('user');
 token = token.replace(/"/g, '');
@@ -12,7 +16,12 @@ const slug = urlParams.get('slug');
 
 document.addEventListener('DOMContentLoaded', function () {
   async function initializeComponents() {
-    const components = ['learning_bottom', 'learning-header', 'comments'];
+    const components = [
+      'learning_bottom',
+      'learning-header',
+      'comments',
+      'toastMessage',
+    ];
 
     for (const component of components) {
       await loadComponent(component);
@@ -48,8 +57,31 @@ async function fetchCourses() {
         },
       });
       const course = await response.json();
+      if (course.errors) {
+        toast({
+          title: 'Đăng nhập lại',
+          message: 'Vui lòng đăng nhập lại để học tiếp',
+          type: 'warning',
+          duration: 5000,
+        });
+      }
       console.log(course);
-      course_id = course.id;
+
+      // render video source
+      const source = document.querySelector('source');
+      source.src = course.lesson_url;
+      const videoElement = document.querySelector('video');
+      videoElement.load();
+
+      // asign current_time to video time
+      videoTime = course.current_time
+        ? seekToTimeInVideo(course.current_time)
+        : 0;
+      // Seek time in video
+      videoElement.currentTime = videoTime;
+
+      // asign current course to id
+      course_id = course.lesson_current;
       const container = document.querySelector('.content');
       renderChapter(container, course.chapter);
 
@@ -62,28 +94,83 @@ async function fetchCourses() {
         });
       });
 
+      current_lesson_isLearnded = course.chapter.some((chapter) =>
+        chapter.lessons.some(
+          (lesson) => lesson.id === course_id && lesson.is_done === true
+        )
+      );
+
+      // Title
+      let title = null;
+
+      course.chapter.forEach((chapter) => {
+        chapter.lessons.forEach((lesson) => {
+          if (lesson.id === course_id) {
+            title = lesson.lesson_title;
+          }
+        });
+      });
+
+      console.log(title);
+      document.querySelector('#title').textContent = title;
+
       // Handle on click event for select course
       const panelItems = document.querySelectorAll('.panel-item');
 
       panelItems.forEach((item) => {
+        const id = Number(item.getAttribute('id'));
+        if (id === course_id) {
+          const imgElement = document.createElement('img');
+          imgElement.src = '../../assets/images/sound-waves.png';
+          imgElement.alt = 'Sound Waves Icon';
+          imgElement.classList.add('sound');
+          imgElement.width = 10;
+          imgElement.height = 10;
+          item.appendChild(imgElement);
+          item.style.backgroundColor = 'antiquewhite';
+          item.style.borderRadius = '10px';
+        }
+      });
+
+      panelItems.forEach((item) => {
         item.addEventListener('click', async function () {
+          currentTime = formatTime(currentTime);
           const targetLesson = this.id;
-          // await updateCourse(course_id, token, targetId);
 
           Promise.all([
-            updateCourse(course_id, token),
+            current_lesson_isLearnded
+              ? Promise.resolve(null)
+              : updateCourse(course_id, token, currentTime),
             updateCurrentLesson(targetLesson),
           ])
             .then(([result1, result2]) => {
-              console.log('API 1 result:', result1);
-              console.log('API 2 result:', result2);
+              // let data = await result1.json();
+              // console.log(data);
+
+              // console.log('API 1 result:', data);
+              // if (data.errors)
+              if (result2.errors) {
+                toast({
+                  title: 'Có lỗi xảy ra',
+                  message: result2.errors,
+                  type: 'error',
+                  duration: 5000,
+                });
+                return;
+              }
+
+              console.log(result2);
 
               // Nếu cả hai hàm đều thành công, reload trang
-              // window.location.reload();
               console.log(`all done`);
             })
             .catch((error) => {
-              console.error('Có lỗi xảy ra:', error);
+              toast({
+                title: 'Có lỗi xảy ra',
+                message: error,
+                type: 'error',
+                duration: 5000,
+              });
             });
         });
       });
@@ -93,14 +180,14 @@ async function fetchCourses() {
 
       // render
       content.style.opacity = '1';
-      content.classList.toggle('none');
+      content.classList.remove('none');
       const learned_courses = document.querySelector('#learned-lessons');
       const total_courses = document.querySelector('#unfinished-Lessons');
       const progress = document.querySelector('.progress-percent');
       const progressCircle = document.querySelector('.progress-circle');
 
       const percent = Number(course.average_lesson);
-      progressCircle.style.background = `conic-gradient(#f56545 ${percent}%, #4e4e4e 0%)`;
+      progressCircle.style.background = `conic-gradient(var(--colors-default-50) ${percent}%, #4e4e4e 0%)`;
       progress.textContent = percent + '%';
       total_courses.textContent = course.total_lesson_of_course;
       learned_courses.textContent = course.total_lesson_done_of_course;
@@ -108,29 +195,17 @@ async function fetchCourses() {
       // handle button next/back lesson
       const prevButton = document.querySelector('#prev-lesson');
       const nextButton = document.querySelector('#next-lesson');
-
-      console.log('lesson_current: ' + course.lesson_current);
-
-      // render video source
-      const source = document.querySelector('source');
-      source.src = course.lesson_url;
-      const videoElement = document.querySelector('video');
-      console.log(videoElement);
-      videoElement.load();
-
       if (course.lesson_current === 1) {
         prevButton.disabled = true;
       } else if (course.lesson_current === course.total_lesson_of_course) {
         nextButton.disabled = true;
       }
-
       const currentLesson = parseInt(course.lesson_current);
       prevButton.addEventListener('click', () => {
-        updateCourse(currentLesson - 1, token);
+        updateCurrentLesson(course.lesson_pre);
       });
-
       nextButton.addEventListener('click', () => {
-        updateCourse(currentLesson + 1, token);
+        updateCurrentLesson(course.lesson_next);
       });
     } else {
       console.log('Course ID not found in the URL');
@@ -203,11 +278,9 @@ document.getElementById('playButton').addEventListener('click', function () {
 
 const blurElement = document.querySelector('.blur');
 const rightContainer = document.querySelector('.right-container');
-const limit = 100;
 
 rightContainer.addEventListener('scroll', function () {
   // Kiểm tra nếu cuộn tới cuối của right-container
-  // console.log(typeof rightContainer.scrollHeight);
   if (
     rightContainer.scrollTop + rightContainer.clientHeight >=
     rightContainer.scrollHeight
@@ -220,6 +293,9 @@ rightContainer.addEventListener('scroll', function () {
 
 // Hàm riêng để call API
 async function updateCourse(id, token, currentTime) {
+  const body = currentTime
+    ? JSON.stringify({ current_time: currentTime })
+    : undefined;
   return fetch(
     `https://onlinecourse.up.railway.app/api/course/learning/update/${id}`,
     {
@@ -228,54 +304,59 @@ async function updateCourse(id, token, currentTime) {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${token}`,
       },
-      body: currentTime
-        ? JSON.stringify({
-            lesson_current: id,
-          })
-        : '',
+      body,
     }
-  ).then((response) => response.json());
-  // .then((data) => {
-  //   console.log('API response:', data);
-
-  // Xử lý phản hồi từ API
-  // window.location.reload();
-  // targetLesson && updateCurrentLesson(targetLesson);
-  // })
-  // .catch((error) => {
-  //   console.error('Error:', error);
-  // });
+  ).then((response) => response && response.json());
 }
 
+// Update current lesson to server
 async function updateCurrentLesson(lessonID) {
-  console.log(lessonID);
   const targetAPI = `https://onlinecourse.up.railway.app/api/course/learning/java-the-complete-java-developer-course?id=${lessonID}`;
-  return fetch(targetAPI, {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${token}`,
-    },
-  }).then((response) => response.json());
-  // .then((data) => {
-  //   console.log('API response:', data);
+  try {
+    const response = await fetch(targetAPI, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+    });
 
-  // Xử lý phản hồi từ API
-  // window.location.reload();
-  // });
+    // Parse the JSON data
+    const data = await response.json();
+
+    // Check if the data is empty
+    if (!data || Object.keys(data).length === 0) {
+      console.warn('No data returned from API, reloading...');
+      window.location.reload();
+      return;
+    }
+
+    return data;
+  } catch (err) {
+    console.error('Fetch error:', err);
+    // Optionally reload on error
+    window.location.reload();
+  }
 }
 
-let currentTime = null;
+// NEED TO DO
 
+//Handle back button on click
+// const backButton = document.querySelectorAll('.left .back-btn');
+// backButton.forEach((element) => {
+//   element.addEventListener('click', function () {
+//     console.log('click');
+//   });
+// });
+
+// Check if the video is done send PUT request to server update done lesson
 const video = document.querySelector('video');
-// Check if the video is done
 video.ontimeupdate = (evt) => {
   if (video.duration === evt.target.currentTime) {
-    console.log(video.duration);
-    console.log(evt.target.currentTime);
+    if (current_lesson_isLearnded) return;
 
     // Gọi hàm updateCourse với id tương ứng
-    // updateCourse(slug, token);
+    updateCourse(course_id, token);
   }
   currentTime = evt.target.currentTime;
 };
@@ -284,9 +365,11 @@ let pauseStartTime = null;
 let pauseCheckInterval = null;
 let apiCalled = false;
 
-// handle pause 10s auto send PUT
+// handle pause 10s automatically send PUT request to update current learning time
 video.onpause = (evt) => {
   if (apiCalled) return;
+  if (video.duration === evt.target.currentTime) return;
+  if (current_lesson_isLearnded) return;
 
   pauseStartTime = new Date();
   const pauseTime = 10;
@@ -298,18 +381,20 @@ video.onpause = (evt) => {
     if (pauseDuration > pauseTime) {
       clearInterval(pauseCheckInterval);
       apiCalled = true;
-
-      updateCourse(course_id, token, video.currentTime);
+      const formattedTime = formatTime(video.currentTime);
+      updateCourse(course_id, token, formattedTime).then(() => {
+        video.onplay = () => {
+          apiCalled = false;
+        };
+      });
     }
   }, 1000);
-  console.log(evt.target.currentTime);
 };
 
 video.onplay = () => {
-  // Clear the interval and reset the flag if the video resumes playing
   clearInterval(pauseCheckInterval);
   pauseCheckInterval = null;
-  apiCalled = false; // Reset the flag
+  apiCalled = false;
 };
 
 function updatePanelItemBackground(total_lesson_done_of_course) {

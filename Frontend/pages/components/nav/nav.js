@@ -10,7 +10,7 @@ if (currentUser && btn_nav_links && avt_User) {
 }
 
 // Select the image element inside the Profile_user div
-const profileImage = document.querySelector('.Profile_user img');
+const profileImage = document.querySelector('.Profile_user');
 // Select the slide element
 const slide = document.querySelector('.slide');
 
@@ -55,6 +55,7 @@ async function search(query) {
       `https://onlinecourse.up.railway.app/api/courses/search?keyword=${query}`
     );
     const data = await response.json();
+    console.log(data);
     return data;
   } catch (error) {
     console.error('Error:', error);
@@ -87,10 +88,12 @@ function updateSearchResults(results) {
 
   if (results.length > 0) {
     searchResultContainer.classList.remove('none');
+    searchResultContainer.classList.add('visible');
     noResults.style.display = 'none';
 
     results.forEach((result) => {
-      const accountItem = document.createElement('div');
+      const accountItem = document.createElement('a');
+      accountItem.href = `http://127.0.0.1:3000/Frontend/pages/Course_Detail/detail.html?slug=${result.slug}`;
       accountItem.className = 'account-item';
 
       // Create image element
@@ -122,6 +125,9 @@ function clearSearchResults() {
   document.getElementById('account-items').innerHTML = '';
   document.getElementById('no-results').style.display = 'none';
   document.getElementById('search-result-container').classList.add('none');
+  document
+    .getElementById('search-result-container')
+    .classList.remove('visible');
   document.querySelector('#clear-btn').style.display = 'none';
 }
 
@@ -140,6 +146,7 @@ document.getElementById('search-input').addEventListener('focus', function () {
   const searchValue = this.value.trim();
   if (searchValue) {
     document.getElementById('search-result-container').classList.remove('none');
+    document.getElementById('search-result-container').classList.add('visible');
   }
 });
 
@@ -147,6 +154,9 @@ document.addEventListener('click', function (event) {
   const searchContainer = document.getElementById('search-container');
   if (!searchContainer.contains(event.target)) {
     document.getElementById('search-result-container').classList.add('none');
+    document
+      .getElementById('search-result-container')
+      .classList.remove('visible');
   }
 });
 

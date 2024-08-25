@@ -24,6 +24,7 @@
   </head>
 
   <body>
+    <div id="toastMessage"></div>
     <nav>
       <div id="learning-header"></div>
     </nav>
@@ -44,7 +45,7 @@
 
         <!-- Video desc -->
         <div class="video-desc">
-          <h2>Video title</h2>
+          <h2 id="title"></h2>
           Made with <i class="fa-solid fa-heart"></i> Powered by F88
         </div>
         <div id="comments"></div>
@@ -74,5 +75,36 @@
 
     <!-- Write a hero section with a background image, heading, and a call to action button -->
     <script type="module" defer src="learning.js"></script>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        const videoPlayer = document.getElementById('videoPlayer');
+        const playButton = document.getElementById('playButton');
+
+        // Show the play button when the video is paused
+        videoPlayer.addEventListener('pause', () => {
+          playButton.style.display = 'block';
+        });
+
+        // Hide the play button when the video is playing
+        videoPlayer.addEventListener('play', () => {
+          playButton.style.display = 'none';
+        });
+
+        // Play the video when the play button is clicked
+        playButton.addEventListener('click', () => {
+          videoPlayer.play();
+        });
+
+        // Toggle play/pause when clicking on the video
+        videoPlayer.addEventListener('click', () => {
+          if (videoPlayer.paused) {
+            videoPlayer.play();
+          } else {
+            videoPlayer.pause();
+          }
+        });
+      });
+    </script>
   </body>
 </html>
