@@ -34,9 +34,9 @@ document.addEventListener('click', function (event) {
 const btnLogout = document.querySelector('#logout');
 
 btnLogout.addEventListener('click', () => {
+  window.location.href =
+    'http://127.0.0.1:3000/Frontend/pages/Default/index.html';
   localStorage.removeItem('user');
-  location.reload();
-  logoutUser();
 });
 
 // Debounce function to delay API call
@@ -149,3 +149,44 @@ document.addEventListener('click', function (event) {
     document.getElementById('search-result-container').classList.add('none');
   }
 });
+
+function parseJwt(token) {
+  try {
+    const base64Url = token.split('.')[1]; // Lấy phần payload (phần thứ 2)
+    const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/'); // Chuyển đổi Base64Url thành Base64
+    const jsonPayload = decodeURIComponent(
+      atob(base64)
+        .split('')
+        .map(function (c) {
+          return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+        })
+        .join('')
+    ); // Giải mã Base64 thành chuỗi JSON
+
+    return JSON.parse(jsonPayload); // Chuyển chuỗi JSON thành đối tượng JavaScript
+  } catch (error) {
+    console.error('Invalid token', error);
+    return null;
+  }
+}
+
+// Ví dụ sử dụng
+const checkOutDecodedToken = () => {
+  const token = localStorage.getItem('user'); // Giả sử `user` có chứa token
+  const decodedToken = parseJwt(token);
+  const date = new Date();
+  if (decodedToken.exp < date.getTime() / 1000) {
+    toast({
+      title: 'Warning',
+      message: 'Hết hạn đang nhập vuii lòng đăng nhập lại',
+      type: 'warning',
+      duration: 5000,
+    });
+    setTimeout(() => {
+      window.location.href =
+        'http://127.0.0.1:3000/Frontend/pages/Default/index.html';
+      localStorage.removeItem('user');
+    }, 4000);
+  }
+};
+checkOutDecodedToken();

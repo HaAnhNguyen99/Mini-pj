@@ -37,8 +37,8 @@ async function getReviews() {
     // Sort reviews based on the current sorting order
     data.sort((a, b) => {
       return isNewestFirst
-        ? new Date(b.createdAt) - new Date(a.createdAt)
-        : new Date(a.createdAt) - new Date(b.createdAt);
+        ? new Date(b.created_time) - new Date(a.created_time)
+        : new Date(a.created_time) - new Date(b.created_time);
     });
 
     if (data && data.length > 0) {
@@ -59,7 +59,11 @@ async function getReviews() {
                 <div class="author_infor">
                   <div class="author_infor__name">
                     <span>${review.full_name}</span>
-                    <div>${review.time_ago}</div>
+                    <div>${
+                      Math.abs(parseInt(review.time_ago)) < 60
+                        ? review.time_ago
+                        : 'Vừa mới'
+                    }</div>
                   </div>
                   <div id="star-container">
                     ${stars} <!-- Display stars -->
@@ -70,7 +74,9 @@ async function getReviews() {
                 <span>${review.comment}</span>
                 <div class="btnReport">
                   <img src="../../assets/icons/dots.svg" alt="" class="moreBtn">
-                  <div id="btnDelete" class="btnDelete none" data-id="${review.id}">
+                  <div id="btnDelete" class="btnDelete none" data-id="${
+                    review.id
+                  }">
                     Xóa bình luận
                   </div>
                 </div>
