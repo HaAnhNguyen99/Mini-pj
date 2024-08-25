@@ -1,3 +1,12 @@
+let isNewestFirst = true; // Default to sorting by newest first
+
+document.querySelector('.sort_btn').addEventListener('click', () => {
+  isNewestFirst = !isNewestFirst; // Toggle the sorting order
+  const sortText = isNewestFirst ? 'Mới Nhất' : 'Cũ Nhất';
+  document.querySelector('.sort_btn span').textContent = sortText;
+  getReviews(); // Fetch and sort reviews again based on the new order
+});
+
 async function getReviews() {
   const urlParams = new URLSearchParams(window.location.search);
   const listReviewContainer = document.querySelector('.list_review');
@@ -22,8 +31,16 @@ async function getReviews() {
       return;
     }
 
-    const data = await response.json();
+    let data = await response.json();
     const idReviews = data.map((item) => item.id);
+
+    // Sort reviews based on the current sorting order
+    data.sort((a, b) => {
+      return isNewestFirst
+        ? new Date(b.created_time) - new Date(a.created_time)
+        : new Date(a.created_time) - new Date(b.created_time);
+    });
+
     if (data && data.length > 0) {
       let html = ''; // Initialize empty html to accumulate reviews
       data.forEach((review, index) => {
@@ -38,11 +55,15 @@ async function getReviews() {
         html += `
             <div class="list_review__item" key=${index}>
               <div class="author">
-                <img src=${review.thumbnail} alt="profile picture">
+                <img src="${review.thumbnail}" alt="profile picture">
                 <div class="author_infor">
                   <div class="author_infor__name">
                     <span>${review.full_name}</span>
-                    <div>${review.time_ago}</div>
+                    <div>${
+                      Math.abs(parseInt(review.time_ago)) < 60
+                        ? review.time_ago
+                        : 'Vừa mới'
+                    }</div>
                   </div>
                   <div id="star-container">
                     ${stars} <!-- Display stars -->
@@ -53,7 +74,9 @@ async function getReviews() {
                 <span>${review.comment}</span>
                 <div class="btnReport">
                   <img src="../../assets/icons/dots.svg" alt="" class="moreBtn">
-                  <div id="btnDelete" class="btnDelete none">
+                  <div id="btnDelete" class="btnDelete none" data-id="${
+                    review.id
+                  }">
                     Xóa bình luận
                   </div>
                 </div>
@@ -63,8 +86,11 @@ async function getReviews() {
       });
       listReviewContainer.innerHTML = html; // Insert all reviews into the container
 
-      document.querySelector('#btnDelete').addEventListener('click', () => {
-        deleteReviews(idReviews);
+      document.querySelectorAll('#btnDelete').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          const reviewId = btn.getAttribute('data-id');
+          deleteReviews(reviewId);
+        });
       });
     }
   } catch (error) {
@@ -162,10 +188,16 @@ async function deleteReviews(id) {
         Authorization: `Bearer ${token}`,
       },
     });
-    if (!response.ok) {
-      console.log(response.status);
+    if (response.status === 403) {
+      toast({
+        title: 'Warning',
+        message: 'Bạn không thể xóa review của người khác !!!',
+        type: 'warning',
+        duration: 5000,
+      });
     }
     const data = await response.json();
+
     if (data) {
       getReviews();
     }
