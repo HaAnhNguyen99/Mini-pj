@@ -10,7 +10,7 @@ if (currentUser && btn_nav_links && avt_User) {
 }
 
 // Select the image element inside the Profile_user div
-const profileImage = document.querySelector('.Profile_user img');
+const profileImage = document.querySelector('.Profile_user');
 // Select the slide element
 const slide = document.querySelector('.slide');
 
@@ -159,3 +159,35 @@ document.addEventListener('click', function (event) {
       .classList.remove('visible');
   }
 });
+(async function getInfoUser() {
+  let token = localStorage.getItem('user');
+  if (token) {
+    token = token.replace(/\\\"/g, '').replace(/\"/g, ''); // Clean token
+  }
+  const url = 'https://onlinecourse.up.railway.app/api/users/my-info';
+  try {
+    const response = await fetch(url, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    if (!response.ok) {
+      throw new Error(`Error ${response.status}`);
+    }
+    const data = await response.json();
+    userData = data; // Assign userData
+    console.log(data);
+    if (data) {
+      // Handle picture change overlay toggle
+      const pictureWrapper = document.querySelector('.Profile_user');
+      console.log(pictureWrapper);
+      if (pictureWrapper) {
+        pictureWrapper.style.backgroundImage = `url(${userData.avatar})`;
+      }
+    }
+  } catch (error) {
+    console.error('Failed to fetch user info:', error.message);
+  }
+})();
