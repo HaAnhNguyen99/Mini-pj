@@ -129,18 +129,16 @@ body nav {
 .panel .panel-item {
   margin: 10px 0;
   font-size: var(--font-size-small);
-
   position: relative;
-
   gap: 10px;
   min-height: 48px;
-  padding: 5px 30px 5px 25px;
+  padding: 5px 10px 5px 25px;
   border-bottom: 1px solid rgba(0, 0, 0, 0.03);
   overflow: hidden;
   line-height: 1.5;
   color: var(--text-color);
   cursor: pointer;
-  margin-left: 10px !important;
+  margin-left: 3px !important;
 }
 
 .panel .panel-item:hover {
@@ -150,6 +148,10 @@ body nav {
 
 .panel .panel-item .div:last-child {
   padding-left: 20px;
+}
+
+.panel-body:has(img.sound) {
+  display: block;
 }
 
 .collapse {
@@ -187,6 +189,9 @@ body nav {
 }
 
 .learned {
+}
+
+.panel-item:not(.learned) {
   opacity: 0.6;
   border-radius: 10px;
 }
@@ -201,6 +206,31 @@ body nav {
   z-index: 10000;
   animation: fadeInRight ease 0.5s;
 } */
+
+img[alt~='Sound'] {
+  width: 22px;
+  height: 20px;
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translate(-2px, -15px);
+}
+
+#videoPlayer::-webkit-media-controls {
+  display: none;
+}
+
+#videoPlayer::-moz-media-controls {
+  display: none;
+}
+
+#videoPlayer::-ms-media-controls {
+  display: none;
+}
+
+#videoPlayer::-media-controls {
+  display: none;
+}
 
 @keyframes fadeInRight {
   0% {

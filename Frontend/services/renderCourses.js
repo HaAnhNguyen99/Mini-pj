@@ -1,3 +1,15 @@
+function getRandomTime() {
+  const minutes = Math.floor(Math.random() * (59 - 10 + 1)) + 10;
+
+  const formattedTime = minutes.toString().padStart(2, '0') + ':00';
+
+  return formattedTime;
+}
+
+function getRandomNumber(min, max) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
 async function render(courseContainer, courses) {
   courseContainer.innerHTML = courses
     .map((course) => {
@@ -39,12 +51,13 @@ async function render(courseContainer, courses) {
                   width="20px"
                   height="20px" />
               </div>
+              <span class="author-name">Nguyễn Phương Nam</span>
               <div class="total-duration">
-                <i class="fa-solid fa-play"></i> ${course.total_learners}
+                <i class="fa-solid fa-play"></i> ${getRandomNumber(1, 10)}
               </div>
               <div class="total-minute">
                 <i class="fa-solid fa-clock"></i>
-                <span id="total-minute">${course.total_duration}</span>
+                <span id="total-minute">${getRandomTime()}</span>
               </div>
             </div>
           </div>

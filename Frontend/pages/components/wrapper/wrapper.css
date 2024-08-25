@@ -55,10 +55,15 @@
   border-radius: 20px;
   overflow: hidden;
   position: relative;
-  transition: 1s;
+  transition: 0.2s;
   display: flex;
   flex-direction: column;
   box-shadow: rgba(33, 35, 38, 0.1) 0px 10px 10px -10px;
+}
+
+.course:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 4px 8px #0000001a;
 }
 
 .course > .top-card {
@@ -106,9 +111,9 @@
   word-wrap: break-word;
   white-space: nowrap;
   overflow-wrap: break-word;
-  white-space: nowrap; /* Không cho xuống dòng */
-  overflow: hidden; /* Ẩn phần bị tràn */
-  text-overflow: ellipsis; /* Thêm dấu ba chấm khi tràn */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .course .bot-card .price {
@@ -119,6 +124,7 @@
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  gap: 5px;
 }
 
 .course .bot-card .more-inf i {
@@ -139,15 +145,25 @@
   text-decoration: line-through;
   color: var(--colors-default-400) !important;
 }
-
+.author-name {
+  margin-left: 10px;
+  font-size: var(--font-size-normal);
+  font-weight: 500;
+}
 @media screen and (max-width: 1080px) {
   .courses {
     grid-template-columns: repeat(3, 1fr);
+  }
+  .author-name {
+    display: none;
   }
 }
 
 @media screen and (max-width: 768px) {
   .courses {
     grid-template-columns: repeat(2, 1fr);
+  }
+  .author-name {
+    display: none;
   }
 }

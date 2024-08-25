@@ -100,8 +100,37 @@ async function fetchCourses() {
         )
       );
 
+      // Title
+      let title = null;
+
+      course.chapter.forEach((chapter) => {
+        chapter.lessons.forEach((lesson) => {
+          if (lesson.id === course_id) {
+            title = lesson.lesson_title;
+          }
+        });
+      });
+
+      console.log(title);
+      document.querySelector('#title').textContent = title;
+
       // Handle on click event for select course
       const panelItems = document.querySelectorAll('.panel-item');
+
+      panelItems.forEach((item) => {
+        const id = Number(item.getAttribute('id'));
+        if (id === course_id) {
+          const imgElement = document.createElement('img');
+          imgElement.src = '../../assets/images/sound-waves.png';
+          imgElement.alt = 'Sound Waves Icon';
+          imgElement.classList.add('sound');
+          imgElement.width = 10;
+          imgElement.height = 10;
+          item.appendChild(imgElement);
+          item.style.backgroundColor = 'antiquewhite';
+          item.style.borderRadius = '10px';
+        }
+      });
 
       panelItems.forEach((item) => {
         item.addEventListener('click', async function () {
@@ -129,8 +158,8 @@ async function fetchCourses() {
                 });
                 return;
               }
+
               console.log(result2);
-              window.location.reload();
 
               // Nếu cả hai hàm đều thành công, reload trang
               console.log(`all done`);
@@ -176,7 +205,7 @@ async function fetchCourses() {
         updateCurrentLesson(course.lesson_pre);
       });
       nextButton.addEventListener('click', () => {
-        window.location.reload();
+        updateCurrentLesson(course.lesson_next);
       });
     } else {
       console.log('Course ID not found in the URL');
@@ -249,7 +278,6 @@ document.getElementById('playButton').addEventListener('click', function () {
 
 const blurElement = document.querySelector('.blur');
 const rightContainer = document.querySelector('.right-container');
-const limit = 100;
 
 rightContainer.addEventListener('scroll', function () {
   // Kiểm tra nếu cuộn tới cuối của right-container
@@ -293,18 +321,21 @@ async function updateCurrentLesson(lessonID) {
       },
     });
 
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
-    if (!response.bodyUsed) {
-      console.warn('No data returned from the API.');
+    // Parse the JSON data
+    const data = await response.json();
+
+    // Check if the data is empty
+    if (!data || Object.keys(data).length === 0) {
+      console.warn('No data returned from API, reloading...');
+      window.location.reload();
       return;
     }
-    const data = await response.json();
-    console.log('API Response Data:', data);
+
     return data;
   } catch (err) {
     console.error('Fetch error:', err);
+    // Optionally reload on error
+    window.location.reload();
   }
 }
 
@@ -322,8 +353,7 @@ async function updateCurrentLesson(lessonID) {
 const video = document.querySelector('video');
 video.ontimeupdate = (evt) => {
   if (video.duration === evt.target.currentTime) {
-    console.log(video.duration);
-    console.log(evt.target.currentTime);
+    if (current_lesson_isLearnded) return;
 
     // Gọi hàm updateCourse với id tương ứng
     updateCourse(course_id, token);

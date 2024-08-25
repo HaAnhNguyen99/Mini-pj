@@ -137,16 +137,20 @@ nav .nav-links #sign-up nav .nav-links *:not(:first-child) {
 }
 
 .Profile_user {
-  max-width: 60px;
+  width: 60px;
   height: 50px;
   cursor: pointer;
   border: 3px solid var(--color-secondary);
   border-radius: 50%;
 }
-.Profile_user img {
-  width: 100%;
-  height: 100%;
+
+.Profile_user {
+  background-image: url('https://avatar.iran.liara.run/public/18');
+  background-size: 100% auto;
+  background-position: 50% 50%;
+  background-repeat: no-repeat;
 }
+
 .Profile_user:hover {
   opacity: 0.7;
 }
@@ -186,4 +190,8 @@ nav .nav-links #sign-up nav .nav-links *:not(:first-child) {
 }
 .visible {
   display: block;
+}
+
+nav#avatar {
+  border-radius: 50%;
 }
