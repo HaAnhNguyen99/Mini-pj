@@ -65,7 +65,7 @@ nav.header-container .left .logo {
   border-radius: 50%;
 
   /* percent for circle */
-  background: conic-gradient(var(--colors-default-50) 94%, #4e4e4e 0%);
+  background: conic-gradient(var(--colors-default-50) 1%, #4e4e4e 0%);
 
   display: flex;
   justify-content: center;

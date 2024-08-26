@@ -1,12 +1,72 @@
 let isNewestFirst = true; // Default to sorting by newest first
 
+// Sort by newest/oldest
 document.querySelector('.sort_btn').addEventListener('click', () => {
-  isNewestFirst = !isNewestFirst; // Toggle the sorting order
+  isNewestFirst = !isNewestFirst;
   const sortText = isNewestFirst ? 'Mới Nhất' : 'Cũ Nhất';
   document.querySelector('.sort_btn span').textContent = sortText;
-  getReviews(); // Fetch and sort reviews again based on the new order
+  getReviews();
 });
 
+let selectedRating = null; // Store the currently selected star rating for filtering
+
+document.querySelectorAll('filter_star').forEach((star) => {
+  star.addEventListener('click', (event) => {
+    const selectedValue = parseInt(event.target.getAttribute('data-value'));
+
+    // Reset tất cả các ngôi sao về màu mặc định
+    document.querySelectorAll('.star-rating .star').forEach((star) => {
+      star.style.color = '#CCCCCC'; // Màu mặc định cho các ngôi sao chưa chọn
+    });
+
+    // Đổi màu cho các ngôi sao từ 1 đến giá trị được chọn
+    for (let i = 1; i <= selectedValue; i++) {
+      const start = document.querySelector(`.star[data-value="${i}"]`);
+      start.style.color = '#ee4d2d'; // Màu cho các ngôi sao đã chọn
+    }
+  });
+});
+
+// Thêm màu cho sao đã chọn
+document.querySelectorAll('.filter_star').forEach((star) => {
+  star.addEventListener('click', (e) => {
+    const selectedValue = parseInt(event.target.getAttribute('data-value'));
+
+    // Reset tất cả các ngôi sao về màu mặc định
+    document.querySelectorAll('.filter_star').forEach((star) => {
+      star.style.color = '#CCCCCC'; // Màu mặc định cho các ngôi sao chưa chọn
+    });
+
+    // Đổi màu cho các ngôi sao từ 1 đến giá trị được chọn
+    for (let i = 1; i <= selectedValue; i++) {
+      const start = document.querySelector(`.filter_star[data-value="${i}"]`);
+
+      start.style.color = '#ee4d2d'; // Màu cho các ngôi sao đã chọn
+    }
+
+    const rating = parseInt(e.target.getAttribute('data-value'));
+
+    // Toggle star selection
+    if (selectedRating === rating) {
+      selectedRating = null;
+    } else {
+      selectedRating = rating;
+    }
+
+    // Update UI
+    document.querySelectorAll('.filter_star').forEach((star) => {
+      star.classList.remove('selected');
+    });
+    if (selectedRating) {
+      e.target.classList.add('selected');
+    }
+
+    // Re-fetch and filter reviews based on the selected rating
+    getReviews();
+  });
+});
+
+// Get reviews from BE
 async function getReviews() {
   const urlParams = new URLSearchParams(window.location.search);
   const listReviewContainer = document.querySelector('.list_review');
@@ -27,12 +87,24 @@ async function getReviews() {
 
     if (response.status === 404) {
       // No reviews found, handle the UI accordingly
-      listReviewContainer.innerHTML = `<h1 class="noReview">Chưa có review nào cho khóa học này!</h1>`;
+      listReviewContainer.innerHTML = `<h1 class="noReview" style="margin-bottom: 10px">Chưa có review nào cho khóa học này!</h1>`;
       return;
     }
 
     let data = await response.json();
     const idReviews = data.map((item) => item.id);
+
+    // Sort reviews based on the current sorting order
+    data.sort((a, b) => {
+      return isNewestFirst
+        ? new Date(b.created_time) - new Date(a.created_time)
+        : new Date(a.created_time) - new Date(b.created_time);
+    });
+
+    // Filter reviews by the selected rating
+    if (selectedRating) {
+      data = data.filter((review) => review.rating === selectedRating);
+    }
 
     // Sort reviews based on the current sorting order
     data.sort((a, b) => {
@@ -106,7 +178,6 @@ const btnSubmitReview = document.querySelector('.avatar_user');
 const btnCancel = document.querySelector('.cancelReviews');
 
 // IF YOU HAVE LOGIN
-
 function toggleShowReview(btnReview, inputReview, btnSubmitReview, btnCancel) {
   btnReview.addEventListener('click', () => {
     btnSubmitReview.classList.add('none');

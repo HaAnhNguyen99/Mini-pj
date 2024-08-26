@@ -1,26 +1,25 @@
-// click on a button then add class "choose" and remove class "choose" previous a
-// document.querySelector('#sidebar a').addEventListener('click', function () {
-//   const currentChoose = document.querySelector('.choose');
-//   if (currentChoose) {
-//     currentChoose.classList.remove('choose');
-//   }
-//   this.classList.add('choose');
-// });
+// Function to handle sidebar state
+function updateSidebarState() {
+  const sidebarLinks = document.querySelectorAll('#sidebar a');
+  const storedActiveLink = localStorage.getItem('activeLink');
 
-// document.addEventListener('click', function () {
-//   const btnBack = document.getElementById('btnBack');
+  if (storedActiveLink) {
+    sidebarLinks.forEach((link) => {
+      if (link.href === storedActiveLink) {
+        link.classList.add('choose');
+      } else {
+        link.classList.remove('choose');
+      }
+    });
+  }
 
-//   // Check if the current URL is the homepage
-//   const isHomePage =
-//     window.location.pathname === '/' ||
-//     window.location.pathname === '/index.html';
+  sidebarLinks.forEach((link) => {
+    link.addEventListener('click', function (event) {
+      sidebarLinks.forEach((link) => link.classList.remove('choose'));
+      this.classList.add('choose');
+      localStorage.setItem('activeLink', this.href);
+    });
+  });
+}
 
-//   if (!isHomePage) {
-//     btnBack.classList.remove('hidden');
-//   }
-
-//   // Add event listener to the Back button
-//   btnBack.addEventListener('click', function () {
-//     window.history.back();
-//   });
-// });
+updateSidebarState();

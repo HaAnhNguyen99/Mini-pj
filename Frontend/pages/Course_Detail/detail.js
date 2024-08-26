@@ -1,4 +1,5 @@
 import { showLoader, hideLoader } from '../components/loader/loader.js';
+let is_free = false;
 let token = localStorage.getItem('user');
 if (token) {
   token = token.replace(/\\\"/g, '');
@@ -63,6 +64,10 @@ document.addEventListener('DOMContentLoaded', function () {
               type: 'warning',
               duration: 5000,
             });
+            return;
+          }
+          if (is_free) {
+            window.location.href = `${baseUrl}Frontend/pages/learning/learning.html?slug=${slug}`;
             return;
           }
           if (is_purchase)
@@ -146,7 +151,6 @@ async function fetchCourses() {
       response = await fetch(API_CourseLink);
     }
     const course = await response.json();
-    console.log(course);
     const container = document.querySelector('.course-container');
 
     // Render duration to layout
@@ -207,7 +211,39 @@ async function fetchCourses() {
     // Change text content of a element when user is purchase
     let purchase_btn = document.getElementById('registerCourse');
     is_purchase = course.is_purchase;
-    purchase_btn.textContent = is_purchase ? 'Học ngay' : 'Đăng ký học';
+
+    // If Free then go straight to learning
+    purchase_btn.textContent =
+      is_purchase || course.new_price === 0 ? 'Học ngay' : 'Đăng ký học';
+
+    if (course.new_price === 0) {
+      const API = 'https://onlinecourse.up.railway.app/api/orders/create';
+      course.new_price === 0 ? (is_free = true) : false;
+
+      let token = localStorage.getItem('user');
+      token = token.replace(/"/g, '');
+      const course_id = course.id;
+
+      try {
+        const response = await fetch(API, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({ course_id: course_id }),
+        });
+
+        if (!response.ok) {
+          throw new Error('Failed to fetch data from API');
+        }
+
+        const data = await response.json();
+        console.log(data);
+      } catch (error) {
+        console.error('Error:', error);
+      }
+    }
 
     const btnReview = document.querySelector('.avatar_user');
     if (course.is_purchase) {
