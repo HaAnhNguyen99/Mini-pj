@@ -95,10 +95,11 @@ if (profileForm) {
   });
 }
 
+// Upload user infor
 const updateInfor = async (formValue) => {
   let token = localStorage.getItem('user');
   if (token) {
-    token = token.replace(/\\\"/g, '').replace(/\"/g, ''); // Clean token
+    token = token.replace(/\\\"/g, '').replace(/\"/g, '');
   }
   const url = 'https://onlinecourse.up.railway.app/api/users/update-profile';
   try {
@@ -116,7 +117,7 @@ const updateInfor = async (formValue) => {
     console.log(data);
   } catch (error) {
     console.error('Failed to fetch user info:', error.message);
-  } // Assign userData
+  }
 };
 
 // Helper functions

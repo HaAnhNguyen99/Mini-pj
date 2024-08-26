@@ -164,22 +164,53 @@ document.querySelector('#register_account').addEventListener('click', (e) => {
           });
           document.querySelector('#email-sign-up').focus();
         }
+        return;
       }
+
       const json = await response.json();
       console.log('User registered successfully:', json);
-
+      if (json.status === 500 || json.status === 1001) {
+        toast({
+          title: 'Lỗi',
+          message: 'Email đã đăng ký trước đó',
+          type: 'error',
+          duration: 5000,
+        });
+        return;
+      }
+      if (json.errors) {
+        json.errors.forEach((e) => {
+          toast({
+            title: 'Lỗi',
+            message: e,
+            type: 'error',
+            duration: 5000,
+          });
+        });
+        return;
+      }
+      formSignUp.classList.remove('show');
+      markSignUp.classList.remove('show');
+      toast({
+        title: 'Đăng ký thành công',
+        message: 'Vui lòng kiểm tra mã xác thực qua email',
+        type: 'success',
+        duration: 5000,
+      });
       // Wait for 1 minute (60000 milliseconds) before checking email verification status
-      setTimeout(async () => {
-        if (json.id) {
-          await checkEmailVerification(inputEmail_Sign_Up);
-        }
-      }, 60000);
+
+      // setTimeout(async () => {
+      //   if (json.id) {
+      //     await checkEmailVerification(inputEmail_Sign_Up);
+      //   }
+      // }, 60000);
     } catch (error) {
       console.error('Registration failed:', error.message);
     }
   }
 
   async function checkEmailVerification(email) {
+    // const verificationUrl = `https://onlinecourse.up.railway.app/api/users/verify?email=${email}`; // Replace with your actual API endpoint
     const verificationUrl = `https://onlinecourse.up.railway.app/api/users/verify?email=${email}`; // Replace with your actual API endpoint
     try {
       const response = await fetch(verificationUrl, {
@@ -190,7 +221,7 @@ document.querySelector('#register_account').addEventListener('click', (e) => {
       });
       if (!response.ok) {
       }
-      const data = await response.json();
+      const data = await response;
       console.log('data', data);
 
       // Show success or error toast based on verification status
@@ -212,7 +243,7 @@ document.querySelector('#register_account').addEventListener('click', (e) => {
         });
       }
     } catch (error) {
-      console.error('Error checking verification status:', error.message);
+      console.error('Errors:', error.message);
     }
   }
 

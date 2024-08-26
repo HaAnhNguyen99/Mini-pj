@@ -16,12 +16,7 @@ const slug = urlParams.get('slug');
 
 document.addEventListener('DOMContentLoaded', function () {
   async function initializeComponents() {
-    const components = [
-      'learning_bottom',
-      'learning-header',
-      'comments',
-      'toastMessage',
-    ];
+    const components = ['learning_bottom', 'learning-header', 'toastMessage'];
 
     for (const component of components) {
       await loadComponent(component);
@@ -65,7 +60,6 @@ async function fetchCourses() {
           duration: 5000,
         });
       }
-      console.log(course);
 
       // render video source
       const source = document.querySelector('source');
@@ -111,7 +105,6 @@ async function fetchCourses() {
         });
       });
 
-      console.log(title);
       document.querySelector('#title').textContent = title;
 
       // Handle on click event for select course

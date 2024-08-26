@@ -118,7 +118,9 @@ button img {
   transform: translate(-50%, -50%);
   background: linear-gradient(180.06deg, #e0eafc -5%, #cfdef3 106%);
   border: 1px solid #cfdef3;
-  box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px,
+    rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px,
+    rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
   transition: all 1s;
 }
 
@@ -133,7 +135,8 @@ button img {
   border-radius: 10% 10% 50% 50% / 10% 10% 8% 8%;
   box-shadow: 10px 10px rgba(0, 0, 0, 0.25);
 }
-
+#btn-upload:hover {
+}
 .close-btn {
   position: fixed;
   top: 20px;
@@ -199,13 +202,32 @@ button img {
 }
 
 #profile-form button:hover {
-  background-color: #ea8181;
+  opacity: 0.8;
 }
 
 .btn-update {
   margin-bottom: 20px;
   font-size: var(--font-size-medium);
   font-weight: var(--font-weight-bold);
+}
+
+svg#Layer_1 {
+  position: relative;
+  top: 8px;
+  height: 1.5rem;
+}
+#btn-upload {
+  transition: 0.5s;
+  cursor: pointer;
+  border: 1px solid black;
+}
+#btn-upload:hover {
+  box-shadow: rgba(0, 0, 0, 0.45) 0px 54px 55px;
+  transform: translateY(0.2rem);
+}
+
+#profile-form #btn-upload {
+  padding-top: 10px;
 }
 
 .upload-btn button {
@@ -220,7 +242,7 @@ button img {
   font-weight: var(--font-weight-medium);
   white-space: 1.8rem !important;
   line-height: 1.4rem !important;
-  background: #f0f0f0 !important;
+  background: transparent !important;
 }
 
 .avatar-upload {
@@ -232,13 +254,13 @@ button img {
 .upload-btn button:hover {
   background: #e0e0e0;
 }
-
 .avatar-preview {
   border-radius: 50%;
   overflow: hidden;
   position: relative;
   cursor: pointer;
-  box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px,
+    rgba(0, 0, 0, 0.12) 0px -12px 30px;
   width: 200px;
   height: 200px;
 }
@@ -311,14 +333,14 @@ button img {
   animation-name: fade-in-up;
 }
 
-.email{
+.email {
   display: flex;
   gap: 10px;
   align-items: center;
   transition: all 0.5s;
   padding: 10px 20px 10px;
-  opacity: .6;
+  opacity: 0.6;
   cursor: not-allowed;
-  pointer-events:none;
+  pointer-events: none;
   user-select: none;
 }

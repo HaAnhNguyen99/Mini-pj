@@ -81,6 +81,13 @@ nav .search input {
   cursor: pointer;
   display: flex;
   align-items: center;
+  transition: transform 0.3s ease;
+}
+
+#account-items .account-item:hover {
+  transform: translateY(-10px);
+  background-color: var(--color-primary);
+  border-radius: 10px;
 }
 
 #account-items .account-item:not(:last-child) {

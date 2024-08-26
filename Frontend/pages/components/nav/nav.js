@@ -55,7 +55,6 @@ async function search(query) {
       `https://onlinecourse.up.railway.app/api/courses/search?keyword=${query}`
     );
     const data = await response.json();
-    console.log(data);
     return data;
   } catch (error) {
     console.error('Error:', error);

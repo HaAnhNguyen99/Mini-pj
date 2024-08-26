@@ -8,7 +8,6 @@ let totalleaners = 0;
       'https://onlinecourse.up.railway.app/api/courses/home-page'
     );
     const courses = await response.json();
-    console.log(courses);
 
     const preContainer = document.querySelector('.premium-courses');
     const freeContainer = document.querySelector('.free-courses');
