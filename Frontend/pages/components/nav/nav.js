@@ -186,12 +186,7 @@ const checkOutDecodedToken = () => {
   const decodedToken = parseJwt(token);
   const date = new Date();
   if (decodedToken.exp < date.getTime() / 1000) {
-    toast({
-      title: 'Warning',
-      message: 'Hết hạn đang nhập vuii lòng đăng nhập lại',
-      type: 'warning',
-      duration: 5000,
-    });
+    alert('Hết hạn đang nhập vuii lòng đăng nhập lại');
     setTimeout(() => {
       window.location.href =
         'http://127.0.0.1:3000/Frontend/pages/Default/index.html';
@@ -199,4 +194,4 @@ const checkOutDecodedToken = () => {
     }, 4000);
   }
 };
-checkOutDecodedToken();
+window.addEventListener('click', checkOutDecodedToken());
