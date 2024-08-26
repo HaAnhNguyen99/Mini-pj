@@ -47,7 +47,7 @@
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-gap: 20px;
-  row-gap: 40px;
+  row-gap: 80px;
 }
 
 .course {
@@ -58,12 +58,15 @@
   transition: 0.2s;
   display: flex;
   flex-direction: column;
-  box-shadow: rgba(33, 35, 38, 0.1) 0px 10px 10px -10px;
+  /* box-shadow: rgba(33, 35, 38, 0.1) 0px 10px 10px -10px; */
+  box-shadow: rgba(0, 0, 0, -0.75) 0px 6px 5px,
+    rgba(0, 0, 0, 0.22) 0px 10px 10px;
+  border: 1px groove rgb(95 85 85 / 9%);
 }
 
 .course:hover {
   transform: translateY(-10px);
-  box-shadow: 0 4px 8px #0000001a;
+  box-shadow: 0 4px 8px rgba(33, 35, 38, 0.8);
 }
 
 .course > .top-card {
@@ -159,7 +162,7 @@
   }
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 858px) {
   .courses {
     grid-template-columns: repeat(2, 1fr);
   }

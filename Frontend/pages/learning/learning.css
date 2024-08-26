@@ -216,22 +216,6 @@ img[alt~='Sound'] {
   transform: translate(-2px, -15px);
 }
 
-#videoPlayer::-webkit-media-controls {
-  display: none;
-}
-
-#videoPlayer::-moz-media-controls {
-  display: none;
-}
-
-#videoPlayer::-ms-media-controls {
-  display: none;
-}
-
-#videoPlayer::-media-controls {
-  display: none;
-}
-
 @keyframes fadeInRight {
   0% {
     right: -200px;
