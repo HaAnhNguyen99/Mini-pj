@@ -163,11 +163,17 @@ document.querySelector('#register_account').addEventListener('click', (e) => {
             duration: 5000,
           });
           document.querySelector('#email-sign-up').focus();
+        } else if (response.status === 400) {
+          toast({
+            title: 'Error',
+            message: response.errors,
+            type: 'error',
+            duration: 5000,
+          });
+          document.querySelector('#email-sign-up').focus();
         }
       }
       const json = await response.json();
-      console.log('User registered successfully:', json);
-
       // Wait for 1 minute (60000 milliseconds) before checking email verification status
       setTimeout(async () => {
         if (json.id) {
