@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
+      rel="stylesheet"
+      type="text/css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+      rel="stylesheet" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap"
+      rel="stylesheet" />
+    <link rel="stylesheet" href="detail.css" />
+    <link rel="stylesheet" href="../../config/grobal.css" />
+  </head>
+  <body>
+    <div id="Sign_Up"></div>
+    <div id="Sign_In"></div>
+    <div id="toastMessage"></div>
+    <!-- Navbar -->
+    <header>
+      <nav id="nav"></nav>
+    </header>
+
+    <!-- Container -->
+    <div class="container">
+      <div id="sidebar"></div>
+      <div id="loader"></div>
+      <div class="course-content none">
+        <div class="left-content">
+          <h1 id="course-title"></h1>
+          <p id="course-desc" style="color: var(--text-color)"></p>
+          <div id="learning-goals">
+            <h3 class="section-title">Những gì bạn sẽ học được</h3>
+            <div class="content-details"></div>
+          </div>
+
+          <div class="course-detail-header">
+            <h2>Nội dung khóa học</h2>
+            <div class="header-detail">
+              <span> <span class="chapters bold">5</span> Chương </span>
+              •
+              <span> <span class="lessions bold"> 138 </span> bài học </span>
+              •
+              <span>Thời lượng <span class="duration bold"></span></span>
+            </div>
+          </div>
+          <div class="course-container"></div>
+          <div class="course-require">
+            <h3 class="require-header">* Yêu cầu</h3>
+            <div class="require-items">
+              <!-- <div class="require-item">
+                <img src="../../assets/icons/ok.svg" alt="ok" />
+                <span id="require-container"
+                  >Máy tính kết nối internet (từ Windows 10 trở lên)</span
+                >
+              </div> -->
+            </div>
+          </div>
+
+          <!-- Course Reviews -->
+          <div class="review">
+            <div class="course-reviews">
+              <div id="review"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="right-content">
+          <div class="right-container">
+            <div id="course-img"></div>
+            <div>
+              <span id="course-price">Miễn phí</span>
+            </div>
+            <a id="registerCourse"></a>
+            <div class="course-info">
+              <p>
+                <img src="../../assets/icons/level.svg" alt="" />Trình độ học cơ
+                bản
+              </p>
+              <p>
+                <img src="../../assets/icons/total.svg" alt="" /> Tổng số
+                <span class="lessions">23</span> bài học
+              </p>
+              <p>
+                <img src="../../assets/icons/duration.svg" alt="" />Thời lượng
+                <span class="duration">10 giờ 29 phút</span>
+              </p>
+              <p>
+                <img src="../../assets/icons/battery.svg" alt="" />Học mọi lúc,
+                mọi nơi
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer id="footer"></footer>
+
+    <script type="module" src="detail.js"></script>
+  </body>
+</html>

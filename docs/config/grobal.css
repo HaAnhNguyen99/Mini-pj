@@ -1,0 +1,81 @@
+:root {
+  --colors-default-50: #f5f5f6;
+  --colors-default-100: #e6e6e7;
+  --colors-default-200: #cfd0d2;
+  --colors-default-300: #adaeb3;
+  --colors-default-400: #84858c;
+  --colors-default-500: #696a71;
+  --colors-default-600: #5a5b60;
+  --colors-default-700: #4d4d51;
+  --colors-default-800: #434347;
+  --colors-default-900: #0b0b2e;
+  --colors-default-950: #202022;
+
+  --colors-emphasis: #eb5757;
+  --colors-info: #2f80ed;
+  --colors-info-light: #2f80ed10;
+  --colors-fill: #f2c94c20;
+  --color-primary: #ff8f26;
+  --color-secondary: #ff5117;
+
+  --font-family-primary: 'Roboto', sans-serif;
+  --font-family-secondary: 'Roboto Slab', serif;
+
+  --font-weight-bold: 600;
+  --font-weight-extraBold: 700;
+  --font-weight-medium: 500;
+  --font-weight-normal: 400;
+  --font-weight-light: 300;
+
+  --font-size-small: 14px;
+  --font-size-normal: 16px;
+  --font-size-medium: 18px;
+  --font-size-large: 20px;
+
+  --text-color: #333;
+  --system-ui: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif,
+    'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+}
+*,
+*::after,
+*::before {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  font-family: var(--system-ui);
+  background-color: #f9f9f9;
+  position: relative;
+}
+a {
+  text-decoration: none;
+}
+
+.none {
+  display: none !important;
+}
+
+.container {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  max-width: 100%;
+}
+
+#sidebar {
+  max-width: 400px;
+  width: 100%;
+  padding: 20px;
+}
+
+#content {
+  padding: 50px;
+  overflow-x: auto;
+}
+
+@media screen and (max-width: 768px) {
+  .container {
+    display: block;
+  }
+}
