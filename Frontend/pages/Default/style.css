@@ -1,8 +1,0 @@
-header:has(.slide.active) ~ .container #slider {
-  position: relative;
-  z-index: -1;
-}
-header:has(#search-result-container.visible) ~ .container .slideshow-container {
-  position: relative;
-  z-index: -1;
-}
